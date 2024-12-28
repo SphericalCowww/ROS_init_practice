@@ -24,14 +24,33 @@ Build a ROS package with the following (python based):
 Common ROS terminal commands:
 
     rqt_graph
-    ros2 node\topic\service node\list\echo
+    ros2 node\topic\service list\info\type\hz\echo
     ros2 interface show std_msgs/msg/String
 
-### Practice note
+### Basic turtle controller (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
+Node practice:
 
     cd ~/ROS_init_practice/
     colcon build --symlink-install
     ros2 run practice_controller test_node
+
+Publisher (transmitter), subscriber (receiver), and closed loop system (both):
+
+    ros2 run turtlesim turtlesim_node 
+    ros2 run turtlesim turtle_teleop_key
+    ros2 run practice_controller turtle_move_cycle_node 
+    ros2 topic echo /turtle1/cmd_vel
+    ros2 run practice_controller turtle_read_pose_node 
+    ros2 run practice_controller turtle_controller_node
+
+Node (one run mode of the robot), topic (main code of the robot), and service (basically help to change the configuration parameter of the topic):
+
+    ros2 service list
+    ros2 service type /clear
+    ros2 service call /clear std_srvs/srv/Empty 
+    ros2 topic hz /turtle1/pose
+
+Actually, the main code is already covered in ''turtle_controller_node.py''.
 
 ## References:
 - Robotics Back-End, "ROS2 Tutorial - ROS2 Humble 2H50 [Crash Course]" (2022) (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
