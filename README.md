@@ -12,6 +12,7 @@ Installed Xcode with the following:
 Installed Ubuntu 24.04.1 LTS on Raspberry Pi 4. Installed ROS2 following this <a href=" https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>. However, watch out ''$UBUNTU_CODENAME'' can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04.
     
 Exporting the following in ''.bashrc'':
+
     source /opt/ros/jazzy/setup.bash
     source ~/Documents/ROS_init_practice/install/setup.bash
 
