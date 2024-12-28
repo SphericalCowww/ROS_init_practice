@@ -22,6 +22,7 @@ Build a ROS package with the following (python based):
     ros2 pkg create practice_controller --build-type ament_python --dependencies rclpy
 
 Common ROS terminal commands:
+
     rqt_graph
     ros2 node\topic\service node\list\echo
     ros2 interface show std_msgs/msg/String
