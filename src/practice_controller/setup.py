@@ -20,7 +20,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'test_node = practice_controller.practice_node:main'
+            'test_node              = practice_controller.practice_node:main',
+            'turtle_move_cycle_node = practice_controller.turtle_move_cycle:main',
+            'turtle_read_pose_node  = practice_controller.turtle_read_pose:main',
+            'turtle_controller_node = practice_controller.turtle_controller:main',
         ],
     },
 )
