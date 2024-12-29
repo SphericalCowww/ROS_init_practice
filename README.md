@@ -9,7 +9,7 @@ Installed Xcode with the following:
     sudo apt install code
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash # if not found: sudo apt install python3-colcon-common-extensions
 
-Installed Ubuntu 24.04.1 LTS on Raspberry Pi 4. Installed ROS2 following this <a href=" https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>. However, watch out ''$UBUNTU_CODENAME'' can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04.
+Installed Ubuntu 24.04.1 LTS on Raspberry Pi 4. Installed ROS2 following this <a href="https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>. However, watch out ''$UBUNTU_CODENAME'' can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04.
     
 Exporting the following in ''.bashrc'':
 
