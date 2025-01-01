@@ -25,17 +25,26 @@ Exporting the following in ''.bashrc'':
 Common ROS terminal commands:
 
     rqt_graph
-    ros2 node\topic\service list\info\type\hz\echo
+    ros2 node\topic\service\param list\info\type\hz\echo
     ros2 interface show std_msgs/msg/String
 
-### Basic turtle controller (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
+### Basic turtle controller using ros2 (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
+ROS: Robot Operating System
+- node: one run mode of the robot
+- topic: main host code of the robot
+- service: basically helps to change the configuration parameter of the topic
+
+- publisher: transmitter
+- subscriber: receiver
+- closed loop system: transmitter + receiver
+
 Node practice:
 
     cd .../ROS_init_practice/
     colcon build --symlink-install
     ros2 run practice_controller test_node
 
-Publisher (transmitter), subscriber (receiver), and closed loop system (both):
+Publisher, subscriber, closed-loop system practice with ''turtlesim'' topic:
 
     ros2 run turtlesim turtlesim_node 
     ros2 run turtlesim turtle_teleop_key
@@ -43,8 +52,8 @@ Publisher (transmitter), subscriber (receiver), and closed loop system (both):
     ros2 topic echo /turtle1/cmd_vel
     ros2 run practice_controller turtle_read_pose_node 
     ros2 run practice_controller turtle_controller_node
-
-Node (one run mode of the robot), topic (main code of the robot), and service (basically help to change the configuration parameter of the topic):
+    
+Service practice:
 
     ros2 service list
     ros2 service type /clear
@@ -55,6 +64,16 @@ Actually, the main code is already covered in ''turtle_controller_node.py'', res
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/practice_controller_demo.png" width="400">
 
+### Basic simulation using URDF, rvis2, and gazebo
+URDF: Unified Robot Description Format in XML format
+- link: https://wiki.ros.org/urdf/XML/link
+- joint: https://wiki.ros.org/urdf/XML/joint
+
+Common URDF inspection code:
+
+        ros2 run tf2_tools view_frames # after opening the model in rviz2
+
 ## References:
+- msadowski, "awesome-weekly-robotics" (<a href="https://github.com/msadowski/awesome-weekly-robotics">GitHub</a>)
 - Robotics Back-End, "ROS2 Tutorial - ROS2 Humble 2H50 [Crash Course]" (2022) (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
 
