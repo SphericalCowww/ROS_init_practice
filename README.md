@@ -20,7 +20,7 @@ Exporting the following in ''.bashrc'':
 
     source /opt/ros/jazzy/setup.bash
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash # if not found: sudo apt install python3-colcon-common-extensions
-    source .../ROS_init_practice/install/setup.bash
+    source (...)/ros2_ws(...)/install/setup.bash
 
 Common ROS terminal commands:
 
@@ -64,14 +64,41 @@ Actually, the main code is already covered in ''turtle_controller_node.py'', res
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/practice_controller_demo.png" width="400">
 
-### Basic simulation using URDF, rvis2, and gazebo
+### Basic simulation using URDF, rvis2, and gazebo (<a href="https://www.udemy.com/course/ros2-tf-urdf-rviz-gazebo">Udemy</a>)
 URDF: Unified Robot Description Format in XML format
 - link: https://wiki.ros.org/urdf/XML/link
 - joint: https://wiki.ros.org/urdf/XML/joint
 
 Common URDF inspection code:
 
-        ros2 run tf2_tools view_frames # after opening the model in rviz2
+    check_urdf practice.urdf
+    ros2 run tf2_tools view_frames # after opening the model in rviz2
+
+Launch ''practice.urdf'' in rviz2:
+
+    sudo apt install ros-(...)-xacro     # if not installed
+    cd ros2_ws2_vis_sim
+    mkdir src/
+    colcon build
+    cd src/
+    ros2 pkg create practice_robot_description
+    cd practice_robot_description
+    rm -r include/ src/
+    mkdir urdf launch
+    # move in urdf/practice.urdf and launch/display.launch.xml, replac CMakeLists.txt
+    cd ros2_ws2_vis_sim
+    colcon build
+    file ~/ros2_ws/install/practice_robot_description/share/practice_robot_description/urdf/practice.urdf
+    source install/setup.bash
+
+In rvis2 do:
+
+    # Fixed Frame: base_footprint or base_link
+    # add RobotModel: Description: /robot_description
+    # add TF
+    # save .rviz
+    ros2 run rviz2 rviz2 -d (...).rviz
+
 
 ## References:
 - msadowski, "awesome-weekly-robotics" (<a href="https://github.com/msadowski/awesome-weekly-robotics">GitHub</a>)
