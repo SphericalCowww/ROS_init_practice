@@ -88,19 +88,22 @@ Launch ''practice.urdf'' in rviz2:
     # move in urdf/practice.urdf and launch/display.launch.xml, replac CMakeLists.txt
     cd ros2_ws2_vis_sim
     colcon build
-    file ~/ros2_ws/install/practice_robot_description/share/practice_robot_description/urdf/practice.urdf
+    file (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/urdf/practice.urdf
     source install/setup.bash
+    ros2 launch practice_robot_description display.launch.xml
 
 In rvis2 do:
 
     # Fixed Frame: base_footprint or base_link
     # add RobotModel: Description: /robot_description
     # add TF
-    # save .rviz
-    ros2 run rviz2 rviz2 -d (...).rviz
-
+    # save practice.rviz in urdf/
+    ros2 run rviz2 rviz2 -d (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/practice.rviz
+    # or
+    ros2 launch practice_robot_description display.launch_withRvizConfig.xml
 
 ## References:
 - msadowski, "awesome-weekly-robotics" (<a href="https://github.com/msadowski/awesome-weekly-robotics">GitHub</a>)
 - Robotics Back-End, "ROS2 Tutorial - ROS2 Humble 2H50 [Crash Course]" (2022) (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
+- Edouard Renard, "ROS2 for Beginners Level 2 - TF | URDF | RViz | Gazebo" (<a href="https://www.udemy.com/course/ros2-tf-urdf-rviz-gazebo">Udemy</a>)
 
