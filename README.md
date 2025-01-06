@@ -79,13 +79,13 @@ Launch ''practice.urdf'' in rviz2:
     sudo apt install ros-(...)-xacro     # if not installed
     cd ros2_ws2_vis_sim
     mkdir src/
-    colcon build
+    colcon build --symlink-install
     cd src/
     ros2 pkg create practice_robot_description
     cd practice_robot_description
     rm -r include/ src/
     mkdir urdf launch
-    # move in urdf/practice.urdf and launch/display.launch.xml, replac CMakeLists.txt
+    # move in ''urdf/practice.urdf'' and ''launch/display.launch.xml'', replace ''CMakeLists.txt''
     cd ros2_ws2_vis_sim
     colcon build
     file (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/urdf/practice.urdf
@@ -101,6 +101,15 @@ In rvis2 do:
     ros2 run rviz2 rviz2 -d (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/practice.rviz
     # or
     ros2 launch practice_robot_description display.launch_withRvizConfig.xml
+
+Updated with xacro:
+
+    cd ros2_ws2_vis_sim/src/practice_robot_description
+    # move items in ''urdf/'', ''launch/'', and ''mesh/'' accordingly
+    colcon build --symlink-install
+    ros2 launch practice_robot_description display.launch.practice.xacro.xml
+    # or 
+    ros2 launch practice_robot_description display.launch_withRvizConfig.practice.xacro.xml
 
 ## References:
 - msadowski, "awesome-weekly-robotics" (<a href="https://github.com/msadowski/awesome-weekly-robotics">GitHub</a>)
