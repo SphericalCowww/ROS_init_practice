@@ -90,7 +90,7 @@ Launch ''practice.urdf'' in rviz2:
     colcon build
     file (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/urdf/practice.urdf
     source install/setup.bash
-    ros2 launch practice_robot_description display.launch.xml
+    ros2 launch practice_robot_description display.launch.practice.xml
 
 In rvis2 do:
 
@@ -100,7 +100,7 @@ In rvis2 do:
     # save practice.rviz in urdf/
     ros2 run rviz2 rviz2 -d (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/practice.rviz
     # or
-    ros2 launch practice_robot_description display.launch_withRvizConfig.xml
+    ros2 launch practice_robot_description display.launch_withRvizConfig.practice.xml
 
 Updated with xacro:
 
