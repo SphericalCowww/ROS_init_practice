@@ -112,9 +112,14 @@ Updated with xacro:
     ros2 launch practice_robot_description display.launch_withRvizConfig.practice.xacro.xml
     ros2 param get /robot_state_publisher robot_description # to check the parameter value calculated by xacro
 
+Installing gazebo in jazzy:
+
+    sudo apt install ros-jazzy-ros-gz
+    sudo apt install ros-jazzy-joint-state-publisher
+    sudo apt install ros-jazzy-joint-state-publisher-gui
+
 Launch ''practice.gazebo.urdf'' in gazebo:
     
-    sudo apt install ros-<distro>-ros-gz   # only for Gazebo Harmonic on Ubuntu 24.04 and using ROS 2 Jazzy
     cd ros2_ws2_vis_sim/src/practice_robot_description
     # move items in ''urdf/'', ''launch/'', and ''mesh/'' accordingly
     colcon build --symlink-install
