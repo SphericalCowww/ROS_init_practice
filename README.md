@@ -95,7 +95,7 @@ Launch ''practice.urdf'' in rviz2:
 In rvis2 do:
 
     # Fixed Frame: base_footprint or base_link
-    # add RobotModel: Description: /robot_description
+    # add RobotModel: Description Topic: /robot_description
     # add TF
     # save practice.rviz in urdf/
     ros2 run rviz2 rviz2 -d (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/practice.rviz
