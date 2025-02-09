@@ -77,6 +77,8 @@ Finally:
 
     ros2 topic echo /odom # to see if the control is odometry kinematics is correctly updating
     ps -aux | grep gz # notice the servers may still be running even after quitting the program
+
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws2_vis_sim/practice_gazebo_demo.png" width="1000">
     
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 2 - TF | URDF | RViz | Gazebo" (<a href="https://www.udemy.com/course/ros2-tf-urdf-rviz-gazebo">Udemy</a>)
