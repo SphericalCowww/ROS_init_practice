@@ -32,7 +32,7 @@ Service practice:
 
 Actually, the main code is already covered in ''turtle_controller_node.py'', resulting in the trajectory and color change of ''turtlesim'' shown in the following plot:
 
-<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/practice_controller_demo.png" width="400">
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws1_basics/practice_controller_demo.png" width="400">
     
 ## References:
 - Robotics Back-End, "ROS2 Tutorial - ROS2 Humble 2H50 [Crash Course]" (2022) (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
