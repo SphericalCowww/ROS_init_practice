@@ -61,6 +61,9 @@ Launch ''practice.gazebo.urdf'' in gazebo. The kinematics uses the <a href="http
     colcon build --symlink-install
     ros2 launch practice_robot_description display.launch.practice.jazzy.gazebo.xacro.xml
     # to check geometry details within Gazebo: Entity Tree => practice => right click => view
+    # to save the world in an .sdf file: Save world as... => add path => OK
+    # to load the ros2_ws2_vis_sim/src/practice_robot_description/urdf/practice.sdf file at launch:
+    ros2 launch practice_robot_description display.launch_withSDFworld.practice.jazzy.gazebo.xacro.xml 
     
 To issue control through the command line:
 
