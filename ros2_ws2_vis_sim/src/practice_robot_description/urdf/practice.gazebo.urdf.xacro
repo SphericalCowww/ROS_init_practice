@@ -6,8 +6,12 @@
     <xacro:property name="base_x" value="0.6"/>
     <xacro:property name="base_y" value="0.4"/>
     <xacro:property name="base_z" value="0.2"/>
-    <xacro:property name="wheel_height" value="0.1"/>
+    <xacro:property name="wheel_height"    value="0.1"/>
     <xacro:property name="wheel_thickness" value="0.05"/>
+    <xacro:property name="camera_x" value="0.01"/>
+    <xacro:property name="camera_y" value="0.1"/>
+    <xacro:property name="camera_z" value="0.05"/>
+
     <xacro:macro name="gen_box_macro" params="prefix a b c">
         <link name="${prefix}_link">
             <visual>
@@ -38,19 +42,20 @@
                            o_xyz="0 0 ${base_z/2.0}" o_rpy="0 0 0"/>
     </link>
 
+    <!-- -->
     <link name="base_footprint">
         <inertial>
             <mass value="0.001"/>
             <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
         </inertial>
     </link>
-
     <joint name="base_joint" type="fixed">
         <parent link="base_footprint"/>
         <child link="base_link"/>
         <origin xyz="0 0 ${wheel_height}" rpy="0 0 0"/>
     </joint>
 
+    <!-- -->
     <link name="right_wheel_link">
         <visual>
             <geometry>
@@ -68,7 +73,6 @@
         <xacro:cylinder_inertia m="1.0" r="${wheel_height}" l="${wheel_thickness}"
                                 o_xyz="0 0 0" o_rpy="${pi/2.0} 0 0"/>
     </link>
-
     <joint name="base_right_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel_link"/>
@@ -76,6 +80,7 @@
         <axis xyz="0 1 0"/>
     </joint>
 
+    <!-- -->
     <link name="left_wheel_link">
         <visual>
             <geometry>
@@ -93,7 +98,6 @@
         <xacro:cylinder_inertia m="1.0" r="${wheel_height}" l="${wheel_thickness}"
                                 o_xyz="0 0 0" o_rpy="${pi/2.0} 0 0"/>
     </link>
-
     <joint name="base_left_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel_link"/>
@@ -101,6 +105,7 @@
         <axis xyz="0 1 0"/>
     </joint>
 
+    <!-- -->
     <link name="caster_wheel_link">
         <visual>
             <geometry>
@@ -118,7 +123,6 @@
         <xacro:sphere_inertia m="0.5" r="${wheel_height/2.0}" 
                               o_xyz="0 0 0" o_rpy="0 0 0"/>
     </link>
-
     <joint name="base_caster_wheel_joint" type="continuous">
         <parent link="base_link"/>
         <child link="caster_wheel_link"/>
@@ -126,6 +130,29 @@
         <axis xyz="0 1 0"/>
     </joint>
 
+    <!-- -->
+    <link name="camera_link">
+        <visual>
+            <geometry>
+                <box size="${camera_x} ${camera_y} ${camera_z}"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${camera_x} ${camera_y} ${camera_z}"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+        <xacro:box_inertia m="0.1" x="${camera_x}" y="${camera_y}" z="${camera_z}"
+                           o_xyz="0 0 0" o_rpy="0 0 0"/>
+    </link>
+    <joint name="base_camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="camera_link"/>
+        <origin xyz="${(base_x+camera_x)/2.0} 0 ${base_z/2.0}" rpy="0 0 0"/>
+    </joint>
     <!-- ================================================================================================ -->
     
     <!-- friction -->
@@ -169,6 +196,46 @@
         </plugin>
     </gazebo>
 
+    <gazebo reference="camera_link">
+        <sensor name="camera_sensor" type="camera">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <always_on>1</always_on>
+            <update_rate>10</update_rate>
+            <topic>camera/image</topic>
+            <camera>
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>480</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.1</near>
+                    <far>15</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <!-- Noise is sampled independently per pixel on each frame.
+                         That pixel's noise value is added to each of its color
+                         channels, which at that point lie in the range [0,1]. -->
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+                <optical_frame_id>camera_link_optical</optical_frame_id>
+                <camera_info_topic>camera/camera_info</camera_info_topic>
+            </camera>
+        </sensor>
+        <plugin name="libgazebo_ros_camera.so" filename="gazebo_ros::Camera">
+            <frame_name>camera_link</frame_name>
+        </plugin>
+        <!--
+        <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+            <frameName>camera_link</frameName>
+        </plugin>
+        -->
+    </gazebo>
+
     <!-- joint state publisher -->
     <gazebo>
         <plugin
@@ -180,10 +247,3 @@
         </plugin>
     </gazebo>
 </robot>
-
-
-
-
-
-
-
