@@ -51,7 +51,10 @@ Installing gazebo in jazzy. Notice that Jazzy uses "Gazebo Sim (Gazebo Harmonic)
     sudo apt install ros-jazzy-ros-gz
     sudo apt install ros-jazzy-joint-state-publisher
     sudo apt install ros-jazzy-joint-state-publisher-gui
-    sudo apt-get install ros-jazzy-teleop-twist-keyboard
+    sudo apt install ros-jazzy-teleop-twist-keyboard
+    sudo apt install ros-jazzy-ros2-control
+    sudo apt install ros-jazzy-ros2-controllers
+    sudo apt install ros-jazzy-gazebo-ros2-control 
     ros2 pkg list | grep gz
 
 Launch ''diffCart.gazebo.urdf'' in gazebo. The kinematics uses the <a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">differential drive plugin</a>, and the Jazzy format following <a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>:
@@ -82,6 +85,8 @@ Finally:
     ps -aux | grep gz # notice the servers may still be running even after quitting the program
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws2_vis_sim/diffCart_gazebo_demo.png" width="1000">
+
+    ros2 topic pub -1 /set_joint_trajectory trajectory_msgs/msg/JointTrajectory '{header: {frame_id: arm_base_link}, joint_names: [arm_base_forearm_joint, forearm_hand_joint], points: [ {positions: {0.0, 0.0}} ]}'
     
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 2 - TF | URDF | RViz | Gazebo" (<a href="https://www.udemy.com/course/ros2-tf-urdf-rviz-gazebo">Udemy</a>)
