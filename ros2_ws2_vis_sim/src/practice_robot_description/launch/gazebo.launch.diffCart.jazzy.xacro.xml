@@ -1,6 +1,6 @@
 <launch>
     <let name="urdf_path" 
-         value="$(find-pkg-share practice_robot_description)/urdf/practice.gazebo.urdf.xacro"/>
+         value="$(find-pkg-share practice_robot_description)/urdf/diffCart.gazebo.urdf.xacro"/>
     <let name="gazebo_config_path" 
          value="$(find-pkg-share practice_robot_description)/config/gazebo_bridge.yaml"/>
 
@@ -8,7 +8,7 @@
         <arg name="gz_args" value="-r -v -v4 empty.sdf"/>
     </include>
     <node pkg="ros_gz_sim" exec="create" output="screen">
-        <param name="name" value="practice"/>
+        <param name="name" value="diffCart"/>
         <param name="topic" value="robot_description"/>
     </node>
     <node pkg="robot_state_publisher" exec="robot_state_publisher" output="screen">
