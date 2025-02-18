@@ -1,4 +1,4 @@
-# Learning the Robot Operating System 2 (ROS)
+# Learning the Robot Operating System 2 (ROS2)
 
 Installed Xcode with the following:
 
