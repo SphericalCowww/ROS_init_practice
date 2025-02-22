@@ -29,6 +29,10 @@ Common ROS terminal commands:
     ros2 node\topic\service\param list\info\type\hz\echo
     ros2 interface show std_msgs/msg/String
 
+## Terminologies:
+
+* Denavit–Hartenberg (DH) Convention: <a href="https://www.youtube.com/watch?v=rA9tm0gTln8">YouTube</a>
+
 ## References:
 - msadowski, "awesome-weekly-robotics" (<a href="https://github.com/msadowski/awesome-weekly-robotics">GitHub</a>)
 
