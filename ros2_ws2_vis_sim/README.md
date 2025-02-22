@@ -86,10 +86,15 @@ Finally:
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws2_vis_sim/diffCart_gazebo_demo.png" width="1000">
 
-    ros2 topic pub -1 /set_joint_trajectory trajectory_msgs/msg/JointTrajectory '{header: {frame_id: arm_base_link}, joint_names: [arm_base_forearm_joint, forearm_hand_joint], points: [ {positions: {0.0, 0.0}} ]}'
+Additionally, a robot arm with physics is added to the cart:
+
+    ros2 launch practice_robot_description display.launch.diffCartWithArm.jazzy.gazebo.xacro.xml 
+
+However, the controller is missing. For Jazzy, the use of ''ros2_control'' will be required and will need to be updated later for the learning will be quite in-depth; see <a href="https://control.ros.org/jazzy/doc/ros2_control_demos/doc/index.html">Tutorial</a> and <a href="https://www.reddit.com/r/ROS/comments/161s6cv/to_ros2_control_or_to_not_ros2_control/">Reddit</a>.
     
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 2 - TF | URDF | RViz | Gazebo" (<a href="https://www.udemy.com/course/ros2-tf-urdf-rviz-gazebo">Udemy</a>)
 - Open Source Robotics Foundation, "DiffDrive.hh" (<a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">GitHub code</a>)
 - Aleksandar Haber PhD, "Model, Simulate, and Control Differential Drive Robot in ROS2 Jazzy and Gazebo Harmonic from Scratch" (<a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>)
+- ros2_control Development Team, "ros2_control demo", (<a href="https://control.ros.org/jazzy/doc/ros2_control_demos/doc/index.html">Tutorial</a>)
 
