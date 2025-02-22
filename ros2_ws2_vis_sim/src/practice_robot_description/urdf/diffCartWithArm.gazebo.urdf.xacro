@@ -157,14 +157,13 @@
         <origin xyz="${(base_x+camera_x)/2.0} 0 ${base_z/2.0}" rpy="0 0 0"/>
     </joint>
 
-    <!-- arm -->
     <link name="arm_base_link">
         <visual>
             <geometry>
                 <box size="${arm_base_x} ${arm_base_y} ${arm_base_z}"/>
             </geometry>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-            <material name="orange"/>
+            <material name="red"/>
         </visual>
         <collision>
             <geometry>
@@ -178,33 +177,8 @@
     <joint name="base_arm_base_joint" type="fixed">
         <parent link="base_link"/>
         <child link="arm_base_link"/>
-        <origin xyz="${(base_x)/2.0} 0 ${base_z + arm_base_z/2.0}" rpy="0 0 0"/>
+        <origin xyz="${(base_x)/4.0} 0 ${base_z + arm_base_z/2.0}" rpy="0 0 0"/>
     </joint>
-
-    <link name="forearm_link">
-        <visual>
-            <geometry>
-                <cylinder radius="${arm_radius}" length="${arm_length}"/>
-            </geometry>
-            <origin xyz="0 0 ${arm_length/2.0}" rpy="0 0 0"/>
-            <material name="orange"/>
-        </visual>
-        <collision>
-            <geometry>
-                <cylinder radius="${arm_radius}" length="${arm_length}"/>
-            </geometry>
-            <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
-        </collision>
-        <xacro:cylinder_inertia m="0.3" r="${arm_radius}" l="${arm_length}"
-                                o_xyz="0 0 0" o_rpy="0 0 0"/>
-    </link>
-    <joint name="base_arm_forearm_joint" type="revolute">
-        <parent link="base_arm_link"/>
-        <child link="forearm_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
-        <limit lower="0" upper="1.5708" effort="100" velocity="100"/>
-    </joint>    
 
     <link name="forearm_link">
         <visual>
@@ -214,48 +188,98 @@
             <origin xyz="0 0 ${arm_length/2.0}" rpy="0 0 0"/>
             <material name="yellow"/>
         </visual>
-        <!--collision>
+        <collision>
             <geometry>
                 <cylinder radius="${arm_radius}" length="${arm_length}"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
-        </collision-->
+            <origin xyz="0 0 ${arm_length/2.0}" rpy="0 0 0"/>
+        </collision>
         <xacro:cylinder_inertia m="0.3" r="${arm_radius}" l="${arm_length}"
-                                o_xyz="0 0 0" o_rpy="0 0 0"/>
+                                o_xyz="0 0 ${arm_length/2.0}" o_rpy="0 0 0"/>
     </link>
     <joint name="base_arm_forearm_joint" type="revolute">
-        <parent link="base_arm_link"/>
+        <parent link="arm_base_link"/>
         <child link="forearm_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 ${arm_base_z/2.0}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
         <limit lower="0" upper="${pi/2.0}" effort="100" velocity="100"/>
     </joint>
 
-    <!-- -->
     <link name="hand_link">
         <visual>
             <geometry>
                 <cylinder radius="${arm_radius}" length="${arm_length}"/>
             </geometry>
             <origin xyz="0 0 ${arm_length/2.0}" rpy="0 0 0"/>
-            <material name="orange"/>
+            <material name="red"/>
         </visual>
-        <!--collision>
+        <collision>
             <geometry>
                 <cylinder radius="${arm_radius}" length="${arm_length}"/>
             </geometry>
-            <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
-        </collision-->
+            <origin xyz="0 0 ${arm_length/2.0}" rpy="0 0 0"/>
+        </collision>
         <xacro:cylinder_inertia m="0.3" r="${arm_radius}" l="${arm_length}"
-                                o_xyz="0 0 0" o_rpy="0 0 0"/>
+                                o_xyz="0 0 ${arm_length/2.0}" o_rpy="0 0 0"/>
     </link>
     <joint name="forearm_hand_joint" type="revolute">
         <parent link="forearm_link"/>
         <child link="hand_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 ${arm_length}" rpy="0 0 0"/>
         <axis xyz="0 1 0"/>
         <limit lower="0" upper="${pi/2.0}" effort="100" velocity="100"/>
-    </joint>  
+    </joint>
+
+    <link name="finger1_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${arm_radius}" length="${arm_length/5}"/>
+            </geometry>
+            <origin xyz="0 0 ${arm_length/10.0}" rpy="0 0 0"/>
+            <material name="yellow"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${arm_radius}" length="${arm_length/5}"/>
+            </geometry>
+            <origin xyz="0 0 ${arm_length/10.0}" rpy="0 0 0"/>
+        </collision>
+        <xacro:cylinder_inertia m="0.3" r="${arm_radius}" l="${arm_length/5}"
+                                o_xyz="0 0 ${arm_length/10.0}" o_rpy="0 0 0"/>
+    </link>
+    <joint name="hand_finger1_joint" type="revolute">
+        <parent link="hand_link"/>
+        <child link="finger1_link"/>
+        <origin xyz="${arm_radius/2.0} 0 ${arm_length}" rpy="0 ${pi/4.0} 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="0" upper="${pi/2.0}" effort="100" velocity="100"/>
+    </joint>
+
+    <link name="finger2_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${arm_radius}" length="${arm_length/5}"/>
+            </geometry>
+            <origin xyz="0 0 ${arm_length/10.0}" rpy="0 0 0"/>
+            <material name="yellow"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${arm_radius}" length="${arm_length/5}"/>
+            </geometry>
+            <origin xyz="0 0 ${arm_length/10.0}" rpy="0 0 0"/>
+        </collision>
+        <xacro:cylinder_inertia m="0.3" r="${arm_radius}" l="${arm_length/5}"
+                                o_xyz="0 0 ${arm_length/10.0}" o_rpy="0 0 0"/>
+    </link>
+    <joint name="hand_finger2_joint" type="revolute">
+        <parent link="hand_link"/>
+        <child link="finger2_link"/>
+        <origin xyz="${-arm_radius/2.0} 0 ${arm_length}" rpy="0 ${-pi/4.0} 0"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="0" upper="${pi/2.0}" effort="100" velocity="100"/>
+    </joint>
+
     <!-- ================================================================================================ -->
     
     <!-- friction -->
@@ -276,10 +300,16 @@
         <mu2 value="0.1"/>
     </gazebo>
     <gazebo reference="base_arm_forearm_joint">
-        <dynamics friction="0.05" damping="0.1"/>
+        <dynamics friction="0.01" damping="0.1"/>
     </gazebo>
     <gazebo reference="forearm_hand_joint">
-        <dynamics friction="0.05" damping="0.1"/>
+        <dynamics friction="0.01" damping="0.1"/>
+    </gazebo>
+    <gazebo reference="hand_finger1_joint">
+        <dynamics friction="0.01" damping="0.1"/>
+    </gazebo>
+    <gazebo reference="hand_finger2_joint">
+        <dynamics friction="0.01" damping="0.1"/>
     </gazebo>
 
     <!-- https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh -->
@@ -294,7 +324,7 @@
             <wheel_separation>${base_y+wheel_thickness}</wheel_separation>
             <wheel_diameter>${2*wheel_radius}</wheel_diameter>
             <!-- limits -->
-            <max_linear_acceleration>10</max_linear_acceleration>
+            <max_linear_acceleration>20</max_linear_acceleration>
             <!-- topic, frames, and odometry -->
             <topic>cmd_vel</topic>
             <tf_topic>tf</tf_topic>
@@ -353,12 +383,17 @@
             <topic>joint_states</topic>
             <topic_name>base_left_wheel_joint</topic_name>
             <topic_name>base_right_wheel_joint</topic_name>
+            <!--
             <topic_name>base_arm_forearm_joint</topic_name>
             <topic_name>forearm_hand_joint</topic_name>
+            <topic_name>hand_finger1_joint</topic_name>
+            <topic_name>hand_finger2_joint</topic_name>
+            -->
         </plugin>
     </gazebo>
+    
+    <!-- joint pose trajectory, needs to use ros_control in Jazzy -->
 
-    <!-- joint pose trajectory -->
 </robot>
 
 
