@@ -12,7 +12,6 @@ Launch ''diffCart.urdf'' in rviz2:
 
     sudo apt install ros-(...)-xacro     # if not installed
     cd ros2_ws2_vis_sim
-    mkdir src/
     colcon build --symlink-install
     cd src/
     ros2 pkg create practice_robot_description
