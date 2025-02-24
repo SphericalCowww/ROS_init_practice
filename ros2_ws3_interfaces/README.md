@@ -1,39 +1,35 @@
-## Basic turtle controller using ros2 (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
+## Basic interfaces using ros2 (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
 ROS: Robot Operating System
-- node: one run mode of the robot
-- topic: main host code of the robot
-- service: basically helps to change the configuration parameter of the topic
+- topic: the data stream of the robot
+- node: a subcode that runs simultaneously from other nodes; need to start a new window to run each node
+- service: a single usually quick task performed by the topic via running several nodes
+- publisher/subscriber: like receiver/transmitter, messages are broadcast and received asynchronously, ideal for continuous data flow and decoupled communication
+- closed loop system: publisher + subscriber
+- client/server: one-to-one communication where the client waits for a response from the server, ideal for interactions that require a direct reply
+- action: a state machine with feedbacks and conditions that tries to achieve a task goal with success or failure. Recommended using client/server
 
-- publisher: transmitter
-- subscriber: receiver
-- closed loop system: transmitter + receiver
+Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be capitalized):
 
-Node practice:
-
-    cd .../ROS_init_practice/
+    sudo apt install ros-(...)-xacro     # if not installed
+    mv ros2_ws3_interfaces ros2_ws3_interfaces_
+    mkdir ros2_ws3_interfaces
+    cd ros2_ws3_interfaces
+    mkdir src
     colcon build --symlink-install
-    ros2 run practice_controller test_node
-
-Publisher, subscriber, closed-loop system practice with ''turtlesim'' topic:
-
-    ros2 run turtlesim turtlesim_node 
-    ros2 run turtlesim turtle_teleop_key
-    ros2 run practice_controller turtle_move_cycle_node 
-    ros2 topic echo /turtle1/cmd_vel
-    ros2 run practice_controller turtle_read_pose_node 
-    ros2 run practice_controller turtle_controller_node
+    cd src/
+    ros2 pkg create practice_robot_interfaces
+    ros2 pkg create action_scripts --build-type ament_python --dependencies rclpy practice_robot_interfaces
+    cd ..
+    # move everything from ros2_ws3_interfaces_ to ros2_ws3_interfaces
+    colcon build --packages-select practice_robot_interfaces
+    colcon build --packages-select action_scripts --symlink-install
+    source install/setup.bash
     
-Service practice:
+    ros2 interface show practice_robot_interfaces/action/CountUntil
+    ros2 run action_scripts CountUntil_server 
+    ros2 run action_scripts CountUntil_client                            # in a separate winder
 
-    ros2 service list
-    ros2 service type /clear
-    ros2 service call /clear std_srvs/srv/Empty 
-    ros2 topic hz /turtle1/pose
 
-Actually, the main code is already covered in ''turtle_controller_node.py'', resulting in the trajectory and color change of ''turtlesim'' shown in the following plot:
-
-<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws1_basics/practice_controller_demo.png" width="400">
-    
 ## References:
-- Robotics Back-End, "ROS2 Tutorial - ROS2 Humble 2H50 [Crash Course]" (2022) (<a href="https://www.youtube.com/watch?v=Gg25GfA456o">YouTube</a>)
+- Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
 
