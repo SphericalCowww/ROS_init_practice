@@ -31,8 +31,14 @@ Common ROS terminal commands:
 
 ## Terminologies:
 
-* Denavit–Hartenberg (DH) Convention: <a href="https://www.youtube.com/watch?v=rA9tm0gTln8">YouTube</a>
+- high level:
+    * determine end-effector trajectory using control theory with variational method/functional analysis/Lagrange multiplier (<a href="https://www.amazon.de/-/en/Donald-Kirk-ebook/dp/B00CWR4MX0">book</a>)
+- low level:
+    * solving end-effector link/joint configuration using inverse kinematic algorithm (<a href="https://www.amazon.de/-/en/Bruno-Siciliano-ebook/dp/B007IDTLL6">book</a>)
+    * Denavit–Hartenberg (DH) Convention: <a href="https://www.youtube.com/watch?v=rA9tm0gTln8">YouTube</a>
 
 ## References:
 - msadowski, "awesome-weekly-robotics" (<a href="https://github.com/msadowski/awesome-weekly-robotics">GitHub</a>)
+- D. E. Kirk, "Optimal Control Theory: An Introduction" (1998) (<a href="https://www.amazon.de/-/en/Donald-Kirk-ebook/dp/B00CWR4MX0">book</a>)
+- B. Siciliano, L. Sciavicco, L. Villani, G. Oriolo, "Robotics: Modelling, Planning and Control (2012)" (<a href="https://www.amazon.de/-/en/Bruno-Siciliano-ebook/dp/B007IDTLL6">book</a>)
 
