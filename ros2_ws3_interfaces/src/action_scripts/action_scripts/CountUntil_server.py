@@ -28,9 +28,12 @@ class CountUntil_serverNode(Node):
         target_number       = goal_handle.request.target_number
         wait_time_per_count = goal_handle.request.wait_time_per_count
         self.get_logger().info("CountUntil_serverNode: executing the goal")
+        feedback = CountUntil.Feedback()
         local_counter = 0
         for counterIdx in range(target_number):
             local_counter += 1
+            feedback.current_number = local_counter
+            goal_handle.publish_feedback(feedback)
             self.get_logger().info("CountUntil_serverNode: counting: "+str(local_counter))
             time.sleep(wait_time_per_count)
         goal_handle.succeed()

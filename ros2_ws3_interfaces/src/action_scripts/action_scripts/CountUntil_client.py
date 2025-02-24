@@ -2,7 +2,7 @@
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
-from rclpy.action.client import ClientGoalHandle
+from rclpy.action.client import ClientGoalHandle, GoalStatus
 from practice_robot_interfaces.action import CountUntil
 
 #####################################################################################################
@@ -22,7 +22,7 @@ class CountUntil_serverNode(Node):
 
         self.get_logger().info("CountUntil_clientNode: sending goal")
         # without async, only send after spin finishes; async is a python future object
-        self.count_until_client_.send_goal_async(goal)\
+        self.count_until_client_.send_goal_async(goal, feedback_callback=self.goal_feedback_callback)\
                                 .add_done_callback(self.goal_response_callback)
     def goal_response_callback(self, futureObj):
         self.goal_handle_ : ClientGoalHandle = futureObj.result()
@@ -33,10 +33,17 @@ class CountUntil_serverNode(Node):
         else:
             self.get_logger().warn("CountUntil_clientNode: goal rejected")
     def goal_result_callback(self, futureObj):
+        status = futureObj.result().status
         result = futureObj.result().result
+        if status == GoalStatus.STATUS_SUCCEEDED:
+            self.get_logger().info("CountUntil_clientNode: goal succeeded")
+        elif status == GoalStatus.STATUS_ABORTED:
+            self.get_logger().error("CountUntil_clientNode: goal aborted")
         self.get_logger().info("CountUntil_clientNode: receiving result: "+\
                                str(result.reached_number))
-        
+    def goal_feedback_callback(self, feedback_msg):
+        self.get_logger().info("CountUntil_clientNode: receiving feedback: "+\
+                               str(feedback_msg.feedback.current_number)) 
 #####################################################################################################
 def main(args=None):
     rclpy.init(args=args)
