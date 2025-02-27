@@ -9,11 +9,11 @@ from practice_robot_interfaces.action import CountUntil
 class CountUntil_serverNode(Node):
     def __init__(self):
         super().__init__("CountUntil_client")
+        self.goal_handle_ = None
         self.count_until_client_ = ActionClient(\
             self,\
             CountUntil,\
             "count_until") #NOTE: must be the same name as server
-        self.goal_handle_ = None
         self.get_logger().info("CountUntil_clientNode: action client has been started")
     def send_goal(self, target_number, wait_time_per_count):
         self.count_until_client_.wait_for_server()
@@ -26,7 +26,7 @@ class CountUntil_serverNode(Node):
         self.count_until_client_.send_goal_async(goal,feedback_callback=self.goal_feedback_callback)\
                                 .add_done_callback(self.goal_response_callback)
 
-        self.timer_ = self.create_timer(2.0, self.cancel_goal)
+        self.timer_ = self.create_timer(5.0, self.cancel_goal)
     def cancel_goal(self):
         self.get_logger().info("CountUntil_clientNode: sending cancel request")
         self.goal_handle_.cancel_goal_async()
