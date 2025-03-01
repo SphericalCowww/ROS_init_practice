@@ -17,10 +17,10 @@ class CountUntil_serverNode(Node):
         self.goal_handle_: ServerGoalHandle = None
         self.goal_lock_  = threading.Lock()
         self.goal_queue_ = []
-        self.count_until_server_ = ActionServer(\
+        self.CountUntil_server_ = ActionServer(\
             self,\
             CountUntil,\
-            "count_until",\
+            "CountUntil",\
             goal_callback            = self.goal_callback,\
             handle_accepted_callback = self.handle_accepted_callback,\
             execute_callback         = self.execute_callback,\

@@ -21,7 +21,9 @@ setup(
     entry_points={
         'console_scripts': [
             "CountUntil_server = action_scripts.CountUntil_server:main",
-            "CountUntil_client = action_scripts.CountUntil_client:main"
+            "CountUntil_client = action_scripts.CountUntil_client:main",
+            "MoveDist_server = action_scripts.MoveDist_server:main",
+            "MoveDist_client = action_scripts.MoveDist_client:main",
         ],
     },
 )

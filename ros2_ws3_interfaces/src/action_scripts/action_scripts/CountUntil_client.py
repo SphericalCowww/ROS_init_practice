@@ -11,19 +11,19 @@ class CountUntil_clientNode(Node):
         rclpy.init()
         super().__init__("CountUntil_client")
         self.goal_handle_ = None
-        self.count_until_client_ = ActionClient(\
+        self.CountUntil_client_ = ActionClient(\
             self,\
             CountUntil,\
-            "count_until") ### NOTE: must be the same name as server
+            "CountUntil") ### NOTE: must be the same name as server
         self.get_logger().info("CountUntil_clientNode: action client has been started")
     def send_goal(self, target_number, wait_time_per_count):
-        self.count_until_client_.wait_for_server()
+        self.CountUntil_client_.wait_for_server()
         goal                     = CountUntil.Goal()
         goal.target_number       = target_number
         goal.wait_time_per_count = wait_time_per_count
         self.get_logger().info("CountUntil_clientNode: sending goal")
-        self.count_until_client_.send_goal_async(goal, feedback_callback=self.goal_feedback_callback)\
-                                .add_done_callback(self.goal_response_callback)
+        self.CountUntil_client_.send_goal_async(goal, feedback_callback=self.goal_feedback_callback)\
+                               .add_done_callback(self.goal_response_callback)
         #self.timer_ = self.create_timer(5.0, self.cancel_goal)             ### for test cancel
     def goal_feedback_callback(self, feedback_msg):
         self.get_logger().info("CountUntil_clientNode: receiving feedback: "+str(feedback_msg.feedback.current_number))
@@ -48,6 +48,7 @@ class CountUntil_clientNode(Node):
         self.get_logger().info("CountUntil_clientNode: sending cancel request")
         self.goal_handle_.cancel_goal_async()
         #self.timer_.cancel()                                               ### for test cancel
+        rclpy.shutdown()
 #######################################################################################################################
 def main():
     node = CountUntil_clientNode()

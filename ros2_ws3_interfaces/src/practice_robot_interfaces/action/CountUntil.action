@@ -2,10 +2,10 @@
 int64 target_number
 float64 wait_time_per_count
 ---
-# Feedback()
-int64 current_number
----
 # Result()
 int64 reached_number
+---
+# Feedback()
+int64 current_number
 
 
