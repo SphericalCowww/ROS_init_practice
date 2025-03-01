@@ -2,6 +2,7 @@
 import rclpy
 import time
 import threading
+import numpy as np
 from rclpy.node import Node
 from rclpy.action import ActionServer, GoalResponse, CancelResponse
 from rclpy.action.server import ServerGoalHandle
@@ -63,6 +64,8 @@ class CountUntil_serverNode(Node):
         resultVars   = CountUntil.Result()                          ### object of Result() varaiables
 
         self.get_logger().info("CountUntil_serverNode: executing the goal")
+        self.get_logger().info("goal id: "+str("".join([str(hex(val)).replace("0x", "")\
+                                               for val in goal_handle.goal_id.uuid])))
         local_counter = 0
         for counterIdx in range(goalVars.target_number):
             if goal_handle.is_active == False:
@@ -101,7 +104,7 @@ class CountUntil_serverNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = CountUntil_serverNode()
-    rclpy.spin(node, MultiThreadedExecutor())
+    rclpy.spin(node, MultiThreadedExecutor())       # basically while 1==1
     rclpy.shutdown()
 
 

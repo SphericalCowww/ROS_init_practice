@@ -8,6 +8,7 @@ from practice_robot_interfaces.action import CountUntil
 #######################################################################################################################
 class CountUntil_clientNode(Node):
     def __init__(self):
+        rclpy.init()
         super().__init__("CountUntil_client")
         self.goal_handle_ = None
         self.count_until_client_ = ActionClient(\
@@ -20,7 +21,6 @@ class CountUntil_clientNode(Node):
         goal                     = CountUntil.Goal()
         goal.target_number       = target_number
         goal.wait_time_per_count = wait_time_per_count
-
         self.get_logger().info("CountUntil_clientNode: sending goal")
         self.count_until_client_.send_goal_async(goal, feedback_callback=self.goal_feedback_callback)\
                                 .add_done_callback(self.goal_response_callback)
@@ -29,10 +29,11 @@ class CountUntil_clientNode(Node):
         self.get_logger().info("CountUntil_clientNode: receiving feedback: "+str(feedback_msg.feedback.current_number))
     def goal_response_callback(self, futureObj):
         self.goal_handle_:ClientGoalHandle = futureObj.result()
+        self.get_logger().info("goal id: "+str("".join([str(hex(val)).replace("0x", "")\
+                                                        for val in self.goal_handle_.goal_id.uuid])))
         if self.goal_handle_.accepted:
             self.get_logger().info("CountUntil_clientNode: goal accepted")
-            self.goal_handle_.get_result_async()\
-                             .add_done_callback(self.goal_result_callback)
+            self.goal_handle_.get_result_async().add_done_callback(self.goal_result_callback)
         else:
             self.get_logger().warn("CountUntil_clientNode: goal rejected")
     def goal_result_callback(self, futureObj):
@@ -42,18 +43,16 @@ class CountUntil_clientNode(Node):
         elif status == GoalStatus.STATUS_ABORTED:   self.get_logger().error("CountUntil_clientNode: goal aborted")
         elif status == GoalStatus.STATUS_CANCELED:  self.get_logger().error("CountUntil_clientNode: goal canceled")
         self.get_logger().info("CountUntil_clientNode: receiving result: "+str(result.reached_number))
+        rclpy.shutdown()
     def cancel_goal(self):
         self.get_logger().info("CountUntil_clientNode: sending cancel request")
         self.goal_handle_.cancel_goal_async()
         #self.timer_.cancel()                                               ### for test cancel
 #######################################################################################################################
-def main(args=None):
-    rclpy.init(args=args)
+def main():
     node = CountUntil_clientNode()
     node.send_goal(10, 1.0)             # client sending goal request to server
-    rclpy.spin(node)                    # basically while 1==1
-    rclpy.shutdown()
-
+    rclpy.spin(node)
 #######################################################################################################################
 if __name__ == "__main__": main()
 
