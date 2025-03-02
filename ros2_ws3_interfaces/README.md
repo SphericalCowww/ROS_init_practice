@@ -51,9 +51,25 @@ Run the CountUntil action scripts (see <a href="https://docs.ros2.org/foxy/api/r
     # or in command line client node
     ros2 action send_goal /CountUntil practice_robot_interfaces/action/CountUntil "{target_number: 4, wait_time_per_count: 2}" --feedback 
 
+Similarly, run the MoveDist action scripts:
+
     ros2 run action_scripts MoveDist_server 
     ros2 run action_scripts MoveDist_client 76 2
     ros2 run action_scripts MoveDist_client 0 0
+
+Note that in ``../ROS_init_practice/ros2_ws3_interfaces/src/practice_robot_interfaces/action``, there are 3 types of variables in the action server:
+
+| type | IO in code | description | 
+| - | - | - |
+| Goal | ServerGoalHandle.request | The ServerGoalHandle manages the state transitions of a goal, such as accepting, executing, succeeding, aborting, or canceling a goal. It ensures that each goal progresses through its lifecycle in a controlled manner. |
+| Result | return parameter of ActionServer.execute_callback() | Upon completion of a goal, the ServerGoalHandle facilitates sending the final result back to the client, indicating the outcome of the action. |
+| Feedback | ServerGoalHandle.publish_feedback() | It provides the publish_feedback() method, allowing the action server to send feedback to the client about the ongoing goal execution. This enables clients to receive real-time updates on the progress of their requested actions. |
+
+From the server side, there are 2 ways to handle multiple callbacks/goals: linearly by ``MutuallyExclusiveCallbackGroup`` and in parallel by ''ReentrantCallbackGroup''. Watch out for the difference between the global ``ServerGoalHandle self.goal_handle_`` and the local ``ServerGoalHandle goal_handle``; they will be different when the server has multiple goals to handle.
+
+From the client side, the ''send_goal_async'', ensures sending goals while spinning. The return object is a python ``concurrent.futures`` object (see <a href="https://www.youtube.com/watch?v=SAueUTQNup8">YouTube</a>).
+
+Finally, there is a major structure difference between how the server and client codes use threads. For server, it directly has callback functions as input parameters, and uses ``ReentrantCallbackGroup()`` and ``threading.Lock()`` to pass down the callbacks. For client, it initializes callback functions via ''send_goal_async()'', and uses ``concurrent.futures`` and ``add_done_callback()`` to pass down the callbacks.
 
 ### lifecycle practice
 
