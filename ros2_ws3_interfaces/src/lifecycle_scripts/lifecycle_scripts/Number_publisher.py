@@ -29,6 +29,7 @@ class Number_publisherNode(LifecycleNode):
         return super().on_activate(statePre)
     def on_deactivate(self, statePre: LifecycleState):
         self.get_logger().info("Number_publisherNode: deactivating")
+        self.number_timer_.cancel()
         return super().on_deactivate(statePre)
     def on_shutdown(self, statePre: LifecycleState):
         self.get_logger().info("Number_publisherNode: shutting down")
