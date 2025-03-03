@@ -36,6 +36,7 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     colcon build --symlink-install
     cd src/
     ros2 pkg create practice_robot_interfaces
+    ros2 pkg create lifecycle_scripts --build-type ament_python --dependencies rclpy practice_robot_interfaces
     ros2 pkg create action_scripts --build-type ament_python --dependencies rclpy practice_robot_interfaces
     cd ..
     # move everything from ros2_ws3_interfaces_ to ros2_ws3_interfaces
