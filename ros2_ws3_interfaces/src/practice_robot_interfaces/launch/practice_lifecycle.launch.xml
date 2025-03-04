@@ -1,0 +1,7 @@
+<launch>
+    <let name="node_name" value="Number_publisher"/>
+    <node pkg="lifecycle_scripts", exec="Number_publisher" name="$(var node_name)">
+    <node pkg="lifecycle_scripts", exec="lifecycleNode_manager"> 
+        <param name="lifecycleNode_manager" value="$(var node_name)"/>
+    </node>
+</launch>
