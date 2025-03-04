@@ -74,11 +74,17 @@ Finally, there is a major structure difference between how the server and client
 
 ### lifecycle practice
 
-    ros2 run lifecycle lifecycle_scripts
+Similarly, run the Number lifecycle script:
+
+    ros2 run lifecycle_scripts Number_publisher
     ros2 lifecycle nodes
     ros2 lifecycle list /Number_publisher
     ros2 lifecycle get /Number_publisher
     ros2 lifecycle set /Number_publisher configure/activate/deactivate/cleanup/shutdown
+    ros2 topic list
+    # at the activate state
+    ros2 topic echo /number
+    # while transitioning
     ros2 topic echo /Number_publisher/transition_event
 
     ros2 service list
