@@ -18,6 +18,8 @@ class Number_publisherNode(LifecycleNode):
         self.number_publisher_ = self.create_lifecycle_publisher(Int64, "number", 10)
         self.number_timer_     = self.create_timer(1.0/self.publish_frequency_, self.publish_number)
         self.number_timer_.cancel()
+        #raise Exception()                               # for testing on_error()
+        #return TransitionCallbackReturn.FAILURE         # for testing on_error()
         return TransitionCallbackReturn.SUCCESS
     def on_cleanup(self, statePre: LifecycleState):
         self.get_logger().info("Number_publisherNode: cleaning up")
@@ -39,7 +41,7 @@ class Number_publisherNode(LifecycleNode):
         ### sent here by TransitionCallbackReturn.ERROR/.FAILURE, or raise Exeception()
         self.get_logger().info("Number_publisherNode: deadly error occured, shutting down")
         self.cleanup_()
-        return TransitionCallbackReturn.SUCCESS
+        return TransitionCallbackReturn.FAILURE
     def cleanup_(self):
         self.destroy_lifecycle_publisher(self.number_publisher_)
         self.destroy_lifecycle_timer(    self.number_timer_)
