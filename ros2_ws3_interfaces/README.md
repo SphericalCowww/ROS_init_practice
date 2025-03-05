@@ -74,7 +74,7 @@ Finally, there is a major structure difference between how the server and client
 
 ### lifecycle practice
 
-Similarly, run the Number lifecycle script:
+Similarly, run the Number lifecycle script through ``lifecycle`` command lines:
 
     ros2 run lifecycle_scripts Number_publisher
     ros2 lifecycle nodes
@@ -87,13 +87,20 @@ Similarly, run the Number lifecycle script:
     # while transitioning
     ros2 topic echo /Number_publisher/transition_event
 
+Or it can be run with ``service`` command lines:
+
     ros2 service list
     ros2 service type /Number_publisher/get_state
-    ros2 service type /Number_publisher/get_state
     ros2 interface show lifecycle_msgs/srv/GetState
+    ros2 service call /Number_publisher/get_state lifecycle_msgs/srv/GetState 
     ros2 service type /Number_publisher/change_state
     ros2 interface show lifecycle_msgs/srv/ChangeState
-    ros2 service call  /Number_publisher/change_state lifecycle_msgs/srv/ChangeState “{transition:{id: 1, label: ‘configure’}}”
+    ros2 service call /Number_publisher/change_state lifecycle_msgs/srv/ChangeState
+    ros2 service call /Number_publisher/change_state lifecycle_msgs/srv/ChangeState "{transition: {id: 1, label: 'configure'}}"
+
+Or it can be run with a Python script specifically written in ``lifecycle_scripts/Number_client.py``:
+    
+    ros2 run lifecycle_scripts Number_client --ros-args -p managed_node_name:="Number_publisher"
 
     colcon build --symlink-install
     ros2 launch practice_robot_interfaces practice_lifecycle.launch.xml
