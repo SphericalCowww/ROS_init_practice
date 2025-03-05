@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "Number_publisher = lifecycle_scripts.Number_publisher:main",
+            "Number_publisher = lifecycle_scripts.Number_publisher: main",
+            "Number_client    = lifecycle_scripts.Number_client:    main"
         ],
     },
 )
