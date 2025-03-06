@@ -70,7 +70,7 @@ From the server side, there are 2 ways to handle multiple callbacks/goals: linea
 
 From the client side, the ''send_goal_async'', ensures sending goals while spinning. The return object is a python ``concurrent.futures`` object (see <a href="https://www.youtube.com/watch?v=SAueUTQNup8">YouTube</a>).
 
-Finally, there is a major structure difference between how the server and client codes use threads. For server, it directly has callback functions as input parameters, and uses ``ReentrantCallbackGroup()`` and ``threading.Lock()`` to pass down the callbacks. For client, it initializes callback functions via ''send_goal_async()'', and uses ``concurrent.futures`` and ``add_done_callback()`` to pass down the callbacks.
+Finally, there is a major structure difference between how the server and client codes use threads. For the server, it directly has callback functions as input parameters, which uses ``ReentrantCallbackGroup()`` and ``threading.Lock()`` to pass down the callbacks. For the client, it initializes callback functions via ''send_goal_async()'', which uses ``concurrent.futures`` and ``add_done_callback()`` to pass down the callbacks.
 
 ### lifecycle practice
 
@@ -102,7 +102,7 @@ Or it can be run with a Python script specifically written in ``lifecycle_script
     
     ros2 run lifecycle_scripts Number_client --ros-args -p managed_node_name:="Number_publisher"
 
-Or is the launch files at ``practice_robot_interfaces/launch``:
+Or use the launch files at ``practice_robot_interfaces/launch``:
 
     ros2 launch practice_robot_interfaces practice_lifecycle.launch.xml
     ros2 launch practice_robot_interfaces practice_lifecycle.launch.py
