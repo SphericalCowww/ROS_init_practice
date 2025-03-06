@@ -102,7 +102,8 @@ Or it can be run with a Python script specifically written in ``lifecycle_script
     
     ros2 run lifecycle_scripts Number_client --ros-args -p managed_node_name:="Number_publisher"
 
-    colcon build --symlink-install
+Or is the launch files at ``practice_robot_interfaces/launch``:
+
     ros2 launch practice_robot_interfaces practice_lifecycle.launch.xml
     ros2 launch practice_robot_interfaces practice_lifecycle.launch.py
 
