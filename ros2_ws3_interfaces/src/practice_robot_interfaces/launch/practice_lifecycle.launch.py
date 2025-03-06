@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from laucn_ros.actions import Node LifecycleNode
+from launch_ros.actions import Node, LifecycleNode
 
 def generate_launch_description():
     node_name = "Number_publisher"
@@ -12,17 +12,17 @@ def generate_launch_description():
         namespace="",
     )
 
-    lifecycleNode_manager = Node(
-        package="lifecycle_script",
-        executable="lifecycleNode_manager",
+    Number_clientNode = Node(
+        package="lifecycle_scripts",
+        executable="Number_client",
         parameters = [
-            {"lifecycleNode_manager": node_name}
+            {"managed_node_name": node_name}
         ]
     )
 
-    launchDesc.add_acction(Number_publisherNode)
-    launchDesc.add_acction(lifecycleNode_manager)
-    return ld
+    launchDesc.add_action(Number_publisherNode)
+    launchDesc.add_action(Number_clientNode)
+    return launchDesc
 
 
 
