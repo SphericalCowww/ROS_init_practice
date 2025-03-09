@@ -107,6 +107,13 @@ Or use the launch files at ``robot_interfaces/launch``:
     ros2 launch robot_interfaces practice_lifecycle.launch.xml
     ros2 launch robot_interfaces practice_lifecycle.launch.py
 
+Similarly, run the MoveDist action scripts:
+
+    ros2 run lifecycle_scripts MoveDist_lifecycle                          # in a separate window
+    ros2 lifecycle set /MoveDist_lifecycleNode configure
+    ros2 lifecycle set /MoveDist_lifecycleNode activate
+    ros2 run action_scripts CountUntil_client
+    
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
 - rclpy developers, "Actions" (<a href="https://docs.ros2.org/foxy/api/rclpy/api/actions.html#module-rclpy.action.server">webpage</a>)
