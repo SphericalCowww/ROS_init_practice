@@ -33,15 +33,15 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     mkdir ros2_ws3_interfaces
     cd ros2_ws3_interfaces
     mkdir src
-    colcon build --symlink-install
+    colcon build
     cd src/
-    ros2 pkg create practice_robot_interfaces
-    ros2 pkg create action_scripts --build-type ament_python --dependencies rclpy practice_robot_interfaces
-    ros2 pkg create lifecycle_scripts --build-type ament_python --dependencies rclpy practice_robot_interfaces
+    ros2 pkg create robot_interfaces
+    ros2 pkg create robot_descriptions
+    ros2 pkg create action_scripts --build-type ament_python --dependencies rclpy robot_interfaces
+    ros2 pkg create lifecycle_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     cd ..
     # move everything from ros2_ws3_interfaces_ to ros2_ws3_interfaces
-    colcon build --packages-select practice_robot_interfaces
-    colcon build --packages-select action_scripts --symlink-install
+    colcon build --symlink-install
     source install/setup.bash
 
 Run the CountUntil action scripts (see <a href="https://docs.ros2.org/foxy/api/rclpy/api/actions.html#module-rclpy.action.server">webpage</a> for available functions for Action Client/Server):
