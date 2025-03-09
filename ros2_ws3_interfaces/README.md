@@ -5,7 +5,7 @@
 | topic | the data stream of the robot | 
 | node | a subcode that runs simultaneously from other nodes; need to start a new window to run each node |
 | service | a single usually quick task performed by the topic via running several nodes |
-| publisher/subscriber | like receiver/transmitter, messages are broadcast and received asynchronously, ideal for continuous data flow and decoupled communication |
+| publisher/subscriber | like transmitter/receiver, messages are broadcast and received asynchronously, ideal for continuous data flow and decoupled communication |
 | closed loop system | publisher + subscriber |
 | client/server | one-to-one communication where the client waits for a response from the server, ideal for interactions that require a direct reply |
 | state | condition of the system at a specific time; this condition can be in infinite loop until triggered |
