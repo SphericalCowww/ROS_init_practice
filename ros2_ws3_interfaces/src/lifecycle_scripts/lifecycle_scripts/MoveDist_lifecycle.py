@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import time
-import threading
-import numpy as np
 import rclpy
+from rclpy.lifecycle import LifecycleNode
+from rclpy.lifecycle.node import LifecycleState, TransitionCallbackReturn
 from rclpy.node import Node
 from rclpy.action import ActionServer, GoalResponse, CancelResponse
 from rclpy.action.server import ServerGoalHandle
@@ -11,12 +11,16 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 from practice_robot_interfaces.action import MoveDist
 
 #######################################################################################################################
-class MoveDist_serverNode(Node):
+class MoveDist_lifecycleNode(LifecycleNode):
     def __init__(self):
-        super().__init__("MoveDist_server")
-        self.goal_handle_: ServerGoalHandle = None
-        self.goal_lock_  = threading.Lock()
-        self.current_position_ = 50
+        super().__init__("MoveDist_lifecycleNode")
+        self.get_logger().info("MoveDist_lifecycleNode: initializing")
+        self.goal_lock_ = threading.Lock()
+        
+        self.cleanup_()
+        self.current_position_              = 50        
+    def on_configure(self, statePre: LifecycleState):
+        self.get_logger().info("MoveDist_lifecycleNode: configuring")
         self.MoveDist_server_ = ActionServer(\
             self,\
             MoveDist,\
@@ -26,7 +30,33 @@ class MoveDist_serverNode(Node):
             execute_callback         = self.execute_callback,\
             cancel_callback          = self.cancel_callback,\
             callback_group           = ReentrantCallbackGroup())
-        self.get_logger().info("MoveDist_serverNode: action server has been started")
+        return TransitionCallbackReturn.SUCCESS
+    def on_cleanup(self, statePre: LifecycleState):
+        self.get_logger().info("MoveDist_lifecycleNode: cleaning up")
+        self.cleanup_()
+        return TransitionCallbackReturn.SUCCESS
+    def on_activate(self, statePre: LifecycleState):
+        self.get_logger().info("MoveDist_lifecycleNode: activating")
+        self.activated = True
+        return super().on_activate(statePre)
+    def on_deactivate(self, statePre: LifecycleState):
+        self.get_logger().info("MoveDist_lifecycleNode: deactivating")
+        self.activated = False
+        return super().on_deactivate(statePre)
+    def on_shutdown(self, statePre: LifecycleState):
+        self.get_logger().info("MoveDist_lifecycleNode: shutting down")
+        self.cleanup_()
+        return TransitionCallbackReturn.SUCCESS
+    def on_error(self, statePre: LifecycleState):
+        self.get_logger().info("MoveDist_lifecycleNode: deadly error occured, shutting down")
+        self.cleanup_()
+        return TransitionCallbackReturn.FAILURE
+    def cleanup_(self):
+        self.activated = False
+        if self.action_server is not None: self.MoveDist_server_.destroy()
+        self.MoveDist_server_               = None
+        self.goal_handle_: ServerGoalHandle = None
+    ###################################################################################################################
     def goal_callback(self, goal:MoveDist.Goal):
         self.get_logger().info("MoveDist_serverNode: goal received")
         if (goal.target_position < 0) or (100 < goal.target_position):
@@ -86,15 +116,27 @@ class MoveDist_serverNode(Node):
 #######################################################################################################################
 def main(args=None):
     rclpy.init(args=args)
-    node = MoveDist_serverNode()
-    rclpy.spin(node, MultiThreadedExecutor()) 
+    node = MoveDist_lifecycleNode()
+    rclpy.spin(node, MultiThreadedExecutor())
     rclpy.shutdown()
-
-
-
-
-
 
 #######################################################################################################################
 if __name__ == "__main__": main()
+
+class ActionServerNode(Node):
+...
+class lifecycleNode(Node):
+    def __init__(self):
+        ...
+    def on_configure():
+        self.action_node_ = ActionServerNode()
+        ...
+    def on_activate():
+        rclpy.spin(self.action_node_)
+    ...
+def main(args=None):
+    rclpy.init(args=args)
+    node = lifecycleNode()
+    rclpy.spin(node)
+    rclpy.shutdown()
 
