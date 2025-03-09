@@ -8,7 +8,7 @@ from rclpy.action import ActionServer, GoalResponse, CancelResponse
 from rclpy.action.server import ServerGoalHandle
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.callback_groups import ReentrantCallbackGroup
-from practice_robot_interfaces.action import MoveDist
+from robot_interfaces.action import MoveDist
 
 #######################################################################################################################
 class MoveDist_serverNode(Node):

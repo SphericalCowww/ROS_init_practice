@@ -8,7 +8,7 @@ from rclpy.action import ActionServer, GoalResponse, CancelResponse
 from rclpy.action.server import ServerGoalHandle
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.callback_groups import ReentrantCallbackGroup
-from practice_robot_interfaces.action import MoveDist
+from robot_interfaces.action import MoveDist
 
 #######################################################################################################################
 class MoveDist_lifecycleNode(LifecycleNode):
@@ -123,20 +123,7 @@ def main(args=None):
 #######################################################################################################################
 if __name__ == "__main__": main()
 
-class ActionServerNode(Node):
-...
-class lifecycleNode(Node):
-    def __init__(self):
-        ...
-    def on_configure():
-        self.action_node_ = ActionServerNode()
-        ...
-    def on_activate():
-        rclpy.spin(self.action_node_)
-    ...
-def main(args=None):
-    rclpy.init(args=args)
-    node = lifecycleNode()
-    rclpy.spin(node)
-    rclpy.shutdown()
+
+
+
 

@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
 from rclpy.action.client import ClientGoalHandle, GoalStatus
-from practice_robot_interfaces.action import CountUntil
+from robot_interfaces.action import CountUntil
 
 #######################################################################################################################
 class CountUntil_clientNode(Node):

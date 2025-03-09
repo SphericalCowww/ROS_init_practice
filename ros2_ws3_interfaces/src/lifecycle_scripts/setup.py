@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             "Number_publisher = lifecycle_scripts.Number_publisher: main",
-            "Number_client    = lifecycle_scripts.Number_client:    main"
+            "Number_client    = lifecycle_scripts.Number_client:    main",
+            "MoveDist_lifecycle = lifecycle_scripts.MoveDist_lifecycle: main"
         ],
     },
 )
