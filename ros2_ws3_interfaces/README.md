@@ -46,11 +46,11 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
 
 Run the CountUntil action scripts (see <a href="https://docs.ros2.org/foxy/api/rclpy/api/actions.html#module-rclpy.action.server">webpage</a> for available functions for Action Client/Server):
     
-    ros2 interface show practice_robot_interfaces/action/CountUntil
+    ros2 interface show robot_interfaces/action/CountUntil
     ros2 run action_scripts CountUntil_server 
     ros2 run action_scripts CountUntil_client                            # in a separate window
     # or in command line client node
-    ros2 action send_goal /CountUntil practice_robot_interfaces/action/CountUntil "{target_number: 4, wait_time_per_count: 2}" --feedback 
+    ros2 action send_goal /CountUntil robot_interfaces/action/CountUntil "{target_number: 4, wait_time_per_count: 2}" --feedback 
 
 Similarly, run the MoveDist action scripts:
 
@@ -58,7 +58,7 @@ Similarly, run the MoveDist action scripts:
     ros2 run action_scripts MoveDist_client 76 2
     ros2 run action_scripts MoveDist_client 0 0
 
-Note that in ``../ROS_init_practice/ros2_ws3_interfaces/src/practice_robot_interfaces/action``, there are 3 types of variables in the action server:
+Note that in ``../ROS_init_practice/ros2_ws3_interfaces/src/robot_interfaces/action``, there are 3 types of variables in the action server:
 
 | type | IO in code | description | 
 | - | - | - |
@@ -102,10 +102,10 @@ Or it can be run with a Python script specifically written in ``lifecycle_script
     
     ros2 run lifecycle_scripts Number_client --ros-args -p managed_node_name:="Number_publisher"
 
-Or use the launch files at ``practice_robot_interfaces/launch``:
+Or use the launch files at ``robot_interfaces/launch``:
 
-    ros2 launch practice_robot_interfaces practice_lifecycle.launch.xml
-    ros2 launch practice_robot_interfaces practice_lifecycle.launch.py
+    ros2 launch robot_interfaces practice_lifecycle.launch.xml
+    ros2 launch robot_interfaces practice_lifecycle.launch.py
 
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
