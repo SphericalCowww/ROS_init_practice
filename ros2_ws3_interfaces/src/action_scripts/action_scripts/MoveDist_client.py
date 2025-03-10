@@ -8,12 +8,12 @@ from robot_interfaces.action import MoveDist
 
 #######################################################################################################################
 class MoveDist_clientNode(Node):
-    def __init__(self):
+    def __init__(self, actionName):
         rclpy.init()
         super().__init__("MoveDist_client")
         self.goal_        = None
         self.goal_handle_ = None
-        self.MoveDist_client_ = ActionClient(self, MoveDist, "MoveDist") 
+        self.MoveDist_client_ = ActionClient(self, MoveDist, actionName) 
         self.get_logger().info("MoveDist_clientNode: action client has been started")
     def send_goal(self, target_position, target_speed):
         self.MoveDist_client_.wait_for_server()
@@ -24,8 +24,8 @@ class MoveDist_clientNode(Node):
         self.get_logger().info("MoveDist_clientNode: sending goal")
         self.MoveDist_client_.send_goal_async(self.goal_, feedback_callback=self.goal_feedback_callback)\
                              .add_done_callback(self.goal_response_callback)
-    def goal_feedback_callback(self, feedback_msg):
-        self.get_logger().info("MoveDist_clientNode: receiving feedback: "+str(feedback_msg.feedback.current_position))
+    def goal_feedback_callback(self, feedbackMsg):
+        self.get_logger().info("MoveDist_clientNode: receiving feedback: "+str(feedbackMsg.feedback.current_position))
     def goal_response_callback(self, futureObj):
         self.goal_handle_:ClientGoalHandle = futureObj.result()
         self.get_logger().info("goal id: "+str("".join([str(hex(val)).replace("0x", "")\
@@ -51,12 +51,12 @@ class MoveDist_clientNode(Node):
         rclpy.shutdown()
 #######################################################################################################################
 def main(args=None):
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("MoveDist client requires arguments target_position, target_speed")
         print("In case both are 0 will cancel the current goal")
         sys.exit(0)
-    node = MoveDist_clientNode()
-    node.send_goal(int(sys.argv[1]), int(sys.argv[2]))
+    node = MoveDist_clientNode(sys.argv[1])
+    node.send_goal(int(sys.argv[2]), int(sys.argv[3]))
     rclpy.spin(node)
 #######################################################################################################################
 if __name__ == "__main__": main()

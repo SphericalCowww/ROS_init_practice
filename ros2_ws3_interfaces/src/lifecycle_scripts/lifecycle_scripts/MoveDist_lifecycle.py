@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import time
+import threading
+import numpy as np
 import rclpy
 from rclpy.lifecycle import LifecycleNode
 from rclpy.lifecycle.node import LifecycleState, TransitionCallbackReturn
@@ -16,9 +18,11 @@ class MoveDist_lifecycleNode(LifecycleNode):
         super().__init__("MoveDist_lifecycleNode")
         self.get_logger().info("MoveDist_lifecycleNode: initializing")
         self.goal_lock_ = threading.Lock()
+        self.activated = False
         
-        self.cleanup_()
-        self.current_position_              = 50        
+        self.MoveDist_server_               = None
+        self.goal_handle_: ServerGoalHandle = None
+        self.current_position_              = 50  
     def on_configure(self, statePre: LifecycleState):
         self.get_logger().info("MoveDist_lifecycleNode: configuring")
         self.MoveDist_server_ = ActionServer(\
@@ -53,7 +57,7 @@ class MoveDist_lifecycleNode(LifecycleNode):
         return TransitionCallbackReturn.FAILURE
     def cleanup_(self):
         self.activated = False
-        if self.action_server is not None: self.MoveDist_server_.destroy()
+        if self.MoveDist_server_ is not None: self.MoveDist_server_.destroy()
         self.MoveDist_server_               = None
         self.goal_handle_: ServerGoalHandle = None
     ###################################################################################################################
