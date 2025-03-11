@@ -17,52 +17,56 @@ from robot_interfaces.action import MoveDist
 class MoveDist_lifecycleMultiNode(LifecycleNode):
     def __init__(self):
         super().__init__("MoveDist_lifecycleMultiNode")
-        self.get_logger().info("MoveDist_lifecycleMultiNode: initializing")
+        self.get_logger().info(self.get_name()+": initializing")
+
         self.goal_lock_ = threading.Lock()
         self.activated = False
-       
-        self.legNumber_ = 4
+        self.legNumber_, self.actionNames_ = 4, []
         self.MoveDist_servers_, self.goal_handles_, self.current_positions_ = [], [], []
         for legIdx in range(self.legNumber_):
             self.MoveDist_servers_ .append(None)
             self.goal_handles_     .append(None)
             self.current_positions_.append(50)
-    def on_configure(self, statePre: LifecycleState):
+    def on_configure(self, statePre: LifecycleState) -> TransitionCallbackReturn:
         self.MoveDist_servers_ = []
         for legIdx in range(self.legNumber_):
-            self.get_logger().info("MoveDist_lifecycleMultiNode: configuring Leg"+str(legIdx))
+            self.get_logger().info(self.get_name()+": configuring Leg"+str(legIdx))
+            self.actionNames_.append("Leg"+str(legIdx))
             goal_callback_idx            = partial(self.goal_callback,            legIdx=legIdx)
             handle_accepted_callback_idx = partial(self.handle_accepted_callback, legIdx=legIdx)
             execute_callback_idx         = partial(self.execute_callback,         legIdx=legIdx)
             cancel_callback_idx          = partial(self.cancel_callback,          legIdx=legIdx)
             self.MoveDist_servers_.append(ActionServer(\
-                                            self,\
-                                            MoveDist,\
-                                            "Leg"+str(legIdx),\
-                                            goal_callback            = goal_callback_idx,\
-                                            handle_accepted_callback = handle_accepted_callback_idx,\
-                                            execute_callback         = execute_callback_idx,\
-                                            cancel_callback          = cancel_callback_idx,\
-                                            callback_group           = ReentrantCallbackGroup()))
+                                              self,\
+                                              MoveDist,\
+                                              self.actionNames_[legIdx],\
+                                              goal_callback            = goal_callback_idx,\
+                                              handle_accepted_callback = handle_accepted_callback_idx,\
+                                              execute_callback         = execute_callback_idx,\
+                                              cancel_callback          = cancel_callback_idx,\
+                                              callback_group           = ReentrantCallbackGroup()))
+            self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": current_position: "+\
+                                   str(self.current_positions_[legIdx]))
+ 
         return TransitionCallbackReturn.SUCCESS
     def on_cleanup(self, statePre: LifecycleState):
-        self.get_logger().info("MoveDist_lifecycleMultiNode: cleaning up")
+        self.get_logger().info(self.get_name()+": cleaning up")
         self.cleanup_()
         return TransitionCallbackReturn.SUCCESS
     def on_activate(self, statePre: LifecycleState):
-        self.get_logger().info("MoveDist_lifecycleMultiNode: activating")
+        self.get_logger().info(self.get_name()+": activating")
         self.activated = True
         return super().on_activate(statePre)
     def on_deactivate(self, statePre: LifecycleState):
-        self.get_logger().info("MoveDist_lifecycleMultiNode: deactivating")
+        self.get_logger().info(self.get_name()+": deactivating")
         self.activated = False
         return super().on_deactivate(statePre)
     def on_shutdown(self, statePre: LifecycleState):
-        self.get_logger().info("MoveDist_lifecycleMultiNode: shutting down")
+        self.get_logger().info(self.get_name()+": shutting down")
         self.cleanup_()
         return TransitionCallbackReturn.SUCCESS
     def on_error(self, statePre: LifecycleState):
-        self.get_logger().info("MoveDist_lifecycleMultiNode: deadly error occured, shutting down")
+        self.get_logger().info(self.get_name()+": deadly error occured, shutting down")
         self.cleanup_()
         return TransitionCallbackReturn.FAILURE
     def cleanup_(self):
@@ -73,25 +77,28 @@ class MoveDist_lifecycleMultiNode(LifecycleNode):
             self.goal_handles_[legIdx]     = None
     ###################################################################################################################
     def goal_callback(self, goal:MoveDist.Goal, legIdx):
-        self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": goal received")
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": goal received")
         if self.activated == False:
-            self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": MoveDist_lifecycleMultiNode is not activated")
+            self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+\
+                                   ": "+self.get_name()+" is not activated")
             return GoalResponse.REJECT
         if (goal.target_position < 0) or (100 < goal.target_position):
-            self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": rejecting goal for target_position")
+            self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+\
+                                   ": rejecting goal for target_position")
             return GoalResponse.REJECT
         if (goal.target_speed < 0) or (100 < goal.target_speed):
-            self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": rejecting goal for target_speed")
+            self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+\
+                                   ": rejecting goal for target_speed")
             return GoalResponse.REJECT       
  
         with self.goal_lock_:
             if self.goal_handles_[legIdx] is not None:
                 if self.goal_handles_[legIdx].is_active == True:
-                    self.get_logger().info("MoveDist_serverNode "+str(legIdx)+\
+                    self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+\
                                            ": abort current goal, accepting new goal")
                     self.goal_handles_[legIdx].abort()
 
-        self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": accepting goal") 
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": accepting goal") 
         return GoalResponse.ACCEPT
     def handle_accepted_callback(self, goal_handle:ServerGoalHandle, legIdx):
         goal_handle.execute()
@@ -102,18 +109,18 @@ class MoveDist_lifecycleMultiNode(LifecycleNode):
         feedbackVars = MoveDist.Feedback() 
         resultVars   = MoveDist.Result()    
 
-        self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": executing the goal")
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": executing the goal")
         self.get_logger().info("goal id: "+str("".join([str(hex(val)).replace("0x", "")\
                                                for val in goal_handle.goal_id.uuid])))
-        self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": current_position: "+\
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": current_position: "+\
                                str(self.current_positions_[legIdx]))
         while self.current_positions_[legIdx] != goalVars.target_position:
             if goal_handle.is_active == False:
-                self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": aborting the goal")
+                self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": aborting the goal")
                 resultVars.reached_position = self.current_positions_[legIdx]
                 return resultVars
             if goal_handle.is_cancel_requested == True:
-                self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": canceling the goal")
+                self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": canceling the goal")
                 goal_handle.canceled()
                 resultVars.reached_position = self.current_positions_[legIdx]
                 return resultVars
@@ -122,17 +129,17 @@ class MoveDist_lifecycleMultiNode(LifecycleNode):
                                                        self.current_positions_[legIdx])*goalVars.target_speed)
             else:
                 self.current_positions_[legIdx] = goalVars.target_position
-            self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": current_position: "+\
+            self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": current_position: "+\
                                    str(self.current_positions_[legIdx]))
             feedbackVars.current_position = self.current_positions_[legIdx]
             goal_handle.publish_feedback(feedbackVars)
             time.sleep(1)
-        self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": goal succeeded")
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": goal succeeded")
         goal_handle.succeed()
         resultVars.reached_position = self.current_positions_[legIdx]
         return resultVars
     def cancel_callback(self, goal_handle:ServerGoalHandle, legIdx):
-        self.get_logger().info("MoveDist_serverNode "+str(legIdx)+": receiving cancel request")
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": receiving cancel request")
         return CancelResponse.ACCEPT
 #######################################################################################################################
 def main(args=None):

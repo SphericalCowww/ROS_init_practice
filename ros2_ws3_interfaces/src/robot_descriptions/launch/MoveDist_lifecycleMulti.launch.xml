@@ -1,0 +1,9 @@
+<launch>
+    <let name="node_name" value="MoveDist_lifecycleMulti1"/>
+    <node pkg="lifecycle_scripts" exec="MoveDist_lifecycleMulti" name="$(var node_name)"/>
+    <node pkg="lifecycle_scripts" exec="MoveDist_client"> 
+        <param name="server_name" value="$(var node_name)"/>
+        <param name="target_position_input" value="$(var node_name)"/>
+        <param name="target_speed_input" value="$(var node_name)"/>
+    </node>
+</launch>
