@@ -105,10 +105,10 @@ Or it can be run with a Python script specifically written in ``lifecycle_script
 
 Or use the launch files at ``robot_interfaces/launch``:
 
-    ros2 launch robot_interfaces practice_lifecycle.launch.xml
-    ros2 launch robot_interfaces practice_lifecycle.launch.py
+    ros2 launch robot_interfaces Number_publisher.launch.xml
+    ros2 launch robot_interfaces Number_publisher.launch.py
 
-Similarly, run the MoveDist action scripts:
+Similarly, run the MoveDist lifecycle scripts:
 
     ros2 run lifecycle_scripts MoveDist_lifecycleMulti                          # in a separate window
     ros2 lifecycle nodes
@@ -116,6 +116,11 @@ Similarly, run the MoveDist action scripts:
     ros2 lifecycle set /MoveDist_lifecycleMultiNode activate
     ros2 action list -t
     ros2 run action_scripts MoveDist_client /Leg1 76 2
+
+Or run the multiple MoveDist lifecycle node with predefined names:
+
+    ros2 run lifecycle_scripts MoveDist_lifecycleMulti ros-args -r __node:MoveDist_lifecycleMulti1
+    ros2 run lifecycle_scripts MoveDist_lifecycleMulti ros-args -r __node:MoveDist_lifecycleMulti2
     
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
