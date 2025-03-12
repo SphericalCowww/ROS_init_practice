@@ -30,8 +30,8 @@ class MoveDist_lifecycleMultiNode(LifecycleNode):
     def on_configure(self, statePre: LifecycleState) -> TransitionCallbackReturn:
         self.MoveDist_servers_ = []
         for legIdx in range(self.legNumber_):
-            self.get_logger().info(self.get_name()+": configuring Leg"+str(legIdx))
-            self.actionNames_.append("Leg"+str(legIdx))
+            self.actionNames_.append(self.get_name()+"_ACleg"+str(legIdx))
+            self.get_logger().info(self.get_name()+": configuring "+self.actionNames_[-1])
             goal_callback_idx            = partial(self.goal_callback,            legIdx=legIdx)
             handle_accepted_callback_idx = partial(self.handle_accepted_callback, legIdx=legIdx)
             execute_callback_idx         = partial(self.execute_callback,         legIdx=legIdx)
@@ -145,8 +145,8 @@ class MoveDist_lifecycleMultiNode(LifecycleNode):
 def main(args=None):
     rclpy.init(args=args)
     node = MoveDist_lifecycleMultiNode()
-    node.trigger_configure()
-    node.trigger_activate()
+#    node.trigger_configure()
+#    node.trigger_activate()
     rclpy.spin(node, MultiThreadedExecutor())
     rclpy.shutdown()
 

@@ -1,0 +1,23 @@
+<launch>
+    <let name="node_name1" value="LC_MoveDist1"/>
+    <let name="node_name2" value="LC_MoveDist2"/>
+    <node pkg="lifecycle_scripts" exec="MoveDist_lifecycleMulti" name="$(var node_name1)"/>
+    <node pkg="lifecycle_scripts" exec="MoveDist_lifecycleMulti" name="$(var node_name2)"/>
+
+    <node pkg="lifecycle_scripts" exec="MoveDist_manager">
+        <param name="managed_node_names" value="['$(var node_name1)', '$(var node_name2)']"/>
+    </node>
+
+    <!--WARNING: unfortunately, no way to delay the following executions-->
+
+    <node pkg="action_scripts" exec="MoveDist_client">
+        <param name="actionName"      value="LC_MoveDist1_ACleg3"/>
+        <param name="target_position" value="68"/>
+        <param name="target_speed"    value="1"/>
+    </node>
+    <node pkg="action_scripts" exec="MoveDist_client">
+        <param name="actionName"      value="LC_MoveDist2_ACleg0"/>
+        <param name="target_position" value="12"/>
+        <param name="target_speed"    value="4"/>
+    </node>
+</launch>
