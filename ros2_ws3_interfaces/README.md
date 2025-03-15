@@ -101,12 +101,12 @@ Or it can be run with ``service`` command lines:
 
 Or it can be run with a Python script specifically written in ``lifecycle_scripts/Number_client.py``:
     
-    ros2 run lifecycle_scripts Number_client --ros-args -p managed_node_name:="Number_publisher"
+    ros2 run lifecycle_scripts Number_manager --ros-args -p managed_node_name:="Number_publisher"
 
 Or use the launch files at ``robot_interfaces/launch``:
 
-    ros2 launch robot_interfaces Number_publisher.launch.xml
-    ros2 launch robot_interfaces Number_publisher.launch.py
+    ros2 launch robot_descriptions Number_publisher.launch.xml
+    ros2 launch robot_descriptions Number_publisher.launch.py
 
 Similarly, run the MoveDist lifecycle scripts:
 
@@ -115,13 +115,24 @@ Similarly, run the MoveDist lifecycle scripts:
     ros2 lifecycle set /MoveDist_lifecycleMultiNode configure
     ros2 lifecycle set /MoveDist_lifecycleMultiNode activate
     ros2 action list -t
-    ros2 run action_scripts MoveDist_client /Leg1 76 2
+    ros2 run action_scripts MoveDist_client /MoveDist_lifecycleMultiNode_ACleg1 76 2
 
 Or run the multiple MoveDist lifecycle node with predefined names:
 
-    ros2 run lifecycle_scripts MoveDist_lifecycleMulti ros-args -r __node:MoveDist_lifecycleMulti1
-    ros2 run lifecycle_scripts MoveDist_lifecycleMulti ros-args -r __node:MoveDist_lifecycleMulti2
-    
+    ros2 run lifecycle_scripts MoveDist_lifecycleMulti ros-args -r __node:LC_MoveDist1
+    ros2 run lifecycle_scripts MoveDist_lifecycleMulti ros-args -r __node:LC_MoveDist2
+    ros2 run action_scripts MoveDist_client /LC_MoveDist1_ACleg3 76 2
+
+Or use the launch file at ``robot_interfaces/launch``:
+
+    ros2 launch robot_descriptions MoveDist_lifecycleMulti.launch.xml
+    ros2 run lifecycle_scripts MoveDist_manager --ros-args -p managed_node_names:="['LC_MoveDist1', 'LC_MoveDist2']"
+    ros2 run action_scripts MoveDist_client /LC_MoveDist2_ACleg0 76 2
+
+Or use this one launch file at ``robot_interfaces/launch``:
+
+    ros2 launch robot_descriptions MoveDist_lifecycleMulti_fullProcess.launch.xml
+
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
 - rclpy developers, "Actions" (<a href="https://docs.ros2.org/foxy/api/rclpy/api/actions.html#module-rclpy.action.server">webpage</a>)
