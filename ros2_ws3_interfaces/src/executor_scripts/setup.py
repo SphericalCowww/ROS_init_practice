@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "Single_threaded_executor = executor_scripts.Single_threaded_executor: main",
+            "Multi_threaded_executor  = executor_scripts.Multi_threaded_executor:  main",
         ],
     },
 )
