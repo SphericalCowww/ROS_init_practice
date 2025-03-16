@@ -10,8 +10,17 @@ ROS: Robot Operating System
 
 Node practice:
 
-    cd .../ROS_init_practice/
+    mv ros2_ws1_basics ros2_ws1_basics_
+    mkdir ros2_ws1_basics
+    cd ros2_ws1_basics
+    mkdir src
+    colcon build
+    cd src/
+    ros2 pkg create practice_controller --build-type ament_python --dependencies rclpy robot_interfaces
+    cd ..
+    # move everything from ros2_ws1_basics_ to ros2_ws1_basics
     colcon build --symlink-install
+    source install/setup.bash
     ros2 run practice_controller test_node
 
 Publisher, subscriber, closed-loop system practice with ''turtlesim'' topic:
@@ -30,7 +39,7 @@ Service practice:
     ros2 service call /clear std_srvs/srv/Empty 
     ros2 topic hz /turtle1/pose
 
-Actually, the main code is already covered in ''turtle_controller_node.py'', resulting in the trajectory and color change of ''turtlesim'' shown in the following plot:
+The main code is covered in ''turtle_controller_node.py'', resulting in the trajectory and color change of ''turtlesim'' shown in the following plot:
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws1_basics/practice_controller_demo.png" width="400">
     
