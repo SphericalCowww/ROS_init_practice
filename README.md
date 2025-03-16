@@ -15,7 +15,7 @@ Build a ROS package with the following (python based):
     cd (...)/ros2_ws(...)/
     colcon build
     cd src/
-    ros2 pkg create practice_controller --build-type ament_python --dependencies rclpy
+    ros2 pkg create (...project_name...) --build-type ament_python --dependencies rclpy
 
 Exporting the following in ''.bashrc'':
 
