@@ -41,6 +41,7 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     ros2 pkg create action_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     ros2 pkg create lifecycle_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     ros2 pkg create executor_scripts --build-type ament_python --dependencies rclpy robot_interfaces
+    ros2 pkg create moveturtle_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     cd ..
     # move everything from ros2_ws3_interfaces_ to ros2_ws3_interfaces
     colcon build --symlink-install
