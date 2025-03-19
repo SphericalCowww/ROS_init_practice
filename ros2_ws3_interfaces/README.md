@@ -41,6 +41,7 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     ros2 pkg create action_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     ros2 pkg create lifecycle_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     ros2 pkg create executor_scripts --build-type ament_python --dependencies rclpy robot_interfaces
+    ros2 pkg create moveturtle_scripts --build-type ament_python --dependencies rclpy robot_interfaces
     cd ..
     # move everything from ros2_ws3_interfaces_ to ros2_ws3_interfaces
     colcon build --symlink-install
@@ -140,6 +141,13 @@ Simply do:
 
     ros2 run executor_scripts Single_threaded_executor
     ros2 run executor_scripts Multi_threaded_executor
+
+### turtlesim practice
+
+    ros2 run moveturtle_scripts MoveTurtle_lifecycle
+    ros2 lifecycle nodes
+    ros2 lifecycle set /MoveTurtle_lifecycleNode configure
+    ros2 lifecycle set /MoveTurtle_lifecycleNode activate
 
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
