@@ -10,6 +10,8 @@ from rclpy.action import ActionServer, GoalResponse, CancelResponse
 from rclpy.action.server import ServerGoalHandle
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.callback_groups import ReentrantCallbackGroup
+from launch import LaunchService, LaunchDescription
+from launch_ros.actions import Node as LaunchNode
 from robot_interfaces.action import MoveTurtle
 
 #######################################################################################################################
@@ -20,20 +22,17 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
         self.goal_lock_ = threading.Lock()
         self.activated = False
         
-        self.MoveTurtle_server_             = None
-        self.goal_handle_: ServerGoalHandle = None
-        self.current_position_              = 50  
+        self.MoveTurtle_service_ = None
     def on_configure(self, statePre: LifecycleState):
         self.get_logger().info("MoveTurtle_lifecycleNode: configuring")
-        self.MoveTurtle_server_ = ActionServer(\
-            self,\
-            MoveTurtle,\
-            "MoveTurtle",\
-            goal_callback            = self.goal_callback,\
-            handle_accepted_callback = self.handle_accepted_callback,\
-            execute_callback         = self.execute_callback,\
-            cancel_callback          = self.cancel_callback,\
-            callback_group           = ReentrantCallbackGroup())
+        
+        MoveTurtle_action = LaunchNode(package="turtlesim",\
+                                       executable="turtlesim_node",\
+                                       name="turtlesim1")
+
+        launch_description = LaunchDescription([MoveTurtle_action])
+        self.MoveTurtle_service_ = LaunchService()
+        self.MoveTurtle_service_.include_launch_description(launch_description)
         return TransitionCallbackReturn.SUCCESS
     def on_cleanup(self, statePre: LifecycleState):
         self.get_logger().info("MoveTurtle_lifecycleNode: cleaning up")
@@ -42,6 +41,7 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
     def on_activate(self, statePre: LifecycleState):
         self.get_logger().info("MoveTurtle_lifecycleNode: activating")
         self.activated = True
+        self.MoveTurtle_service_.run()
         return super().on_activate(statePre)
     def on_deactivate(self, statePre: LifecycleState):
         self.get_logger().info("MoveTurtle_lifecycleNode: deactivating")
@@ -57,10 +57,10 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
         return TransitionCallbackReturn.FAILURE
     def cleanup_(self):
         self.activated = False
-        if self.MoveTurtle_server_ is not None: self.MoveTurtle_server_.destroy()
-        self.MoveTurtle_server_               = None
-        self.goal_handle_: ServerGoalHandle = None
+        if self.MoveTurtle_service_ is not None: self.MoveTurtle_service_.destroy()
+        self.MoveTurtle_service_ = None
     ###################################################################################################################
+    '''
     def goal_callback(self, goal:MoveTurtle.Goal):
         self.get_logger().info("MoveTurtle_serverNode: goal received")
         if (goal.target_position < 0) or (100 < goal.target_position):
@@ -117,6 +117,7 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
     def cancel_callback(self, goal_handle:ServerGoalHandle):
         self.get_logger().info("MoveTurtle_serverNode: receiving cancel request")
         return CancelResponse.ACCEPT
+    '''
 #######################################################################################################################
 def main(args=None):
     rclpy.init(args=args)

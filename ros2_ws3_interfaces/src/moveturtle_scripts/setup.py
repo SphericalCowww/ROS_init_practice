@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "MoveTurtle_lifecycle = lifecycle_scripts.MoveTurtle_lifecycle: main",
-            "MoveTurtle_manager   = lifecycle_scripts.MoveTurtle_manager:   main",
+            "MoveTurtle_lifecycle = moveturtle_scripts.MoveTurtle_lifecycle: main",
+            "MoveTurtle_manager   = moveturtle_scripts.MoveTurtle_manager:   main",
         ],
     },
 )
