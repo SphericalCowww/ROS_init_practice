@@ -142,6 +142,13 @@ Simply do:
     ros2 run executor_scripts Single_threaded_executor
     ros2 run executor_scripts Multi_threaded_executor
 
+### turtlesim practice
+
+    ros2 run moveturtle_scripts MoveTurtle_lifecycle
+    ros2 lifecycle nodes
+    ros2 lifecycle set /MoveTurtle_lifecycleNode configure
+    ros2 lifecycle set /MoveTurtle_lifecycleNode activate
+
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
 - rclpy developers, "Actions" (<a href="https://docs.ros2.org/foxy/api/rclpy/api/actions.html#module-rclpy.action.server">webpage</a>)
