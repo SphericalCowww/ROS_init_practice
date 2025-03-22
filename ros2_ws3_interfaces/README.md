@@ -144,6 +144,17 @@ Simply do:
 
 ### turtlesim practice
 
+    ros2 run turtlesim turtlesim_node 
+    ros2 service list
+    ros2 service type /kill
+    ros2 interface show turtlesim/srv/Kill
+    ros2 service call /kill turtlesim/srv/Kill "{name: 'turtle1'}"
+    ros2 service type /spawn
+    ros2 interface show turtlesim/srv/Spawn
+    ros2 service call /spawn turtlesim/srv/Spawn "{x: 1.0, y: 2.0, theta: 1.0}”
+
+    ros2 run moveturtle_scripts MoveTurtle_manager 
+
     ros2 run moveturtle_scripts MoveTurtle_lifecycle
     ros2 lifecycle nodes
     ros2 lifecycle set /MoveTurtle_lifecycleNode configure
