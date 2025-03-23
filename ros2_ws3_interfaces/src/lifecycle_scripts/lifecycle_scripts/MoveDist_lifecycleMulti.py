@@ -134,9 +134,9 @@ class MoveDist_lifecycleMultiNode(LifecycleNode):
             feedbackVars.current_position = self.current_positions_[legIdx]
             goal_handle.publish_feedback(feedbackVars)
             time.sleep(1)
-        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": goal succeeded")
-        goal_handle.succeed()
         resultVars.reached_position = self.current_positions_[legIdx]
+        goal_handle.succeed()
+        self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": goal succeeded")
         return resultVars
     def cancel_callback(self, goal_handle:ServerGoalHandle, legIdx):
         self.get_logger().info("MoveDist_serverNode "+self.actionNames_[legIdx]+": receiving cancel request")

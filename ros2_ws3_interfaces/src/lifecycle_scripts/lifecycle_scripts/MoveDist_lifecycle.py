@@ -63,6 +63,9 @@ class MoveDist_lifecycleNode(LifecycleNode):
     ###################################################################################################################
     def goal_callback(self, goal:MoveDist.Goal):
         self.get_logger().info("MoveDist_serverNode: goal received")
+        if self.activated == False:
+            self.get_logger().info("MoveDist_serverNode: "+self.get_name()+" is not activated")
+            return GoalResponse.REJECT
         if (goal.target_position < 0) or (100 < goal.target_position):
             self.get_logger().info("MoveDist_serverNode: rejecting goal for target_position")
             return GoalResponse.REJECT
@@ -110,9 +113,9 @@ class MoveDist_lifecycleNode(LifecycleNode):
             feedbackVars.current_position = self.current_position_
             goal_handle.publish_feedback(feedbackVars)
             time.sleep(1)
-        self.get_logger().info("MoveDist_serverNode: goal succeeded")
-        goal_handle.succeed()
         resultVars.reached_position = self.current_position_
+        goal_handle.succeed()
+        self.get_logger().info("MoveDist_serverNode: goal succeeded")
         return resultVars
     def cancel_callback(self, goal_handle:ServerGoalHandle):
         self.get_logger().info("MoveDist_serverNode: receiving cancel request")
