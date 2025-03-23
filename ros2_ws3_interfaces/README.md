@@ -144,6 +144,8 @@ Simply do:
 
 ### turtlesim practice
 
+To check the basic turtlesim functionality:
+
     ros2 run turtlesim turtlesim_node 
     ros2 service list
     ros2 service type /kill
@@ -153,13 +155,24 @@ Simply do:
     ros2 interface show turtlesim/srv/Spawn
     ros2 service call /spawn turtlesim/srv/Spawn "{x: 1.0, y: 2.0, theta: 1.0}”
 
-    ros2 run moveturtle_scripts MoveTurtle_manager 
+To allow spawning, moving, and kill a turtle in an action goal of a lifecycle ``MoveTurtle_lifecycle``:
 
+    ros2 run turtlesim turtlesim_node 
     ros2 run moveturtle_scripts MoveTurtle_lifecycle
     ros2 lifecycle nodes
     ros2 lifecycle set /MoveTurtle_lifecycleNode configure
     ros2 lifecycle set /MoveTurtle_lifecycleNode activate
+    ros2 action list
+    ros2 interface list | grep robot_interfaces/action/
+    ros2 interface show robot_interfaces/action/MoveTurtle
+    ros2 action send_goal /MoveTurtle robot_interfaces/action/MoveTurtle "{linear_vel_x: 5.0, angular_vel_z: 2.0, duration: 10.0}" --feedback 
+    ros2 action send_goal /MoveTurtle robot_interfaces/action/MoveTurtle "{linear_vel_x: 20.0, angular_vel_z: 0.0, duration: 5.0}" --feedback 
 
+Note: 
+
+  * do NOT do tests in on_configure or on_activate of a lifecycle; the exception will be directly to on_error and not showing the actual compilation error
+  * sometimes need to do configure/activate several times, especially with raspberry pi's
+    
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 3 - Advanced Concepts" (<a href="https://www.udemy.com/course/ros2-advanced-core-concepts">Udemy</a>)
 - rclpy developers, "Actions" (<a href="https://docs.ros2.org/foxy/api/rclpy/api/actions.html#module-rclpy.action.server">webpage</a>)
