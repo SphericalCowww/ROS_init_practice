@@ -170,6 +170,7 @@ To allow spawning, moving, and kill a turtle in an action goal of a lifecycle ``
 
 Note: 
 
+  * .xml launch file cannot easily do configure/activate, do .py launch files in the future after all
   * do NOT do tests in on_configure or on_activate of a lifecycle; the exception will be directly to on_error and not showing the actual compilation error
   * sometimes need to do configure/activate several times, especially with raspberry pi's
     
