@@ -39,6 +39,8 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
         self.get_logger().info("MoveTurtle_lifecycleNode: configuring")
         self.spawn_client_ = self.create_client(Spawn, "spawn", callback_group=self.callback_group_)
         self.kill_client_  = self.create_client(Kill,  "kill",  callback_group=self.callback_group_)        
+        self.spawn_turtle(self.turtleName_)
+
         self.MoveTurtle_server_ = ActionServer(self,\
                                                MoveTurtle,\
                                                "MoveTurtle",\
@@ -75,6 +77,8 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
         return TransitionCallbackReturn.FAILURE
     def cleanup_(self):
         self.activated = False
+        self.kill_turtle(self.turtleName_)
+
         self.spawn_client_ = None
         self.kill_client_  = None
         if self.MoveTurtle_server_ is not None: self.MoveTurtle_server_.destroy()
@@ -138,7 +142,6 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
         self.get_logger().info("MoveTurtle_serverNode: executing the goal")
         self.get_logger().info("goal id: "+str("".join([str(hex(val)).replace("0x", "")\
                                                for val in goal_handle.goal_id.uuid])))
-        self.spawn_turtle(self.turtleName_)
 
         cmd_msg = Twist()
         cmd_msg.linear.x  = goalVars.linear_vel_x
@@ -166,7 +169,6 @@ class MoveTurtle_lifecycleNode(LifecycleNode):
             timeElapses += timeGap
         resultVars.final_pos_x, resultVars.final_pos_y, resultVars.final_pos_theta = self.current_position_
         goal_handle.succeed()
-        self.kill_turtle(self.turtleName_)
         self.get_logger().info("MoveTurtle_serverNode: goal succeeded")
         return resultVars
     def cancel_callback(self, goal_handle:ServerGoalHandle):
