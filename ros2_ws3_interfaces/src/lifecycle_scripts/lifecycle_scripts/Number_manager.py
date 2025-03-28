@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import rclpy
 import time
+import rclpy
 from rclpy.node import Node
 from lifecycle_msgs.srv import ChangeState
 from lifecycle_msgs.msg import Transition
