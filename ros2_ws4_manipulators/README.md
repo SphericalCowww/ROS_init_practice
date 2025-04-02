@@ -35,6 +35,10 @@ Upload ''src/arduino_firmware/firmware/serial_receiver_LED/serial_receiver_LED.i
     ros2 topic list
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '1'"
 
+    ros2 run arduino_firmware serial_receiver --ros-args -p port:=/dev/ttyACM0
+    ros2 topic list
+    ros2 topic echo /serial_receiver 
+
 ## References:
 - Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
 
