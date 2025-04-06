@@ -4,7 +4,6 @@ from rclpy.node import Node
 from example_interfaces.msg import String
 import serial
 
-
 #######################################################################################################################
 class serialTransmitter(Node):
     def __init__(self):
