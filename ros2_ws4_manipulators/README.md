@@ -35,6 +35,8 @@ Upload ''src/arduino_firmware/firmware/serial_receiver_LED/serial_receiver_LED.i
     ros2 topic list
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '1'"
 
+Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino'' to an arduino, then run the following:
+
     ros2 run arduino_firmware serial_receiver --ros-args -p port:=/dev/ttyACM0
     ros2 topic list
     ros2 topic echo /serial_receiver 
