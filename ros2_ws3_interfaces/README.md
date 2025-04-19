@@ -110,7 +110,7 @@ Or it can be run with a Python script specifically written in ``lifecycle_script
 Or use the launch files at ``robot_interfaces/launch``:
 
     ros2 launch robot_descriptions Number_publisher.launch.xml
-    ros2 launch robot_descriptions Number_publisher.launch.py
+    ros2 launch robot_descriptions Number_publisher.launch.py                   # alternative
 
 Similarly, run the MoveDist lifecycle scripts:
 
@@ -130,6 +130,7 @@ Or run the multiple MoveDist lifecycle node with predefined names:
 Or use the launch file at ``robot_interfaces/launch``:
 
     ros2 launch robot_descriptions MoveDist_lifecycleMulti.launch.xml
+    ros2 launch robot_descriptions MoveDist_lifecycleMulti.launch.py            # alternative: has delay functionality
     ros2 run lifecycle_scripts MoveDist_manager --ros-args -p managed_node_names:="['LC_MoveDist1', 'LC_MoveDist2']"
     ros2 run action_scripts MoveDist_client /LC_MoveDist2_ACleg0 76 2
 
@@ -157,7 +158,7 @@ To check the basic turtlesim functionality:
     ros2 interface show turtlesim/srv/Spawn
     ros2 service call /spawn turtlesim/srv/Spawn "{x: 1.0, y: 2.0, theta: 1.0}”
 
-To allow spawning, moving, and kill a turtle in an action goal of a lifecycle ``MoveTurtle_lifecycle``:
+To allow spawning, moving, and killing a turtle in an action goal of a lifecycle ``MoveTurtle_lifecycle``:
 
     ros2 run turtlesim turtlesim_node 
     ros2 run moveturtle_scripts MoveTurtle_lifecycle
