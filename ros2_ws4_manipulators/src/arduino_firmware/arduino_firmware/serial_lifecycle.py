@@ -86,8 +86,8 @@ class serial_lifecycleNode(LifecycleNode):
 def main(args=None):
     rclpy.init(args=args)
     node = serial_lifecycleNode()
-    node.trigger_configure()
-    node.trigger_activate()
+    #node.trigger_configure()
+    #node.trigger_activate()
     executor = MultiThreadedExecutor()
     executor.add_node(node)
     try:
