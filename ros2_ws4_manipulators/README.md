@@ -46,6 +46,15 @@ Upload ''src/arduino_firmware/firmware/serial_communicator/serial_communicator.i
 
 Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino'' to an arduino, then run the following:
 
+### course urdf
+
+    # Fixed Frame: world
+    # add TF
+    # add RobotModel: Description Topic: /robot_description
+    ros2 launch robot_description rviz.launch.arduinobot.xacro.xml
+    # or
+    ros2 launch robot_description rviz.launch.arduinobot.xacro.py
+
 ## References:
 - Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
 
