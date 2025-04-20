@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot_test">
+    <xacro:property name="effort"   value="30.0" />
+    <xacro:property name="velocity" value="10.0" />
+
+    <!-- Links -->
+    <link name="world"/>
+
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="base_plate">
+        <visual>
+            <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- Joints -->  
+    <joint name="virtual_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint> 
+
+    <joint name ="joint_1" type="revolute">
+        <parent link="base_link"/>
+        <child link = "base_plate"/>
+        <origin xyz="0 0 0.307"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-${pi/2}" upper="${pi/2}" 
+               effort="${effort}" velocity="${velocity}"/>
+    </joint>
+</robot>

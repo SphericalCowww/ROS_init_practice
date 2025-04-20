@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
+<!-- reference from  Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (Udemy) -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
-    
-    <!-- Useful XACRO Variables (Properties) -->
-    <xacro:property name="PI" value="3.14159265359" />
-    <xacro:property name="effort" value="30.0" />
+    <xacro:property name="effort"   value="30.0" />
     <xacro:property name="velocity" value="10.0" />
 
     <!-- Links -->
@@ -13,7 +11,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -22,52 +20,52 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/base_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
 
     <link name="forward_drive_arm">
         <visual>
-            <origin rpy=" 0 -${PI / 2} ${PI / 2}" xyz="0.19 0.06 -0.08"/>
+            <origin rpy=" 0 -${pi/2} ${pi/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
 
     <link name="horizontal_arm">
         <visual>
-            <origin rpy="${PI / 2} 0 ${PI / 2}" xyz="-0.03 -0.4 -0.06"/>
+            <origin rpy="${pi/2} 0 ${pi/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
 
     <link name="claw_support">
         <visual>
-            <origin rpy="0 0 ${PI / 2}" xyz="0 -0.05 -0.15"/>
+            <origin rpy="0 0 ${pi/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/claw_support.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
 
     <link name="gripper_right">
         <visual>
-            <origin rpy="0 0 -${PI / 2}" xyz="-0.1 0.50 -0.1"/>
+            <origin rpy="0 0 -${pi/2}" xyz="-0.1 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/right_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
 
     <link name="gripper_left">
         <visual>
-            <origin rpy="0 0 -${PI / 2}" xyz="-0.04 0.50 -0.1"/>
+            <origin rpy="0 0 -${pi/2}" xyz="-0.04 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/left_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -76,7 +74,7 @@
         <visual>
             <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
             <geometry>
-                <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_description/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -94,7 +92,7 @@
         <child link = "base_plate"/>
         <origin xyz="0 0 0.307"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI / 2}" upper="${PI / 2}" 
+        <limit lower="-${pi/2}" upper="${pi/2}" 
                effort="${effort}" velocity="${velocity}"/>
     </joint>
 
@@ -103,7 +101,7 @@
         <child link = "forward_drive_arm"/>
         <origin xyz="-0.02 0 0.35"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-${PI / 2}" upper="${PI / 2}"
+        <limit lower="-${pi/2}" upper="${pi/2}"
                 effort="${effort}" velocity="${velocity}"/>
     </joint>
 
@@ -112,7 +110,7 @@
         <child link = "horizontal_arm"/>
         <origin xyz="0 0 0.8"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-${PI / 2}" upper="${PI / 2}"
+        <limit lower="-${pi/2}" upper="${pi/2}"
                effort="${effort}" velocity="${velocity}"/>
     </joint>
 
@@ -127,7 +125,7 @@
         <child link = "gripper_right"/>
         <origin xyz="-0.04 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI / 2}" upper="0.0" 
+        <limit lower="-${pi/2}" upper="0.0" 
                effort="${effort}" velocity="${velocity}"/>
     </joint>
 
@@ -136,7 +134,7 @@
         <child link = "gripper_left"/>
         <origin xyz="-0.22 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
-        <limit lower="0.0" upper="${PI / 2}" 
+        <limit lower="0.0" upper="${pi/2}" 
                effort="${effort}" velocity="${velocity}"/>
         <mimic joint="joint_4" multiplier="-1"/>
     </joint>
