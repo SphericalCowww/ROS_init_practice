@@ -14,7 +14,7 @@ def generate_launch_description():
         default_value=os.path.join(
             get_package_share_directory("robot_description"),
             "urdf",
-            "arduinobot.urdf.xacro",
+            "arduinobot.rvis.urdf.xacro",
         ),
         description="absolute path to urdf file",
     )

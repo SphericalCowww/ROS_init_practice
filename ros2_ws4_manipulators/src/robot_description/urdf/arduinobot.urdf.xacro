@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
+<!-- ======================================================================================================== -->
 <!-- reference from  Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (Udemy) -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
+    <xacro:include filename="$(find robot_description)/urdf/_GlobalConfigs.urdf.xacro"/>
+
+    <xacro:include filename="$(find robot_description)/urdf/arduinobot.gazebo.xacro"/>
+    <xacro:include filename="$(find robot_description)/urdf/arduinobot.ros2_control.xacro"/>
+
     <xacro:property name="effort"   value="30.0" />
     <xacro:property name="velocity" value="10.0" />
+<!-- ======================================================================================================== -->
 
     <!-- Links -->
     <link name="world"/>
@@ -13,7 +20,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="red"/>
         </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="1.0"/>
     </link>
 
     <link name="base_plate">
@@ -22,7 +37,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="blue"/>
         </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.1"/>
     </link>
 
     <link name="forward_drive_arm">
@@ -31,7 +54,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="green"/>
         </visual>
+        <collision>
+            <origin rpy=" 0 -${pi/2} ${pi/2}" xyz="0.19 0.06 -0.08"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.1"/>
     </link>
 
     <link name="horizontal_arm">
@@ -40,7 +71,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="green"/>
         </visual>
+        <collision>
+            <origin rpy="${pi/2} 0 ${pi/2}" xyz="-0.03 -0.4 -0.06"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.1"/>
     </link>
 
     <link name="claw_support">
@@ -49,7 +88,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="blue"/>
         </visual>
+        <collision>
+            <origin rpy="0 0 ${pi/2}" xyz="0 -0.05 -0.15"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.05"/>
     </link>
 
     <link name="gripper_right">
@@ -58,7 +105,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="red"/>
         </visual>
+        <collision>
+            <origin rpy="0 0 -${pi/2}" xyz="-0.1 0.50 -0.1"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.01"/>
     </link>
 
     <link name="gripper_left">
@@ -67,7 +122,15 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="red"/>
         </visual>
+        <collision>
+            <origin rpy="0 0 -${pi/2}" xyz="-0.04 0.50 -0.1"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.01"/>
     </link>
 
     <link name="rgb_camera">
@@ -76,10 +139,18 @@
             <geometry>
                 <mesh filename="package://robot_description/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
+            <material name="green"/>
         </visual>
+        <collision>
+            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
+            <geometry>
+                <mesh filename="package://robot_description/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:lazy_inertia m="0.1"/>
     </link>
 
-    
+<!-- ======================================================================================================== -->
     <!-- Joints -->  
     <joint name="virtual_joint" type="fixed">
         <parent link="world"/>
@@ -89,7 +160,7 @@
 
     <joint name ="joint_1" type="revolute">
         <parent link="base_link"/>
-        <child link = "base_plate"/>
+        <child link="base_plate"/>
         <origin xyz="0 0 0.307"/>
         <axis xyz="0 0 1"/>
         <limit lower="-${pi/2}" upper="${pi/2}" 
@@ -98,7 +169,7 @@
 
     <joint name ="joint_2" type="revolute">
         <parent link="base_plate"/>
-        <child link = "forward_drive_arm"/>
+        <child link="forward_drive_arm"/>
         <origin xyz="-0.02 0 0.35"/>
         <axis xyz="1 0 0"/>
         <limit lower="-${pi/2}" upper="${pi/2}"
@@ -107,7 +178,7 @@
 
     <joint name ="joint_3" type="revolute">
         <parent link="forward_drive_arm"/>
-        <child link = "horizontal_arm"/>
+        <child link="horizontal_arm"/>
         <origin xyz="0 0 0.8"/>
         <axis xyz="1 0 0"/>
         <limit lower="-${pi/2}" upper="${pi/2}"
@@ -116,13 +187,13 @@
 
     <joint name ="horizontal_arm_to_claw_support" type="fixed">
         <parent link="horizontal_arm"/>
-        <child link = "claw_support"/>
+        <child link="claw_support"/>
         <origin xyz="0 0.82 0"/>
     </joint>
 
     <joint name ="joint_4" type="revolute">
         <parent link="claw_support"/>
-        <child link = "gripper_right"/>
+        <child link="gripper_right"/>
         <origin xyz="-0.04 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
         <limit lower="-${pi/2}" upper="0.0" 
@@ -131,7 +202,7 @@
 
     <joint name ="joint_5" type="revolute">
         <parent link="claw_support"/>
-        <child link = "gripper_left"/>
+        <child link="gripper_left"/>
         <origin xyz="-0.22 0.13 -0.1"/>
         <axis xyz="0 0 1"/>
         <limit lower="0.0" upper="${pi/2}" 
@@ -141,8 +212,9 @@
 
     <joint name ="rgb_camera_joint" type="fixed">
         <parent link="base_link"/>
-        <child link = "rgb_camera"/>
+        <child link="rgb_camera"/>
         <origin xyz="0 0.45 0.2" rpy="0 -0.5 1.57"/>
     </joint>
+<!-- ======================================================================================================== -->
 
 </robot>
