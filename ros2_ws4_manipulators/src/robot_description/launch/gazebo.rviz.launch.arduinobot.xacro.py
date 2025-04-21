@@ -10,14 +10,14 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 ##############################################################################################################################
 def generate_launch_description():
     ld = LaunchDescription()    
-    model_arg = DeclareLaunchArgument(
+    urdf_model = DeclareLaunchArgument(
         name="model",
         default_value=os.path.join(
             get_package_share_directory("robot_description"),
             "urdf",
             "arduinobot.gazebo.urdf.xacro",
         ),
-        description="absolute path to urdf file",
+        description="Absolute path to urdf file",
     )
     robot_state_publisher = Node(
         package   ="robot_state_publisher",
@@ -57,7 +57,8 @@ def generate_launch_description():
         value=[
             str(Path(get_package_share_directory("robot_description")).parent.resolve()),
         ],
-    ) 
+    )
+    # find physics plugins in: /opt/ros/jazzy/opt/gz_physics_vendor/lib/gz-physics-7/engine-plugins
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -67,7 +68,7 @@ def generate_launch_description():
             ),
         ),
         launch_arguments=[
-            ("gz_args", [" -v 4 -r empty.sdf"]
+            ("gz_args", [" -v 4 -r empty.sdf --physics-engine libgz-physics7-bullet-featherstone-plugin"]),
         ],
     )
     gz_spawn_entity = Node(
@@ -80,7 +81,7 @@ def generate_launch_description():
     )
     gz_ros2_bridge = Node(
         package="ros_gz_bridge",
-        executable="parameter_brdige"
+        executable="parameter_bridge",
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/cmd_vel@geometry_msgs/msg/Twist[gz.msgs.Twist",
@@ -90,7 +91,7 @@ def generate_launch_description():
         ],
     )
 
-    ld.add_action(model_arg)
+    ld.add_action(urdf_model)
     ld.add_action(robot_state_publisher)
     #ld.add_action(joint_state_publisher_gui)
     #ld.add_action(rviz_node)
