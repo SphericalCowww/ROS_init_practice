@@ -9,15 +9,6 @@ from launch.substitutions import Command, LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 ##############################################################################################################################
 def generate_launch_description():
-    robot_description = ParameterValue(
-        Command([
-            "xacro",
-            " ",
-            LaunchConfiguration("model"),
-        ]),
-        value_type=str,
-    ) 
-
     ld = LaunchDescription()    
     model_arg = DeclareLaunchArgument(
         name="model",
@@ -32,7 +23,14 @@ def generate_launch_description():
         package   ="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[{
-            "robot_description": robot_description,
+            "robot_description": ParameterValue(
+                Command([
+                    "xacro",
+                    " ",
+                    LaunchConfiguration("model"),
+                ]),
+                value_type=str,
+            ),
             "use_sim_time":True,    
         }],
     )
