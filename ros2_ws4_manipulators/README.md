@@ -55,6 +55,13 @@ Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
     # or
     ros2 launch robot_description rviz.launch.arduinobot.xacro.py
 
+### course gazebo control
+
+    sudo apt install  ros-jazzy-ros2-control ros-jazzy-controller-manager ros-jazzy-ros2-controllers ros-jazzy-gz-ros2-control
+    ros2 launch robot_description gazebo.rviz.launch.arduinobot.xacro.py
+    ros2 launch robot_controller ros2_control.launch.arduinobot.xacro.py
+
+
 ## References:
 - Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
 
