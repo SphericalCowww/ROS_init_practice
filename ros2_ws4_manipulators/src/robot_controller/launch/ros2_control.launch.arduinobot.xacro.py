@@ -31,6 +31,8 @@ def generate_launch_description():
             "use_sim_time": True,    
         }],
     )
+
+    ### bugs out, see: https://github.com/ros-controls/gz_ros2_control/issues/567
     controller_manager = Node(
         package   ="controller_manager",
         executable="ros2_control_node",
