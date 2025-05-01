@@ -46,7 +46,7 @@ Upload ''src/arduino_firmware/firmware/serial_communicator/serial_communicator.i
 
 Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino'' to an arduino, then run the following:
 
-### course urdf
+### course on urdf
 
     # Fixed Frame: world
     # add TF
@@ -55,11 +55,21 @@ Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
     # or
     ros2 launch robot_description rviz.launch.arduinobot.xacro.py
 
-### course gazebo control
+### course on gazebo ros2_control
 
     sudo apt install  ros-jazzy-ros2-control ros-jazzy-controller-manager ros-jazzy-ros2-controllers ros-jazzy-gz-ros2-control
     ros2 launch robot_description gazebo.rviz.launch.arduinobot.xacro.py
     ros2 launch robot_controller ros2_control.launch.arduinobot.xacro.py
+
+### course on moveit
+
+Installed moveit according to <a href="https://moveit.picknik.ai/main/doc/tutorials/getting_started/getting_started.html">link</a>, using the ``main`` ``<branch>``. Don't forget to install Colcon with mixin. For Raspberry Pi 5 installation, two packages need to be skipped:
+
+    colcon build --mixin release --packages-skip kortex_api kortex_driver
+
+Instead of writing your own, can do the following:
+    
+    ros2 launch moveit_setup_assistant setup_assistant.launch.py
 
 
 ## References:
