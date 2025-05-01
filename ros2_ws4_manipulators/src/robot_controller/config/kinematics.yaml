@@ -2,7 +2,7 @@ arm:
     kinematics_solve: kdl_kinematics_plugin/KDLKinematicsPlugin
     kinematics_solve_search_resolution: 0.05
     kinematics_solve_timeout:           0.005
-    position_only_ik:                   True
+    position_only_ik:                   true
 
 
 

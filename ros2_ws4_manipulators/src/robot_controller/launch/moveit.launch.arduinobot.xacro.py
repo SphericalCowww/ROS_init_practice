@@ -15,23 +15,25 @@ def generate_launch_description():
 
     is_sim_arg = DeclareLaunchArgument(
         "is_sim",
-        default_value="True"
+        default_value="True", 
     )
     is_sim = LaunchConfiguration("is_sim")
 
     moveit_config = (
         MoveItConfigsBuilder(
             "arduinobot", 
-            package_name="arduinobot_controller"
-        ).robot_description(os.path.join(
-            get_package_share_directory("robot_description"),
-            "urdf",
-            "arduinobot.urdf.xacro",    
+            package_name="robot_controller"
+        ).robot_description(
+            os.path.join(
+                get_package_share_directory("robot_description"),
+                "urdf",
+                "arduinobot.urdf.xacro",
+            )
         ).robot_description_semantic(
-            file_path="config/arduinobot.srdf",
+            file_path="config/arduinobot_moveit.srdf",
         ).trajectory_execution(
             file_path="config/moveit_controllers.yaml",
-        ).to_moveit_configs(), 
+        ).to_moveit_configs() 
     )
     move_group_node = Node(
         package   ="moveit_ros_move_group",
@@ -40,7 +42,7 @@ def generate_launch_description():
         parameters=[
             moveit_config.to_dict(), 
             {"use_sim_time": is_sim},
-            {"publish_robot_description_semantic": True}
+            {"publish_robot_description_semantic": True},
         ],
         arguments=[
             "--ros-args", 
@@ -48,7 +50,6 @@ def generate_launch_description():
             "info",
         ],
     )
-
     rviz_node = Node(
         package   ="rviz2",
         executable="rviz2",
@@ -69,9 +70,8 @@ def generate_launch_description():
             moveit_config.joint_limits,
         ],
     )
-
+    
     ld.add_action(is_sim_arg)
     ld.add_action(move_group_node)
     ld.add_action(rviz_node)
-
     return ld

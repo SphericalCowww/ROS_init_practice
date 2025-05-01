@@ -91,6 +91,7 @@ def generate_launch_description():
         ],
     )
 
+    '''
     ### same error, see: https://github.com/ros-controls/gz_ros2_control/issues/567
     arm_controller_spawner = Node(
         package   ="controller_manager",
@@ -119,6 +120,7 @@ def generate_launch_description():
             "/controller_manager",
         ],
     )
+    '''
 
     ld.add_action(urdf_model)
     ld.add_action(robot_state_publisher)
