@@ -62,6 +62,8 @@ Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
     ros2 launch robot_description gazebo.rviz.launch.arduinobot.xacro.py
     ros2 launch robot_controller ros2_control.launch.arduinobot.xacro.py
 
+Had issue with ros2_control (<a href="https://github.com/ros-controls/gz_ros2_control/issues/567#issuecomment-2833271693">link</a>).
+
 ### course on moveit
 
 Installed moveit according to <a href="https://moveit.picknik.ai/main/doc/tutorials/getting_started/getting_started.html">link</a>, using the ``main`` ``<branch>``. Don't forget to install Colcon with mixin. For Raspberry Pi 5 installation, two packages need to be skipped:
