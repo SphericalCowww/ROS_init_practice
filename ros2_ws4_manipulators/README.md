@@ -68,7 +68,7 @@ Had issue with ros2_control (<a href="https://github.com/ros-controls/gz_ros2_co
 
 This is <span style="color:red">red text</span> and <span style="color:blue">blue text</span>.
 
-$${\color{red}=>\space Failed\space to\space run\space Sec.\space 5.51!}$$	
+$${\color{red}=>\space Failed\space to\space run\space section \space 5.51!}$$	
 
 
 ### course on moveit
