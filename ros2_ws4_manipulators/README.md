@@ -56,10 +56,13 @@ Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
     ros2 launch robot_description rviz.launch.arduinobot.xacro.py
 
 ### course on gazebo ros2_control
-
-    sudo apt install  ros-jazzy-ros2-control ros-jazzy-controller-manager ros-jazzy-ros2-controllers ros-jazzy-gz-ros2-control
+    sudo apt install ros-jazzy-ros2-control ros-jazzy-controller-manager ros-jazzy-ros2-controllers ros-jazzy-gz-ros2-control ros-jazzy-pluginlib
+    source install/setup.bash
+    # ros2 launch robot_build gazebo.rviz.launch.arduinobot.xacro.py
     ros2 launch robot_description gazebo.rviz.launch.arduinobot.xacro.py
     ros2 launch robot_controller ros2_control.launch.arduinobot.xacro.py
+
+Had issue with ros2_control (<a href="https://github.com/ros-controls/gz_ros2_control/issues/567#issuecomment-2833271693">link</a>).
 
 ### course on moveit
 
