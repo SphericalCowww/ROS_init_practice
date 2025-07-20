@@ -30,6 +30,10 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
 
 ### basic urdf 
 
+    ros2 launch my_robot_description display.launch.xml 
+    rqt_graph
+    ros2 run tf2_tools view_frames
+
 
 
 
