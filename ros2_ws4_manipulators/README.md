@@ -1,4 +1,4 @@
-## Basic manipulators using ros2 (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
+## Basic manipulators using ros2 (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>) => Failed
 
 | term | compositions | 
 | - | - | 
@@ -63,6 +63,13 @@ Upload ''src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
     ros2 launch robot_controller ros2_control.launch.arduinobot.xacro.py
 
 Had issue with ros2_control (<a href="https://github.com/ros-controls/gz_ros2_control/issues/567#issuecomment-2833271693">link</a>).
+
+<span style="color:red"> => Failed to run chapter 5.51!</span>
+
+This is <span style="color:red">red text</span> and <span style="color:blue">blue text</span>.
+
+$${\color{red}=>\space Failed\space to\space run\space Sec.\space 5.51!}$$	
+
 
 ### course on moveit
 
