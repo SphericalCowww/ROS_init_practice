@@ -10,7 +10,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -19,7 +19,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>

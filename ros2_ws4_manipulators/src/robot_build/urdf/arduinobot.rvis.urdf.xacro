@@ -11,7 +11,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -20,7 +20,7 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -29,7 +29,7 @@
         <visual>
             <origin rpy=" 0 -${pi/2} ${pi/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -38,7 +38,7 @@
         <visual>
             <origin rpy="${pi/2} 0 ${pi/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -47,7 +47,7 @@
         <visual>
             <origin rpy="0 0 ${pi/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -56,7 +56,7 @@
         <visual>
             <origin rpy="0 0 -${pi/2}" xyz="-0.1 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -65,7 +65,7 @@
         <visual>
             <origin rpy="0 0 -${pi/2}" xyz="-0.04 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>
@@ -74,7 +74,7 @@
         <visual>
             <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
             <geometry>
-                <mesh filename="package://robot_description/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://robot_build/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
     </link>

@@ -25,7 +25,7 @@ def generate_launch_description():
             package_name="robot_controller"
         ).robot_description(
             os.path.join(
-                get_package_share_directory("robot_description"),
+                get_package_share_directory("robot_build"),
                 "urdf",
                 "arduinobot.urdf.xacro",
             )

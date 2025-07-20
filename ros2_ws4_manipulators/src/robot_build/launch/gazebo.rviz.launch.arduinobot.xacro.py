@@ -13,7 +13,7 @@ def generate_launch_description():
     urdf_model = DeclareLaunchArgument(
         name="model",
         default_value=os.path.join(
-            get_package_share_directory("robot_description"),
+            get_package_share_directory("robot_build"),
             "urdf",
             "arduinobot.urdf.xacro",
         ),
@@ -45,7 +45,7 @@ def generate_launch_description():
         output    ="screen",
         arguments =["-d", 
                     os.path.join(
-                        get_package_share_directory("robot_description"), 
+                        get_package_share_directory("robot_build"), 
                         "rviz2", 
                         "display.rviz",
                     ),
@@ -55,7 +55,7 @@ def generate_launch_description():
     gazebo_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[
-            str(Path(get_package_share_directory("robot_description")).parent.resolve()),
+            str(Path(get_package_share_directory("robot_build")).parent.resolve()),
         ],
     )
     # find physics plugins in: /opt/ros/jazzy/opt/gz_physics_vendor/lib/gz-physics-7/engine-plugins
@@ -91,7 +91,6 @@ def generate_launch_description():
         ],
     )
 
-    '''
     ### same error, see: https://github.com/ros-controls/gz_ros2_control/issues/567
     arm_controller_spawner = Node(
         package   ="controller_manager",
@@ -120,7 +119,6 @@ def generate_launch_description():
             "/controller_manager",
         ],
     )
-    '''
 
     ld.add_action(urdf_model)
     ld.add_action(robot_state_publisher)
