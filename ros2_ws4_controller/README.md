@@ -37,7 +37,15 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
 ### controller configuration
 Visti <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/">ros2_controllers github</a> and <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/src/diff_drive_controller_parameter.yaml">diff drive controller parameter</a> to fill in the ros2_control configuration file:  ``.../src/my_robot_bringup/config/my_robot_controllers.yaml``.
 
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_bringup my_robot.launch.py
+    rqt_graph
 
+    ros2 control list_controllers
+    ros2 control list_controller_types
+    ros2 control list_hardware_interfaces
+    ros2 control list_hardware_components
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
