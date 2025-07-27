@@ -34,14 +34,22 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     rqt_graph
     ros2 run tf2_tools view_frames
 
+Use the following to debug urdf/xacro files:
+
+    ros2 run xacro xacro my_robot.urdf.xacro 
+
 ### controller configuration
 Visti <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/">ros2_controllers github</a> and <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/src/diff_drive_controller_parameter.yaml">diff drive controller parameter</a> to fill in the ros2_control configuration file:  ``.../src/my_robot_bringup/config/my_robot_controllers.yaml``.
 
     colcon build
     source install/setup.bash
     ros2 launch my_robot_bringup my_robot.launch.py
+    # on a different window
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_controller/cmd_vel -p stamped:=true
+    
+Other parameters to check:
+    
     rqt_graph
-
     ros2 control list_controllers
     ros2 control list_controller_types
     ros2 control list_hardware_interfaces
