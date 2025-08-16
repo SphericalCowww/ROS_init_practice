@@ -56,6 +56,13 @@ Other parameters to check:
     ros2 control list_hardware_components
 
 ### controlling servo with controller PCA9685 without ros2_control
+
+Check the following file with the Arduino connection:
+
+    /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
+
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.png" width="300">
+
 #### with an Arduino using the Arduino IDE
 #### with an Arduino using the ROS serial
 #### with the driver from python package adafruit_pca9685
