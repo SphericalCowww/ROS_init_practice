@@ -21,16 +21,19 @@ void loop() {
   int controlInputInt = 0;
   if (Serial.available()) {
     controlInputInt = Serial.readString().toInt();
-    if (controlInputInt == 0) {
-      for (int ang = 10; ang <= 170; ang += 5) {
-        pwm.setPWM(servoIdx, 0, angleToPulse(ang));
-        delay(100);
-      }
-    }
-    else {
-      pwm.setPWM(servoIdx, 0, angleToPulse(0));
+  }
+  Serial.print(" Serial.available: "); Serial.print(Serial.available()); Serial.print("\n"); 
+  Serial.print(" controlInputInt:  "); Serial.print(controlInputInt); Serial.print("\n");
+  if (controlInputInt == 1) {
+    for (int ang = 10; ang <= 170; ang += 5) {
+      pwm.setPWM(servoIdx, 0, angleToPulse(ang));
+      delay(100);
     }
   }
+  else {
+    pwm.setPWM(servoIdx, 0, angleToPulse(0));
+  }
+  delay(1000);
 }
 
 int angleToPulse(int ang){
