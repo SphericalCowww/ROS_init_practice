@@ -79,22 +79,23 @@ ROS2 does NOT have an intrinsic package to communicate with an Arduino. To use R
 
 Then the communication can be established in the following ways.
 
-Arduino as a transmitter and ROS as the receiver:
+Arduino as a transmitter and ROS as the receiver (very inconsistent on Rasp Pi):
     
-    #upload to Arduino: src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
+    # upload to Arduino: src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
+    # open Serial Monitor from Arduino IDE, wait for consistent messages, close Serial Monitor
     ros2 run my_robot_firmware_py Arduino_serial_receiver --ros-args -p port:=/dev/ttyACM0
 
 Arduino as the receiver and ROS as the transmitter:
 
-    #upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_receiver_LED/Arduino_serial_receiver_LED.ino
+    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_receiver_LED/Arduino_serial_receiver_LED.ino
     ros2 run my_robot_firmware_py Arduino_serial_publisher --ros-args -p port:=/dev/ttyACM0
     ros2 topic list
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '1'"     # turn on LED_PIN 13
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '0'"     # turn off LED_PIN 13
 
-Arduino as a receiver and ROS as the lifecycle:
+Arduino as the transmitter and receiver, and ROS as the lifecycle:
 
-    #upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
+    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
     ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
     ros2 lifecycle nodes
     ros2 lifecycle set /serial_lifecycleNode configure
