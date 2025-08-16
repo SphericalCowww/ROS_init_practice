@@ -77,7 +77,14 @@ ROS2 does NOT have an intrinsic package to communicate with an Arduino. To use R
     i2cdetect -y 1                        #If I2C is enabled, it will show grid patterns
     sudo adduser $USER i2c
 
-Then the communication can be established in the following way:
+Then the communication can be established in the following ways.
+
+Arduino as a transmitter and ROS as the receiver:
+    
+    #upload to Arduino: src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
+    ros2 run my_robot_firmware_py Arduino_serial_receiver --ros-args -p port:=/dev/ttyACM0
+
+Arduino as the receiver and ROS as the transmitter:
 
     #upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_receiver_LED/Arduino_serial_receiver_LED.ino
     ros2 run my_robot_firmware_py Arduino_serial_publisher --ros-args -p port:=/dev/ttyACM0
@@ -85,15 +92,16 @@ Then the communication can be established in the following way:
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '1'"     # turn on LED_PIN 13
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '0'"     # turn off LED_PIN 13
 
+Arduino as a receiver and ROS as the lifecycle:
+
     #upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
-    ros2 run  my_robot_firmware_py Arduino_lifecycle --ros-args -p port:=/dev/ttyACM0
+    ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
     ros2 lifecycle nodes
     ros2 lifecycle set /serial_lifecycleNode configure
     ros2 lifecycle set /serial_lifecycleNode activate
     ros2 topic list
     ros2 topic echo /serial_lifecycle_receiver
-    
-    #upload to Arduino: src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
+
 
     
 
