@@ -55,6 +55,18 @@ Other parameters to check:
     ros2 control list_hardware_interfaces
     ros2 control list_hardware_components
 
+### controlling servo with controller PCA9685 without ros2_control
+## with an Arduino using the Arduino IDE
+## with an Arduino using the ROS serial
+## with the driver from python package adafruit_pca9685
+
+<a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>
+
+## with the driver from C++ package lib9685
+
+<a href="https://github.com/TeraHz/PCA9685/">github</a>
+
+
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
 
