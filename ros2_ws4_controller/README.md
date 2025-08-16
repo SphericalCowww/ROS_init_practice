@@ -57,7 +57,7 @@ Other parameters to check:
 
 ### controlling servo with controller PCA9685 without ros2_control
 
-Check the following file with the Arduino connection:
+Install ``Adafruit PCA9685 PWM Servo Driver`` library in the Arduino IDE. Open the following file with the Arduino/PCA9685 connected as shown in the figure:
 
     /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
 
