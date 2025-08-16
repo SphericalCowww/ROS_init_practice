@@ -61,7 +61,7 @@ Check the following file with the Arduino connection:
 
     /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
 
-<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.png" width="300">
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/Arduino_PCA9685_testChannel0/Arduino_PCA9685_testChannel0.png" width="300">
 
 #### with an Arduino using the Arduino IDE
 #### with an Arduino using the ROS serial
