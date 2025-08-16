@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>my_robot_firmware_py</name>
@@ -8,9 +8,7 @@
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
-  <depend>board</depend>
-  <depend>adafruit_motor</depend>
-  <depend>adafruit_pca9685</depend>
+  <exec_depend>python3-adafruit-blinka</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

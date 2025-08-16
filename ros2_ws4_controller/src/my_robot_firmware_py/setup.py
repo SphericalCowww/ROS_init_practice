@@ -20,9 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'Arduino_serial_publisher = my_robot_firmware_py.Arduino_serial_publisher',
-            'Arduino_serial_receiver  = my_robot_firmware_py.Arduino_serial_receiver',
-            'Arduino_serial_lifecycle = my_robot_firmware_py.Arduino_serial_lifecycle',
+            'Arduino_serial_publisher = my_robot_firmware_py.Arduino_serial_publisher:main',
+            'Arduino_serial_receiver  = my_robot_firmware_py.Arduino_serial_receiver:main',
+            'Arduino_serial_lifecycle = my_robot_firmware_py.Arduino_serial_lifecycle:main',
         ],
     },
 )
