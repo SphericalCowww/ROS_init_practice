@@ -103,7 +103,7 @@ Arduino as the transmitter and receiver, and ROS as the lifecycle:
     ros2 topic list
     ros2 topic echo /serial_lifecycle_receiver
 
-Arduino as the receiver to control PCA9685, and ROS as the lifecycle:
+Using the same circuit configuration as shown in the figure of the previous section. We can use Arduino as the receiver to control PCA9685, and ROS as the lifecycle to transmit the on/off signal:
 
     # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_receiver_PCA9685.ino
     ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
