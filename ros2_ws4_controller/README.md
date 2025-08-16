@@ -57,14 +57,55 @@ Other parameters to check:
 
 ### controlling servo with controller PCA9685 without ros2_control
 
+#### with an Arduino using the Arduino IDE
 Install ``Adafruit PCA9685 PWM Servo Driver`` library in the Arduino IDE. Open the following file with the Arduino/PCA9685 connected as shown in the figure:
 
-    /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
+    #upload to Arduino: /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/Arduino_PCA9685_testChannel0/Arduino_PCA9685_testChannel0.png" width="300">
 
-#### with an Arduino using the Arduino IDE
-#### with an Arduino using the ROS serial
+#### with an Arduino using the ROS serial to communicate with it
+
+ROS2 does NOT have an intrinsic package to communicate with an Arduino. To use ROS on an Arduino, a serial (I2C) connection needs to be established while connecting the Arduino to Rasp Pi on a USB port. To enable I2C:
+
+    sudo apt update
+    sudo apt upgrade
+    sudo apt-get install raspi-config
+    sudo raspi-config 	                #Navigate to Interfacing Options > I2C, and enable it.
+    reboot
+    sudo apt-get install -y i2c-tools python3-smbus
+    i2cdetect -y 1                        #If I2C is enabled, it will show grid patterns
+    sudo adduser $USER i2c
+
+Then the communication can be established in the following ways.
+
+Arduino as a transmitter and ROS as the receiver (very inconsistent on Rasp Pi):
+    
+    # upload to Arduino: src/arduino_firmware/firmware/serial_transmitter/serial_transmitter.ino
+    # open Serial Monitor from Arduino IDE, wait for consistent messages, close Serial Monitor
+    ros2 run my_robot_firmware_py Arduino_serial_receiver --ros-args -p port:=/dev/ttyACM0
+
+Arduino as the receiver and ROS as the transmitter:
+
+    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_receiver_LED/Arduino_serial_receiver_LED.ino
+    ros2 run my_robot_firmware_py Arduino_serial_publisher --ros-args -p port:=/dev/ttyACM0
+    ros2 topic list
+    ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '1'"     # turn on LED_PIN 13
+    ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '0'"     # turn off LED_PIN 13
+
+Arduino as the transmitter and receiver, and ROS as the lifecycle:
+
+    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
+    ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
+    ros2 lifecycle nodes
+    ros2 lifecycle set /serial_lifecycleNode configure
+    ros2 lifecycle set /serial_lifecycleNode activate
+    ros2 topic list
+    ros2 topic echo /serial_lifecycle_receiver
+
+
+    
+
 #### with the driver from python package adafruit_pca9685
 
 <a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>
