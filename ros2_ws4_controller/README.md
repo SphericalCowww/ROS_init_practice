@@ -96,14 +96,19 @@ Arduino as the receiver and ROS as the transmitter:
 Arduino as the transmitter and receiver, and ROS as the lifecycle:
 
     # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
-    ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
+    ros2 run my_robot_firmware_py Arduino_serial_lifecycle_LED --ros-args -p port:=/dev/ttyACM0
     ros2 lifecycle nodes
     ros2 lifecycle set /serial_lifecycleNode configure
     ros2 lifecycle set /serial_lifecycleNode activate
     ros2 topic list
     ros2 topic echo /serial_lifecycle_receiver
 
+Arduino as the receiver to control PCA9685, and ROS as the lifecycle:
 
+    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_receiver_PCA9685.ino
+    ros2 run my_robot_firmware_py Arduino_serial_lifecycle_PCA9685 --ros-args -p port:=/dev/ttyACM0
+    ros2 lifecycle set /serial_lifecycleNode configure
+    ros2 lifecycle set /serial_lifecycleNode activate
     
 
 #### with the driver from python package adafruit_pca9685
