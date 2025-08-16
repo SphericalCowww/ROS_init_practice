@@ -7,7 +7,8 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 uint8_t servoIdx = 0;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  Serial.setTimeout(1);
   Serial.println("Servo Test:");
   
   pwm.begin();
@@ -17,9 +18,18 @@ void setup() {
 }
 
 void loop() {
-  for (int ang = 10; ang <= 170; ang += 5) {
-    pwm.setPWM(servoIdx, 0, angleToPulse(ang));
-    delay(100);
+  int controlInputInt = 0;
+  if (Serial.available()) {
+    controlInputInt = Serial.readString().toInt();
+    if (controlInputInt == 0) {
+      for (int ang = 10; ang <= 170; ang += 5) {
+        pwm.setPWM(servoIdx, 0, angleToPulse(ang));
+        delay(100);
+      }
+    }
+    else {
+      pwm.setPWM(servoIdx, 0, angleToPulse(0));
+    }
   }
 }
 
