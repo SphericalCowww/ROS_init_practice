@@ -57,14 +57,30 @@ Other parameters to check:
 
 ### controlling servo with controller PCA9685 without ros2_control
 
+#### with an Arduino using the Arduino IDE
 Install ``Adafruit PCA9685 PWM Servo Driver`` library in the Arduino IDE. Open the following file with the Arduino/PCA9685 connected as shown in the figure:
 
     /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/Arduino_PCA9685_testChannel0/Arduino_PCA9685_testChannel0.png" width="300">
 
-#### with an Arduino using the Arduino IDE
-#### with an Arduino using the ROS serial
+#### with an Arduino using the ROS serial to communicate with it
+
+ROS2 does NOT have an intrinsic package to communicate with an Arduino. To use ROS on an Arduino, a serial (I2C) connection needs to be established while connecting the Arduino to Rasp Pi on a USB port. To enable I2C:
+
+    sudo apt update
+    sudo apt upgrade
+    sudo apt-get install raspi-config
+    sudo raspi-config 	                #Navigate to Interfacing Options > I2C, and enable it.
+    reboot
+    sudo apt-get install -y i2c-tools python3-smbus
+    i2cdetect -y 1                        #If I2C is enabled, it will show grid patterns
+    sudo adduser $USER i2c
+
+Then the serial communication can be established running the following Arduino IDE and ROS pairs
+
+    
+
 #### with the driver from python package adafruit_pca9685
 
 <a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>
