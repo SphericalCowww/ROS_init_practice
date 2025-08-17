@@ -22,11 +22,16 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     mkdir src
     colcon build
     cd src/
-    ros2 pkg create arduino_firmware --build-type ament_python --dependencies rclpy
+    # copy the full my_robot_description directly
+    ros2 pkg create my_robot_bringup
+    ros2 pkg create my_robot_firmware --build-type ament_cmake
+    ros2 pkg create my_robot_firmware_py --build-type ament_python --dependencies rclpy python3-adafruit-blinka
     cd ..
     # move everything from ros2_ws4_controller_ to ros2_ws4_controller
     colcon build --symlink-install
     source install/setup.bash
+
+WARNING: do NOT ``source install/setup.sh``!
 
 ### basic urdf 
 
@@ -115,7 +120,24 @@ Using the same circuit configuration as shown in the photo of the previous secti
 
 #### with the driver from python package adafruit_pca9685 (<a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>)
 
+To install the python pakcage ``adafruit_pca9685``  on a raspPi, do 
+
+    sudo apt-get install build-essential python3 python3-dev python3-venv python3-pip
+    sudo apt install python3-lgpio
+    pip install --break-system-packages adafruit-python-shell click wheel 
+    pip install --break-system-packages adafruit-circuitpython-servokit adafruit-circuitpython-pca9685 Adafruit-Blinka adafruit-circuitpython-register adafruit-circuitpython-busdevice
+
+And then follow the connection to the photo:
+
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/RaspPi_PCA9685_channel0.png" width="250">
+
+Test the connection by:
+
+    python3 src/my_robot_firmware_py/my_robot_firmware_py/testRaspPi5_adafruit_pca9685_channel0.py
+
+To run in ROS, do:
+
+    ros2 run my_robot_firmware_py RaspPi5_adafruit_lifecycle --ros-args -p port:=/dev/ttyACM0
 
 #### with the driver from C++ package lib9685 (<a href="https://github.com/TeraHz/PCA9685/">github</a>)
 
