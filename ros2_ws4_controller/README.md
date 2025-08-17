@@ -141,7 +141,7 @@ To run in ROS, do:
 
 #### with the driver from C++ package lib9685 
 
-  * pure driver: <a href="https://github.com/TeraHz/PCA9685/">github</a>
+  * pure driver: <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a>
   * ros2 node: <a href="https://github.com/kimsniper/ros2_pca9685">github</a>, <a href="https://github.com/vertueux/i2c_pwm_board">github</a>
   * ros2_control node: <a href="github.com/rosblox/pca9685_ros2_control?">github</a>, <a href="https://discourse.openrobotics.org/t/ros2-control-hardware-interface-for-adafruit-16-channel-pwm-servo-bonnet-for-raspberry-pi-pca9685/31772">discussion</a>
 
