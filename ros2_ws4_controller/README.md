@@ -76,11 +76,13 @@ ROS2 does NOT have an intrinsic package to communicate with an Arduino. To use R
     sudo apt update
     sudo apt upgrade
     sudo apt-get install raspi-config
-    sudo raspi-config 	                #Navigate to Interfacing Options > I2C, and enable it.
+    sudo raspi-config 	                  # navigate to Interfacing Options > I2C, and enable it.
     reboot
     sudo apt-get install -y i2c-tools python3-smbus
-    i2cdetect -y 1                        #If I2C is enabled, it will show grid patterns
+    i2cdetect -y 1                        # if I2C is enabled, it will show grid patterns
     sudo adduser $USER i2c
+    colcon build
+    source install/setup.bash
 
 Then the communication can be established in the following ways.
 
@@ -143,7 +145,26 @@ To run in ROS, do:
 
   * pure driver: <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a>
   * ros2 node: <a href="https://github.com/kimsniper/ros2_pca9685">github</a>, <a href="https://github.com/vertueux/i2c_pwm_board">github</a>
-  * ros2_control node: <a href="github.com/rosblox/pca9685_ros2_control?">github</a>, <a href="https://discourse.openrobotics.org/t/ros2-control-hardware-interface-for-adafruit-16-channel-pwm-servo-bonnet-for-raspberry-pi-pca9685/31772">discussion</a>
+  * ros2_control node: <a href="https://github.com/rosblox/pca9685_ros2_control">github</a>, <a href="https://discourse.openrobotics.org/t/ros2-control-hardware-interface-for-adafruit-16-channel-pwm-servo-bonnet-for-raspberry-pi-pca9685/31772">discussion</a>
+
+Proceeding with the pure drive option, which needs I2C as well:
+
+    sudo apt update
+    sudo apt upgrade
+    sudo apt-get install build-essential libi2c-dev i2c-tools
+    sudo apt-get install raspi-config
+    sudo raspi-config 	                # navigate to Interfacing Options > I2C, and enable it.
+    reboot
+    ls /dev/i2c-*                       # if I2C is enabled, it will should show /dev/i2c-1
+    i2cdetect -y 1                      # if I2C is enabled, it will show grid patterns with 40 as the default address
+    sudo usermod -aG i2c kali           # lower level than "sudo adduser $USER i2c"
+    reboot
+    colcon build
+    source install/setup.bash
+
+Then move the ``I2C.h``, ``I2C.cpp``, and ``PCA9685.h`` from <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a> to ``/src/my_robot_firmware/include/pca9685``. Note that the ``PCA9685.cpp`` has been corrected by  <a href="https://aistudio.google.com">Google AI Studio</a>. Then run,
+
+    ros2 run my_robot_firmware testRaspPi5_pca9685_channel0 
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
