@@ -58,11 +58,11 @@ Other parameters to check:
 ### controlling servo with controller PCA9685 without ros2_control
 
 #### with an Arduino using the Arduino IDE
-Install ``Adafruit PCA9685 PWM Servo Driver`` library in the Arduino IDE. Open the following file with the Arduino/PCA9685 connected as shown in the figure:
+Install ``Adafruit PCA9685 PWM Servo Driver`` library in the Arduino IDE. Open the following file with the Arduino/PCA9685 connected as shown in the photo:
 
     #upload to Arduino: /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
 
-<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/Arduino_PCA9685_testChannel0/Arduino_PCA9685_testChannel0.png" width="300">
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/Arduino_PCA9685_channel0.png" width="300">
 
 #### with an Arduino using the ROS serial to communicate with it
 
@@ -103,7 +103,7 @@ Arduino as the transmitter and receiver, and ROS as the lifecycle:
     ros2 topic list
     ros2 topic echo /serial_lifecycle_receiver
 
-Using the same circuit configuration as shown in the figure of the previous section. We can use Arduino as the receiver to control PCA9685, and ROS as the lifecycle to transmit the on/off signal:
+Using the same circuit configuration as shown in the photo of the previous section. We can use Arduino as the receiver to control PCA9685, and ROS as the lifecycle to transmit the on/off signal:
 
     # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_receiver_PCA9685.ino
     ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
@@ -113,13 +113,11 @@ Using the same circuit configuration as shown in the figure of the previous sect
     ros2 lifecycle set /serial_lifecycleNode deactivate
     ros2 lifecycle set /serial_lifecycleNode cleanup
 
-#### with the driver from python package adafruit_pca9685
+#### with the driver from python package adafruit_pca9685 (<a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>)
 
-<a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/RaspPi_PCA9685_channel0.png" width="250">
 
-#### with the driver from C++ package lib9685
-
-<a href="https://github.com/TeraHz/PCA9685/">github</a>
+#### with the driver from C++ package lib9685 (<a href="https://github.com/TeraHz/PCA9685/">github</a>)
 
 
 ## References:
