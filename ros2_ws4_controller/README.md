@@ -118,9 +118,9 @@ Using the same circuit configuration as shown in the photo of the previous secti
     ros2 lifecycle set /serial_lifecycleNode deactivate
     ros2 lifecycle set /serial_lifecycleNode cleanup
 
-#### with the driver from python package adafruit_pca9685 (<a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>)
+#### with the driver from python package adafruit_pca9685 
 
-To install the python pakcage ``adafruit_pca9685``  on a raspPi, do 
+To install the python pakcage ``adafruit_pca9685`` on a raspPi (<a href="https://github.com/adafruit/Adafruit_CircuitPython_PCA9685">github</a>), do 
 
     sudo apt-get install build-essential python3 python3-dev python3-venv python3-pip
     sudo apt install python3-lgpio
@@ -139,8 +139,11 @@ To run in ROS, do:
 
     ros2 run my_robot_firmware_py RaspPi5_adafruit_lifecycle --ros-args -p port:=/dev/ttyACM0
 
-#### with the driver from C++ package lib9685 (<a href="https://github.com/TeraHz/PCA9685/">github</a>)
+#### with the driver from C++ package lib9685 
 
+  * pure driver: <a href="https://github.com/TeraHz/PCA9685/">github</a>
+  * ros2 node: <a href="https://github.com/kimsniper/ros2_pca9685">github</a>, <a href="https://github.com/vertueux/i2c_pwm_board">github</a>
+  * ros2_control node: <a href="github.com/rosblox/pca9685_ros2_control?">github</a>, <a href="https://discourse.openrobotics.org/t/ros2-control-hardware-interface-for-adafruit-16-channel-pwm-servo-bonnet-for-raspberry-pi-pca9685/31772">discussion</a>
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
