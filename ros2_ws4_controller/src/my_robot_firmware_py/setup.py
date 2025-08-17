@@ -23,6 +23,7 @@ setup(
             'Arduino_serial_publisher = my_robot_firmware_py.Arduino_serial_publisher:main',
             'Arduino_serial_receiver  = my_robot_firmware_py.Arduino_serial_receiver:main',
             'Arduino_serial_lifecycle = my_robot_firmware_py.Arduino_serial_lifecycle:main',
+            'RaspPi5_adafruit_lifecycle = my_robot_firmware_py.RaspPi5_adafruit_lifecycle:main',
         ],
     },
 )
