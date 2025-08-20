@@ -11,8 +11,10 @@ namespace my_robot_hardware {
         public:
             // SystemInterface override
             hardware_interface::CallbackRetrun on_init(const hardware_interface::HardwareInfo & info) override;
-            hardware_interface::return_type    read (const rclcpp::Time & time, const rclcpp::Duration & period) override;
-            hardware_interface::return_type    write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+            hardware_interface::return_type read 
+                (const rclcpp::Time & time, const rclcpp::Duration & period) override;
+            hardware_interface::return_type write
+                (const rclcpp::Time & time, const rclcpp::Duration & period) override;
             // lifecycle node override
             hardware_interface::CallbackRetrun on_configure (const rclcpp_lifecycle:State & previous_state) override;
             hardware_interface::CallbackRetrun on_activate  (const rclcpp_lifecycle:State & previous_state) override;
