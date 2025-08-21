@@ -4,22 +4,22 @@
 #include "hardware_interface/system_interface.hpp"
 #include "pca9685/PCA9685.h"
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace my_robot_hardware {
     class HardwareInterfacePCA9685: public hardware_interface::SystemInterface
     {
         public:
             // SystemInterface override
-            hardware_interface::CallbackRetrun on_init(const hardware_interface::HardwareInfo & info) override;
+            hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
             hardware_interface::return_type read 
                 (const rclcpp::Time & time, const rclcpp::Duration & period) override;
             hardware_interface::return_type write
                 (const rclcpp::Time & time, const rclcpp::Duration & period) override;
             // lifecycle node override
-            hardware_interface::CallbackRetrun on_configure (const rclcpp_lifecycle:State & previous_state) override;
-            hardware_interface::CallbackRetrun on_activate  (const rclcpp_lifecycle:State & previous_state) override;
-            hardware_interface::CallbackRetrun on_deactivate(const rclcpp_lifecycle:State & previous_state) override;
-        pricate:
+            hardware_interface::CallbackReturn on_configure (const rclcpp_lifecycle::State & previous_state) override;
+            hardware_interface::CallbackReturn on_activate  (const rclcpp_lifecycle::State & previous_state) override;
+            hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
+        private:
             std::shared_ptr<PCA9685> pwm_controller_;
             int i2c_bus_       = 1;
             int i2c_address_   = 0x40;
@@ -37,8 +37,8 @@ namespace my_robot_hardware {
             }
             int min_ticks_ = microSec_to_ticks(pwm_min_microSec_, pwm_freq_);
             int max_ticks_ = microSec_to_ticks(pwm_max_microSec_, pwm_freq_);
-    }    
+    };    
 }
 
 #endif
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
