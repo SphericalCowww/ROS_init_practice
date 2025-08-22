@@ -2,8 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <ros2_control name="MobileBaseHardwareInterface" type="system">
         <hardware>
-            <plugin>mock_components/GenericSystem</plugin>
-            <param name="calculate_dynamics">true</param>
+            <!-- plugin>mock_components/GenericSystem</plugin>
+            <param name="calculate_dynamics">true</param -->
+            <plugin>my_robot_hardware/HardwareInterfacePCA9685</plugin>
         </hardware>
         <joint name="base_right_wheel_joint">
             <command_interface name="velocity"/>
