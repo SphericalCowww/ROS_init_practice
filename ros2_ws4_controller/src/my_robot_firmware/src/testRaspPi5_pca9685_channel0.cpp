@@ -34,7 +34,6 @@ int us_to_ticks(int pulse_us, int pwm_freq) {
 int main(int argc, char **argv) {
     rclcpp::init(argc, argv);
     auto node = std::make_shared<rclcpp::Node>("pca9685_servo_sweep_node");
-
     RCLCPP_INFO(node->get_logger(), "Starting PCA9685 servo sweep test.");
 
     int i2c_bus = 1;

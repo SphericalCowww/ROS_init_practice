@@ -20,6 +20,7 @@ namespace my_robot_hardware {
             hardware_interface::CallbackReturn on_activate  (const rclcpp_lifecycle::State & previous_state) override;
             hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
         private:
+            std::shared_ptr<rclcpp::Node> node_;
             std::shared_ptr<PCA9685> pwm_controller_;
             int i2c_bus_       = 1;
             int i2c_address_   = 0x40;
