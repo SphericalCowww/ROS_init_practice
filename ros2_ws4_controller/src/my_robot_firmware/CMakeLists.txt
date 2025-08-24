@@ -25,12 +25,15 @@ target_include_directories(pca9685_driver PUBLIC
 add_executable(testRaspPi5_pca9685_channel0 src/testRaspPi5_pca9685_channel0.cpp)
 ament_target_dependencies(testRaspPi5_pca9685_channel0 rclcpp)
 target_link_libraries(testRaspPi5_pca9685_channel0 pca9685_driver)
+add_executable(testRaspPi5_pca9685_channel01 src/testRaspPi5_pca9685_channel01.cpp)
+ament_target_dependencies(testRaspPi5_pca9685_channel01 rclcpp)
+target_link_libraries(testRaspPi5_pca9685_channel01 pca9685_driver)
 install(TARGETS pca9685_driver
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
 )
-install(TARGETS testRaspPi5_pca9685_channel0
+install(TARGETS testRaspPi5_pca9685_channel0 testRaspPi5_pca9685_channel01
     DESTINATION lib/${PROJECT_NAME}
 )
 

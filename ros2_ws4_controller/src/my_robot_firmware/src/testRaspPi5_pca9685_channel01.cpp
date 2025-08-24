@@ -50,26 +50,15 @@ int main(int argc, char **argv) {
         RCLCPP_INFO(node->get_logger(), "Servo Range (us): %d to %d",      MIN_PULSE_WIDTH_US, MAX_PULSE_WIDTH_US);
         RCLCPP_INFO(node->get_logger(), "Calculated Tick Range: %d to %d", min_ticks, max_ticks);
         
-        int servo_channel = 0;
-        int delay_ms = 15;              // Delay between steps for a smooth sweep
+        int servo_channel0 = 0;
+        int servo_channel1 = 1;
+        pwm_controller.setPWM(servo_channel0, 0, max_ticks);
+        pwm_controller.setPWM(servo_channel1, 0, max_ticks);
 
-        // --- Servo Sweep Test ---
-        RCLCPP_INFO(node->get_logger(), "Sweeping from MIN to MAX...");
-        for (int ticks = min_ticks; ticks <= max_ticks; ++ticks) {
-            pwm_controller.setPWM(servo_channel, 0, ticks);
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
-        }
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-
-        RCLCPP_INFO(node->get_logger(), "Sweeping from MAX to MIN...");
-        for (int ticks = max_ticks; ticks >= min_ticks; --ticks) {
-            pwm_controller.setPWM(servo_channel, 0, ticks);
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
-        }
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::seconds(10));
         
-        RCLCPP_INFO(node->get_logger(), "Test complete. Releasing servo.");
-        pwm_controller.setPWM(servo_channel, 0, 0); // Turn off PWM signal
+        pwm_controller.setPWM(servo_channel0, 0);
+        pwm_controller.setPWM(servo_channel1, 0);
 
     } catch (const std::exception &e) {
         RCLCPP_ERROR(node->get_logger(), "An exception occurred: %s", e.what());
