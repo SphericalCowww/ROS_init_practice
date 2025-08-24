@@ -8,12 +8,7 @@
 
 ### general installation
 
-Useful inspection code:
-
     ros2 pkg list
-
-Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be capitalized):
-
     sudo apt install ros-(...)-xacro     # if not installed
     sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
     mv ros2_ws4_controller ros2_ws4_controller_
@@ -31,7 +26,7 @@ Launch ''CountUntil.action'' (WARNING: the first letter of the file name must be
     colcon build --symlink-install
     source install/setup.bash
 
-WARNING: do NOT ``source install/setup.sh``!
+WARNING: watch out which .type your shell is for ``source install/setup.XXX``!
 
 ### basic urdf 
 
@@ -44,7 +39,7 @@ Use the following to debug urdf/xacro files:
     ros2 run xacro xacro my_robot.urdf.xacro 
 
 ### controller configuration
-Visti <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/">ros2_controllers github</a> and <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/src/diff_drive_controller_parameter.yaml">diff drive controller parameter</a> to fill in the ros2_control configuration file:  ``.../src/my_robot_bringup/config/my_robot_controllers.yaml``.
+Visit <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/">ros2_controllers github</a> and <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/src/diff_drive_controller_parameter.yaml">diff drive controller parameter</a> to fill in the ros2_control configuration file:  ``.../src/my_robot_bringup/config/my_robot_controllers.yaml``.
 
     colcon build
     source install/setup.bash
