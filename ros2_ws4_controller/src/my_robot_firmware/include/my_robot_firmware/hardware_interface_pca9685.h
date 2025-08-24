@@ -2,10 +2,11 @@
 #define HARDWARE_INTERFACE_PCA9685_HPP
 
 #include "hardware_interface/system_interface.hpp"
+#include "rclcpp_lifecycle/state.hpp"
 #include "pca9685/PCA9685.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace my_robot_hardware {
+namespace my_robot_firmware {
     class HardwareInterfacePCA9685: public hardware_interface::SystemInterface
     {
         public:
@@ -31,9 +32,9 @@ namespace my_robot_hardware {
             int right_servo_channel_ = 0;
             int left_servo_channel_  = 0;
             int microSec_to_ticks(int pulse_microSec, int pwm_freq) {
-                double pulse_s = pulse_microSec / 1000000.0;     // Convert us to seconds
-                double period_s = 1.0 / pwm_freq;          // Get period in seconds
-                double ticks_per_s = 4096 / period_s;      // 12-bit resolution
+                double pulse_s = pulse_microSec / 1000000.0;        // Convert us to seconds
+                double period_s = 1.0 / pwm_freq;                   // Get period in seconds
+                double ticks_per_s = 4096 / period_s;               // 12-bit resolution
                 return static_cast<int>(pulse_s * ticks_per_s);
             }
             int min_ticks_ = microSec_to_ticks(pwm_min_microSec_, pwm_freq_);

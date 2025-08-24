@@ -5,7 +5,7 @@
 #include "my_robot_firmware/hardware_interface_pca9685.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace my_robot_hardware {
+namespace my_robot_firmware {
     hardware_interface::CallbackReturn HardwareInterfacePCA9685::on_init
         (const hardware_interface::HardwareInfo & info) 
     {
@@ -94,7 +94,7 @@ namespace my_robot_hardware {
     }
 }
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(my_robot_hardware::HardwareInterfacePCA9685, hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(my_robot_firmware::HardwareInterfacePCA9685, hardware_interface::SystemInterface)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
