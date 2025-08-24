@@ -161,6 +161,12 @@ Then move the ``I2C.h``, ``I2C.cpp``, and ``PCA9685.h`` from <a href="https://gi
 
     ros2 run my_robot_firmware testRaspPi5_pca9685_channel0 
 
+### ros2_control with plugins
+
+Plugin servos to channels 0 and 1 in PCA9685. Note, however, that the RC servos used do not have speed mode and feedback, so remove the read() requirement in ``src/my_robot_firmware/src/hardware_interface_pca9685.cpp`` and mimic the differential drive with angular position control instead of speed control. Run:
+
+    ros2 launch my_robot_bringup my_robot.launch.xml 
+
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
 
