@@ -30,7 +30,7 @@ namespace my_robot_firmware {
             int pwm_min_microSec_ = 600;
             int pwm_max_microSec_ = 2400;
             int right_servo_channel_ = 0;
-            int left_servo_channel_  = 0;
+            int left_servo_channel_  = 1;
             int microSec_to_ticks(int pulse_microSec, int pwm_freq) {
                 double pulse_s = pulse_microSec / 1000000.0;        // Convert us to seconds
                 double period_s = 1.0 / pwm_freq;                   // Get period in seconds
@@ -39,6 +39,9 @@ namespace my_robot_firmware {
             }
             int min_ticks_ = microSec_to_ticks(pwm_min_microSec_, pwm_freq_);
             int max_ticks_ = microSec_to_ticks(pwm_max_microSec_, pwm_freq_);
+
+            bool write_first_call = true;
+            rclcpp::Time start_time;
     };    
 }
 

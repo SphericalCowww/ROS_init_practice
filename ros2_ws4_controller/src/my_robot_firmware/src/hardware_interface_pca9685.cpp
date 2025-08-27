@@ -24,11 +24,23 @@ namespace my_robot_firmware {
     hardware_interface::return_type HardwareInterfacePCA9685::read 
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
-        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::read()");
+        //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::read()");
         (void) time;
-        double right_velocity = 0.0;        //feedback not available for pca9685 
-        double left_velocity  = 0.0;        //feedback not available for pca9685
-
+        if (write_first_call == true) {
+            start_time = time;
+            write_first_call = false;
+        }
+        rclcpp::Duration lifetime = time - start_time;
+    
+        double right_velocity = get_command("base_right_wheel_joint/velocity");       //feedback not available for pca9685 
+        double left_velocity  = get_command("base_left_wheel_joint/velocity");        //feedback not available for pca9685
+        if (std::isnan(right_velocity)) {
+            right_velocity = 0.0;
+        }
+        if (std::isnan(left_velocity)) {
+            left_velocity = 0.0;
+        }
+        RCLCPP_INFO(node_->get_logger(), "HERE: %lf, %lf", right_velocity, left_velocity);
         // see: /src/my_robot_description/urdf/mobile_base.ros2_control.xacro
         set_state("base_right_wheel_joint/velocity", right_velocity);
         set_state("base_left_wheel_joint/velocity",  left_velocity);
@@ -41,23 +53,13 @@ namespace my_robot_firmware {
     hardware_interface::return_type HardwareInterfacePCA9685::write
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
-        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::write()");
+        //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::write()");
         (void) time;
         (void) period; 
         
         // see: /src/my_robot_description/urdf/mobile_base.ros2_control.xacro
-        int delay_ms = 100;
-        int delay_time;
-        for (int ticks = min_ticks_; ticks <= max_ticks_; ++ticks) {
-            pwm_controller_->setPWM(right_servo_channel_, 0, ticks);
-            delay_time = delay_ms/get_command("base_right_wheel_joint/velocity");
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay_time));
-        }
-        for (int ticks = min_ticks_; ticks <= max_ticks_; ++ticks) {
-            pwm_controller_->setPWM(left_servo_channel_, 0, ticks);
-            delay_time = delay_ms/get_command("base_left_wheel_joint/velocity");
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay_time));
-        }    
+        pwm_controller_->setPWM(right_servo_channel_, 0, 20*get_command("base_right_wheel_joint/velocity"));
+        pwm_controller_->setPWM(left_servo_channel_,  0, 20*get_command("base_left_wheel_joint/velocity")); 
         return hardware_interface::return_type::OK;
     }   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
