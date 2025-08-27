@@ -26,7 +26,7 @@ namespace my_robot_firmware {
     {
         RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::read()");
         (void) time;
-        double right_velocity = 0.0;        //feedback not available for pca9685
+        double right_velocity = 0.0;        //feedback not available for pca9685 
         double left_velocity  = 0.0;        //feedback not available for pca9685
 
         // see: /src/my_robot_description/urdf/mobile_base.ros2_control.xacro
