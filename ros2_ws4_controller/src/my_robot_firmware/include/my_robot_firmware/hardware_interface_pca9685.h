@@ -23,22 +23,22 @@ namespace my_robot_firmware {
         private:
             std::shared_ptr<rclcpp::Node> node_;
             std::shared_ptr<PCA9685> pwm_controller_;
-            int i2c_bus_       = 1;
-            int i2c_address_   = 0x40;
-            int pwm_freq_      = 50;
+            int i2c_bus_     = 1;
+            int i2c_address_ = 0x40;
+            int pwm_freq_    = 50;
 
-            int pwm_min_microSec_ = 600;
-            int pwm_max_microSec_ = 2400;
-            int right_servo_channel_ = 0;
-            int left_servo_channel_  = 1;
+            int right_servo_channel_;
+            int left_servo_channel_;
+            int pwm_min_microSec_;
+            int pwm_max_microSec_;
+            int min_ticks_;
+            int max_ticks_;
             int microSec_to_ticks(int pulse_microSec, int pwm_freq) {
-                double pulse_s = pulse_microSec / 1000000.0;        // Convert us to seconds
-                double period_s = 1.0 / pwm_freq;                   // Get period in seconds
-                double ticks_per_s = 4096 / period_s;               // 12-bit resolution
-                return static_cast<int>(pulse_s * ticks_per_s);
+                double pulse_sec     = pulse_microSec/1000000.0;      
+                double period_sec    = 1.0/pwm_freq;  
+                double ticks_per_sec = 4096/period_sec;
+                return static_cast<int>(pulse_sec* ticks_per_sec);
             }
-            int min_ticks_ = microSec_to_ticks(pwm_min_microSec_, pwm_freq_);
-            int max_ticks_ = microSec_to_ticks(pwm_max_microSec_, pwm_freq_);
 
             bool write_first_call = true;
             rclcpp::Time start_time;

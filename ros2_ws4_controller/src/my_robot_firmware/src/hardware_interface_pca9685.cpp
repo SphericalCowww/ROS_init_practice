@@ -18,6 +18,12 @@ namespace my_robot_firmware {
  
         info_ = info;        
         pwm_controller_ = std::make_shared<PCA9685>(i2c_bus_, i2c_address_);
+        right_servo_channel_ = std::stoi(info_.hardware_parameters["right_servo_channel"]);
+        left_servo_channel_  = std::stoi(info_.hardware_parameters["left_servo_channel"]);
+        pwm_min_microSec_ = std::stoi(info_.hardware_parameters["pwm_min_microSec"]);
+        pwm_max_microSec_ = std::stoi(info_.hardware_parameters["pwm_max_microSec"]);
+        microSec_to_ticks(pwm_min_microSec_, pwm_freq_);
+        microSec_to_ticks(pwm_max_microSec_, pwm_freq_);
 
         return hardware_interface::CallbackReturn::SUCCESS;     
     }
@@ -32,15 +38,16 @@ namespace my_robot_firmware {
         }
         rclcpp::Duration lifetime = time - start_time;
     
-        double right_velocity = get_command("base_right_wheel_joint/velocity");       //feedback not available for pca9685 
-        double left_velocity  = get_command("base_left_wheel_joint/velocity");        //feedback not available for pca9685
+        // note: feedback not available for pca9685
+        double right_velocity = get_command("base_right_wheel_joint/velocity");  
+        double left_velocity  = get_command("base_left_wheel_joint/velocity"); 
         if (std::isnan(right_velocity)) {
             right_velocity = 0.0;
         }
         if (std::isnan(left_velocity)) {
             left_velocity = 0.0;
         }
-        RCLCPP_INFO(node_->get_logger(), "HERE: %lf, %lf", right_velocity, left_velocity);
+        RCLCPP_INFO(node_->get_logger(), "velocity (right, left): (%lf, %lf)", right_velocity, left_velocity);
         // see: /src/my_robot_description/urdf/mobile_base.ros2_control.xacro
         set_state("base_right_wheel_joint/velocity", right_velocity);
         set_state("base_left_wheel_joint/velocity",  left_velocity);
