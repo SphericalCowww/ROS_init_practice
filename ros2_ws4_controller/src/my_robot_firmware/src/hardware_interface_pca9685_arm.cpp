@@ -41,6 +41,12 @@ namespace ma_robot_arm {
         // note: feedback not available for pca9685
         double joint1_position = get_command("arm_joint1/position");  
         double joint2_position = get_command("arm_joint2/position"); 
+        if (std::isnan(joint1_position)) {
+            joint1_position = 0.0;
+        }
+        if (std::isnan(joint2_position)) {
+            joint2_position = 0.0;
+        }
         RCLCPP_INFO(node_->get_logger(), "position (joint1, joint2): (%lf, %lf)", joint1_position, joint2_position);
         // see: /src/my_robot_description/urdf/mobile_base.ros2_control.xacro
         set_state("arm_joint1/position", joint1_position);
@@ -55,8 +61,8 @@ namespace ma_robot_arm {
         (void) period; 
         
         // see: /src/my_robot_description/urdf/arm.ros2_control.xacro
-        pwm_controller_->setPWM(joint1_servo_channel_, 0, get_command("arm_joint1/position"));
-        pwm_controller_->setPWM(joint2_servo_channel_, 0, get_command("arm_joint2/position")); 
+        pwm_controller_->setPWM(joint1_servo_channel_, 0, 20*get_command("arm_joint1/position"));
+        pwm_controller_->setPWM(joint2_servo_channel_, 0, 20*get_command("arm_joint2/position")); 
         return hardware_interface::return_type::OK;
     }   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
