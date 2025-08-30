@@ -2,14 +2,14 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <ros2_control name="MobileBaseHardwareInterface" type="system">
         <hardware>
-            <plugin>mock_components/GenericSystem</plugin>
-            <param name="calculate_dynamics">true</param>
+            <!--plugin>mock_components/GenericSystem</plugin>
+            <param name="calculate_dynamics">true</param-->
 
-            <!--plugin>my_robot_firmware/HardwareInterfacePCA9685_base</plugin>
-            <param name="right_servo_channel">1</param>
-            <param name="left_servo_channel"> 0</param>
+            <plugin>my_robot_base/HardwareInterfacePCA9685_base</plugin>
+            <param name="right_servo_channel">0</param>
+            <param name="left_servo_channel"> 1</param>
             <param name="pwm_min_microSec">600</param>
-            <param name="pwm_max_microSec">2400</param-->
+            <param name="pwm_max_microSec">2400</param>
         </hardware>
         <joint name="base_right_wheel_joint">
             <command_interface name="velocity"/>

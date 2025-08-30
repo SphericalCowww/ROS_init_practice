@@ -31,7 +31,7 @@ namespace ma_robot_arm {
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
         //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_arm::read()");
-        (void) time;
+        (void) period;
         if (write_first_call == true) {
             start_time = time;
             write_first_call = false;
