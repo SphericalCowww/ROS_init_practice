@@ -181,7 +181,8 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
     source install/setup.bash
     ros2 launch my_robot_bringup ma_robot.launch.py
     # on a different window
-    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.4, 0.3]}"
+    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [4.0, 3.0]}"
+    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.0, 0.0]}"
     
     ros2 topic list
     ros2 topic info /arm_joint_controller/commands
