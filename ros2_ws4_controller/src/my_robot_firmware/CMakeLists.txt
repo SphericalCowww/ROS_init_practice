@@ -41,21 +41,22 @@ install(TARGETS testRaspPi5_pca9685_channel0 testRaspPi5_pca9685_channel01
 )
 
 ###########################################################################
-add_library(hardware_interface_pca9685_base SHARED
+add_library(my_robot SHARED
   src/hardware_interface_pca9685_base.cpp
 )
-ament_target_dependencies(hardware_interface_pca9685_base rclcpp rclcpp_lifecycle hardware_interface pluginlib)
+ament_target_dependencies(my_robot rclcpp rclcpp_lifecycle hardware_interface pluginlib)
 target_link_libraries(hardware_interface_pca9685_base pca9685_driver)
 pluginlib_export_plugin_description_file(hardware_interface my_robot_hardware_interface.xml)
 
-add_library(hardware_interface_pca9685 SHARED
-    src/hardware_interface_pca9685.cpp
+add_library(ma_robot SHARED
+  src/hardware_interface_pca9685_base.cpp
+  src/hardware_interface_pca9685_arm.cpp
 )
-ament_target_dependencies(hardware_interface_pca9685_arm rclcpp rclcpp_lifecycle hardware_interface pluginlib)
+ament_target_dependencies(ma_robot rclcpp rclcpp_lifecycle hardware_interface pluginlib)
 target_link_libraries(hardware_interface_pca9685_arm pca9685_driver)
 pluginlib_export_plugin_description_file(hardware_interface ma_robot_hardware_interface.xml)
 
-install(TARGETS hardware_interface_pca9685_base hardware_interface_pca9685_arm
+install(TARGETS my_robot ma_robot
   DESTINATION lib
 )
 install(
@@ -63,7 +64,7 @@ install(
   DESTINATION include
 )
 ament_export_libraries(
-  $(PROJECT_NAME)
+  my_robot
 )
 ament_export_dependencies(rclcpp rclcpp_lifecycle hardware_interface pluginlib)
 ###########################################################################
