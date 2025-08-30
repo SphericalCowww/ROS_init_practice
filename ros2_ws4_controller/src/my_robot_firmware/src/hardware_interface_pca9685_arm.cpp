@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 #include "rclcpp/rclcpp.hpp"
-#include "my_robot_firmware/hardware_interface_pca9685_arm.h"
+#include "my_robot_firmware/hardware_interface_pca9685_arm.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace ma_robot_arm {

@@ -45,7 +45,7 @@ add_library(my_robot SHARED
   src/hardware_interface_pca9685_base.cpp
 )
 ament_target_dependencies(my_robot rclcpp rclcpp_lifecycle hardware_interface pluginlib)
-target_link_libraries(hardware_interface_pca9685_base pca9685_driver)
+target_link_libraries(my_robot pca9685_driver)
 pluginlib_export_plugin_description_file(hardware_interface my_robot_hardware_interface.xml)
 
 add_library(ma_robot SHARED
@@ -53,7 +53,7 @@ add_library(ma_robot SHARED
   src/hardware_interface_pca9685_arm.cpp
 )
 ament_target_dependencies(ma_robot rclcpp rclcpp_lifecycle hardware_interface pluginlib)
-target_link_libraries(hardware_interface_pca9685_arm pca9685_driver)
+target_link_libraries(ma_robot pca9685_driver)
 pluginlib_export_plugin_description_file(hardware_interface ma_robot_hardware_interface.xml)
 
 install(TARGETS my_robot ma_robot

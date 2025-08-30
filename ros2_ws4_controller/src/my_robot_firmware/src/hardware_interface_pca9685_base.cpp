@@ -31,7 +31,8 @@ namespace my_robot_base {
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
         //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::read()");
-        (void) time;
+        (void) period;
+        
         if (write_first_call == true) {
             start_time = time;
             write_first_call = false;
