@@ -2,19 +2,19 @@
 #include <chrono>
 #include <thread>
 #include "rclcpp/rclcpp.hpp"
-#include "my_robot_firmware/hardware_interface_pca9685.h"
+#include "my_robot_firmware/hardware_interface_pca9685_base.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace my_robot_firmware {
-    hardware_interface::CallbackReturn HardwareInterfacePCA9685::on_init
+namespace my_robot_base {
+    hardware_interface::CallbackReturn HardwareInterfacePCA9685_base::on_init
         (const hardware_interface::HardwareInfo & info) 
     {
         if (hardware_interface::SystemInterface::on_init(info) !=
             hardware_interface::CallbackReturn::SUCCESS) {
             return hardware_interface::CallbackReturn::ERROR;
         }
-        node_ = std::make_shared<rclcpp::Node>("HardwareInterfacePCA9685_node");
-        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::on_init()");
+        node_ = std::make_shared<rclcpp::Node>("HardwareInterfacePCA9685_base_node");
+        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::on_init()");
  
         info_ = info;        
         pwm_controller_ = std::make_shared<PCA9685>(i2c_bus_, i2c_address_);
@@ -27,10 +27,10 @@ namespace my_robot_firmware {
 
         return hardware_interface::CallbackReturn::SUCCESS;     
     }
-    hardware_interface::return_type HardwareInterfacePCA9685::read 
+    hardware_interface::return_type HardwareInterfacePCA9685_base::read 
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
-        //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::read()");
+        //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::read()");
         (void) time;
         if (write_first_call == true) {
             start_time = time;
@@ -57,10 +57,10 @@ namespace my_robot_firmware {
                   get_state("base_left_wheel_joint/position")  + left_velocity*period.seconds());
         return hardware_interface::return_type::OK;
     }
-    hardware_interface::return_type HardwareInterfacePCA9685::write
+    hardware_interface::return_type HardwareInterfacePCA9685_base::write
         (const rclcpp::Time & time, const rclcpp::Duration & period) 
     {
-        //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::write()");
+        //RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::write()");
         (void) time;
         (void) period; 
         
@@ -70,18 +70,18 @@ namespace my_robot_firmware {
         return hardware_interface::return_type::OK;
     }   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    hardware_interface::CallbackReturn HardwareInterfacePCA9685::on_configure 
+    hardware_interface::CallbackReturn HardwareInterfacePCA9685_base::on_configure 
         (const rclcpp_lifecycle::State & previous_state) 
     {
-        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::on_configure()");
+        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::on_configure()");
         (void) previous_state;
         pwm_controller_->setPWMFreq(pwm_freq_); 
         return hardware_interface::CallbackReturn::SUCCESS;
     }
-    hardware_interface::CallbackReturn HardwareInterfacePCA9685::on_activate  
+    hardware_interface::CallbackReturn HardwareInterfacePCA9685_base::on_activate  
         (const rclcpp_lifecycle::State & previous_state) 
     {
-        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::on_activate()");
+        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::on_activate()");
         (void) previous_state;
         pwm_controller_->setPWM(right_servo_channel_, 0, min_ticks_);
         pwm_controller_->setPWM(left_servo_channel_,  0, min_ticks_);
@@ -92,10 +92,10 @@ namespace my_robot_firmware {
         set_state("base_left_wheel_joint/velocity",  0.0);
         return hardware_interface::CallbackReturn::SUCCESS;
     }
-    hardware_interface::CallbackReturn HardwareInterfacePCA9685::on_deactivate
+    hardware_interface::CallbackReturn HardwareInterfacePCA9685_base::on_deactivate
         (const rclcpp_lifecycle::State & previous_state) 
     {
-        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685::on_deactivate()");
+        RCLCPP_INFO(node_->get_logger(), "HardwareInterfacePCA9685_base::on_deactivate()");
         (void) previous_state;
         pwm_controller_->setPWM(right_servo_channel_, 0, 0);
         pwm_controller_->setPWM(left_servo_channel_,  0, 0);
@@ -103,7 +103,7 @@ namespace my_robot_firmware {
     }
 }
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(my_robot_firmware::HardwareInterfacePCA9685, hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(my_robot_base::HardwareInterfacePCA9685_base, hardware_interface::SystemInterface)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

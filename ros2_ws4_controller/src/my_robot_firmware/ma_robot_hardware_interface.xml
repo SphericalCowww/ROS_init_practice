@@ -1,0 +1,9 @@
+<library path="hardware_interface_pca9685_arm">
+    <class name="my_robot_firmware/HardwareInterfacePCA9685_arm"
+           type="my_robot_firmware::HardwareInterfacePCA9685_arm"
+           base_class_type="hardware_interface::SystemInterface">
+        <description>
+            Hardware interface for PCA9685 controlling 2 servos
+        </description>
+    </class>
+</library>

@@ -1,25 +1,29 @@
-#ifndef HARDWARE_INTERFACE_PCA9685_HPP
-#define HARDWARE_INTERFACE_PCA9685_HPP
+#ifndef HARDWARE_INTERFACE_PCA9685_ARM_HPP
+#define HARDWARE_INTERFACE_PCA9685_ARM_HPP
 
 #include "hardware_interface/system_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 #include "pca9685/PCA9685.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace my_robot_firmware {
-    class HardwareInterfacePCA9685: public hardware_interface::SystemInterface
+namespace ma_robot_arm {
+    class HardwareInterfacePCA9685_arm: public hardware_interface::SystemInterface
     {
         public:
             // SystemInterface override
-            hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
-            hardware_interface::return_type read 
-                (const rclcpp::Time & time, const rclcpp::Duration & period) override;
-            hardware_interface::return_type write
-                (const rclcpp::Time & time, const rclcpp::Duration & period) override;
+            hardware_interface::CallbackReturn 
+                on_init(const hardware_interface::HardwareInfo & info) override;
+            hardware_interface::return_type 
+                read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+            hardware_interface::return_type 
+                write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
             // lifecycle node override
-            hardware_interface::CallbackReturn on_configure (const rclcpp_lifecycle::State & previous_state) override;
-            hardware_interface::CallbackReturn on_activate  (const rclcpp_lifecycle::State & previous_state) override;
-            hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
+            hardware_interface::CallbackReturn 
+                on_configure(const rclcpp_lifecycle::State & previous_state) override;
+            hardware_interface::CallbackReturn 
+                on_activate(const rclcpp_lifecycle::State & previous_state) override;
+            hardware_interface::CallbackReturn 
+                on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
         private:
             std::shared_ptr<rclcpp::Node> node_;
             std::shared_ptr<PCA9685> pwm_controller_;
@@ -27,8 +31,8 @@ namespace my_robot_firmware {
             int i2c_address_ = 0x40;
             int pwm_freq_    = 50;
 
-            int right_servo_channel_;
-            int left_servo_channel_;
+            int joint1_servo_channel_;
+            int joint2_servo_channel_;
             int pwm_min_microSec_;
             int pwm_max_microSec_;
             int min_ticks_;

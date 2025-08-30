@@ -5,7 +5,7 @@
             <plugin>mock_components/GenericSystem</plugin>
             <param name="calculate_dynamics">true</param>
 
-            <!--plugin>my_robot_firmware/HardwareInterfacePCA9685</plugin>
+            <!--plugin>my_robot_firmware/HardwareInterfacePCA9685_base</plugin>
             <param name="right_servo_channel">1</param>
             <param name="left_servo_channel"> 0</param>
             <param name="pwm_min_microSec">600</param>
