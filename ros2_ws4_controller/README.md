@@ -175,11 +175,13 @@ Connect the servos to channels 0 and 1 of the PCA9685. Note, however, that the R
 Notice that there will be errors if the PCA9685 is not turned on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware.
 
 ### ros2_control with two plugins (Ch5)
-Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control`` classes <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/">diff_drive_controller</a> and <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/forward_command_controller">forward_command_controller</a>. It says that in order to use ``move_it`` later, should also checkout <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/joint_trajectory_controller">joint_trajectory_controller</a>. Run
+Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control`` classes <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/">diff_drive_controller</a> and <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/forward_command_controller">forward_command_controller</a>. It says that in order to use ``move_it`` later, should also checkout <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/joint_trajectory_controller">joint_trajectory_controller</a>. Run:
 
     colcon build
     source install/setup.bash
     ros2 launch my_robot_bringup ma_robot.launch.py
+    # on a different window
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_controller/cmd_vel -p stamped:=true
     # on a different window
     ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [4.0, 3.0]}"
     ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.0, 0.0]}"
@@ -190,6 +192,8 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
     ros2 control list_controllers
     ros2 control list_hardware_interfaces
     ros2 control list_hardware_components
+
+Notice that there will be errors if the PCA9685 is not turned on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` and/or ``src/my_robot_description/urdf/arm.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware. Any combination should work.
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
