@@ -16,13 +16,13 @@ find_package(pluginlib REQUIRED)
 include_directories(include)
 
 ###########################################################################
-add_library(ma_robot_controller SHARED
-  src/ma_controller.cpp
+add_library(me_robot_controller SHARED
+  src/me_controller.cpp
 )
-ament_target_dependencies(ma_robot_controller rclcpp rclcpp_lifecycle controller_interface example_interfaces pluginlib)
-pluginlib_export_plugin_description_file(controller_interface ma_robot_controller.xml)
+ament_target_dependencies(me_robot_controller rclcpp rclcpp_lifecycle controller_interface example_interfaces pluginlib)
+pluginlib_export_plugin_description_file(controller_interface me_robot_controller.xml)
 
-install(TARGETS  ma_robot_controller
+install(TARGETS me_robot_controller
   DESTINATION lib/${PROJECT_NAME}
 )
 install(
@@ -30,7 +30,7 @@ install(
   DESTINATION include
 )
 ament_export_libraries(
-  ma_robot_controller
+  me_robot_controller
 )
 ament_export_dependencies(rclcpp rclcpp_lifecycle controller_interface example_interfaces pluginlib)
 ###########################################################################

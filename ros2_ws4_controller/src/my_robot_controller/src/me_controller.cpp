@@ -2,21 +2,25 @@
 #include <chrono>
 #include <thread>
 #include "rclcpp/rclcpp.hpp"
-#include "my_robot_controller/ma_controller.hpp"
+#include "my_robot_controller/me_controller.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace ma_controller {
+namespace me_controller {
 
-    MaController::MaController(): controller_interface::ControllerInterface() {}
+    MeController::MeController(): controller_interface::ControllerInterface() {}
 
-    controller_interface::CallbackReturn MaController::on_init()
+    controller_interface::CallbackReturn MeController::on_init()
     {   
+        node_ = std::make_shared<rclcpp::Node>("MeController_node");
+        RCLCPP_INFO(node_->get_logger(), "MeController_node::on_init()");
+        
         joint_names_    = auto_declare<std::vector<std::string>>("joints", {});
         interface_name_ = auto_declare<std::string>             ("interface_name", "position");
         return CallbackReturn::SUCCESS;
     }
-    controller_interface::CallbackReturn MaController::on_configure(const rclcpp_lifecycle::State & previous_state)
+    controller_interface::CallbackReturn MeController::on_configure(const rclcpp_lifecycle::State & previous_state)
     {
+        RCLCPP_INFO(node_->get_logger(), "MeController_node::on_configure()");
         (void) previous_state;
         // this is a lambda function to aboid repeated parameters in FloatArray
         auto callback = [this] (const FloatArray::SharedPtr msg) -> void
@@ -31,8 +35,9 @@ namespace ma_controller {
         command_subscriber_ = get_node()->create_subscription<FloatArray>("/joints_command", 10, callback);
         return CallbackReturn::SUCCESS;
     }
-    controller_interface::InterfaceConfiguration MaController::command_interface_configuration() const
+    controller_interface::InterfaceConfiguration MeController::command_interface_configuration() const
     {
+        RCLCPP_INFO(node_->get_logger(), "MeController_node::command_interface_configuration()");
         controller_interface::InterfaceConfiguration config;
         config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
         config.names.reserve(joint_names_.size());
@@ -41,8 +46,9 @@ namespace ma_controller {
         }
         return config;
     }
-    controller_interface::InterfaceConfiguration MaController::state_interface_configuration() const
+    controller_interface::InterfaceConfiguration MeController::state_interface_configuration() const
     {
+        RCLCPP_INFO(node_->get_logger(), "MeController_node::state_interface_configuration()");
         controller_interface::InterfaceConfiguration config;
         config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
         config.names.reserve(joint_names_.size());
@@ -51,8 +57,9 @@ namespace ma_controller {
         }
         return config;
     }
-    controller_interface::CallbackReturn MaController::on_activate(const rclcpp_lifecycle::State & previous_state)
+    controller_interface::CallbackReturn MeController::on_activate(const rclcpp_lifecycle::State & previous_state)
     {
+        RCLCPP_INFO(node_->get_logger(), "MeController_node::on_activate()");
         (void) previous_state;
         appCommand_.clear();
         for (int joint_idx = 0; joint_idx < (int)joint_names_.size(); joint_idx++) {
@@ -60,8 +67,9 @@ namespace ma_controller {
         }
         return CallbackReturn::SUCCESS; 
     }
-    controller_interface::return_type MaController::update(const rclcpp::Time & time, const rclcpp::Duration & period)
+    controller_interface::return_type MeController::update(const rclcpp::Time & time, const rclcpp::Duration & period)
     {
+        RCLCPP_INFO(node_->get_logger(), "MeController_node::update()");
         (void) time;
         (void) period;      // can define update rate
         for (int joint_idx = 0; joint_idx < (int)joint_names_.size(); joint_idx++) {
@@ -75,7 +83,7 @@ namespace ma_controller {
 }
 
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(ma_controller::MaController, controller_interface::ControllerInterface)
+PLUGINLIB_EXPORT_CLASS(me_controller::MeController, controller_interface::ControllerInterface)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
