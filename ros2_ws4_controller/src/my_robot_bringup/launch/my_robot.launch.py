@@ -20,12 +20,12 @@ def generate_launch_description():
         executable="robot_state_publisher",
         parameters=[{'robot_description': robot_description}],
     )
-
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[robot_controllers],
-    )    
+    )
+    
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
