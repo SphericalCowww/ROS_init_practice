@@ -207,6 +207,8 @@ Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, c
 
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
 
+Sometimes it takes a few tries until the GUI is available and all the controllers are linked.
+
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
 
