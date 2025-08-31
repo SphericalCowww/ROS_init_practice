@@ -18,9 +18,10 @@
     colcon build
     cd src/
     # copy the full my_robot_description directly
-    ros2 pkg create my_robot_bringup
+    ros2 pkg create my_robot_bringup --build-type ament_python
     ros2 pkg create my_robot_firmware --build-type ament_cmake
     ros2 pkg create my_robot_firmware_py --build-type ament_python --dependencies rclpy python3-adafruit-blinka
+    ros2 pkg create my_robot_controller --build-type ament_cmake --dependencies rclcpp
     cd ..
     # move everything from ros2_ws4_controller_ to ros2_ws4_controller
     colcon build --symlink-install
@@ -205,6 +206,8 @@ In order to run the same two plugins in Gazebo simulation, install:
 Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, collision and inertia geometries can be found under ``RobotModel``. Then simply change to this launch line:
 
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
+
+Sometimes it takes a few tries until the GUI is available and all the controllers are linked.
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
