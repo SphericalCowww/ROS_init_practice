@@ -172,7 +172,7 @@ Connect the servos to channels 0 and 1 of the PCA9685. Note, however, that the R
     # on a different window
     ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_controller/cmd_vel -p stamped:=true
 
-Notice that there will be errors if the PCA9685 is not turned on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware.
+Note that errors will occur if the PCA9685 is not powered on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware.
 
 ### ros2_control with two plugins (Ch5)
 Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control`` classes <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/">diff_drive_controller</a> and <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/forward_command_controller">forward_command_controller</a>. It says that in order to use ``move_it`` later, should also checkout <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/joint_trajectory_controller">joint_trajectory_controller</a>. Run:
@@ -193,7 +193,18 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
     ros2 control list_hardware_interfaces
     ros2 control list_hardware_components
 
-Notice that there will be errors if the PCA9685 is not turned on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` and/or ``src/my_robot_description/urdf/arm.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware. Any combination should work.
+Note that errors will occur if the PCA9685 is not powered on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` and/or ``src/my_robot_description/urdf/arm.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware. Any combination should work.
+
+#### with Gazebo
+
+In order to run the same two plugins in Gazebo simulation, install:
+
+    sudo apt install ros-jazzy-ros-gz
+    sudo apt install ros-jazzy-gz-ros2-control
+
+Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, collision and inertia geometries can be found under ``RobotModel``. Then simply change to this launch line:
+
+    ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
