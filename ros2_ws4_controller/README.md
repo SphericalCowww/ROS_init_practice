@@ -18,9 +18,10 @@
     colcon build
     cd src/
     # copy the full my_robot_description directly
-    ros2 pkg create my_robot_bringup
+    ros2 pkg create my_robot_bringup --build-type ament_python
     ros2 pkg create my_robot_firmware --build-type ament_cmake
     ros2 pkg create my_robot_firmware_py --build-type ament_python --dependencies rclpy python3-adafruit-blinka
+    ros2 pkg create my_robot_controller --build-type ament_cmake --dependencies rclcpp
     cd ..
     # move everything from ros2_ws4_controller_ to ros2_ws4_controller
     colcon build --symlink-install
