@@ -2,12 +2,12 @@
 #include <chrono>
 #include <thread>
 #include "rclcpp/rclcpp.hpp"
-#include "ma_controller.hpp"
+#include "my_robot_controller/ma_controller.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace ma_robot_controller {
+namespace ma_controller {
 
-    MaController::MaController(): controller_interface:ControllerInterface() {}
+    MaController::MaController(): controller_interface::ControllerInterface() {}
 
     controller_interface::CallbackReturn MaController::on_init()
     {   
@@ -18,23 +18,24 @@ namespace ma_robot_controller {
     controller_interface::CallbackReturn MaController::on_configure(const rclcpp_lifecycle::State & previous_state)
     {
         (void) previous_state;
-        audo callback = [this] (const FloatArray::SharedPrt msg) -> void
+        // this is a lambda function to aboid repeated parameters in FloatArray
+        auto callback = [this] (const FloatArray::SharedPtr msg) -> void
         {
             if (msg->data.size() == joint_names_.size()) {
-                appComand_.clear();
+                appCommand_.clear();
                 for (auto cmd: msg->data) {
-                    appComand_.push_back(cmd);
+                    appCommand_.push_back(cmd);
                 }
             }
-        }
+        };
         command_subscriber_ = get_node()->create_subscription<FloatArray>("/joints_command", 10, callback);
         return CallbackReturn::SUCCESS;
     }
     controller_interface::InterfaceConfiguration MaController::command_interface_configuration() const
     {
         controller_interface::InterfaceConfiguration config;
-        config.type = controller_interface::controller_interface_type::INDIVIDUAL;
-        config.names.reserve(joint_names.size());
+        config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+        config.names.reserve(joint_names_.size());
         for (auto joint_name: joint_names_) {
             config.names.push_back(joint_name+"/"+interface_name_);
         }
@@ -43,8 +44,8 @@ namespace ma_robot_controller {
     controller_interface::InterfaceConfiguration MaController::state_interface_configuration() const
     {
         controller_interface::InterfaceConfiguration config;
-        config.type = controller_interface::controller_interface_type::INDIVIDUAL;
-        config.names.reserve(joint_names.size());
+        config.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+        config.names.reserve(joint_names_.size());
         for (auto joint_name: joint_names_) {
             config.names.push_back(joint_name+"/"+interface_name_);
         }
@@ -53,9 +54,9 @@ namespace ma_robot_controller {
     controller_interface::CallbackReturn MaController::on_activate(const rclcpp_lifecycle::State & previous_state)
     {
         (void) previous_state;
-        appComand_.clear();
+        appCommand_.clear();
         for (int joint_idx = 0; joint_idx < (int)joint_names_.size(); joint_idx++) {
-            appComand_.push_back(state_interfaces_[joint_idx].get_optional().value());
+            appCommand_.push_back(state_interfaces_[joint_idx].get_optional().value());
         }
         return CallbackReturn::SUCCESS; 
     }
@@ -65,7 +66,7 @@ namespace ma_robot_controller {
         (void) period;      // can define update rate
         for (int joint_idx = 0; joint_idx < (int)joint_names_.size(); joint_idx++) {
             double state_val = state_interfaces_[joint_idx].get_optional().value();
-            double cmd_val = appCommend_[joint_idx];
+            double cmd_val = appCommand_[joint_idx];
             double new_val = cmd_val + state_val;                   // NOTE: ADDING NEW VALUES TO OLD
             (void) command_interfaces_[joint_idx].set_value(new_val);
         }

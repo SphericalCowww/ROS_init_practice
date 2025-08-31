@@ -7,7 +7,6 @@ using FloatArray = example_interfaces::msg::Float64MultiArray;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace ma_controller {
-
     class MaController: public controller_interface::ControllerInterface
     {
         public:
@@ -28,7 +27,7 @@ namespace ma_controller {
             std::string                                 interface_name_;
             std::vector<double>                         appCommand_;
             rclcpp::Subscription<FloatArray>::SharedPtr command_subscriber_; 
-    }
+    };
 }
 
 
