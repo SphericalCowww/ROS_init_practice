@@ -32,7 +32,9 @@ namespace me_controller {
                 }
             }
         };
-        command_subscriber_ = get_node()->create_subscription<FloatArray>("/joints_command", 10, callback);
+        // for available functions see: 
+        // https://control.ros.org/rolling/doc/api/classcontroller__interface_1_1ControllerInterfaceBase.html
+        command_subscriber_ = get_node()->create_subscription<FloatArray>(get_name()+"/joints_command", 10, callback);
         return CallbackReturn::SUCCESS;
     }
     controller_interface::InterfaceConfiguration MeController::command_interface_configuration() const
