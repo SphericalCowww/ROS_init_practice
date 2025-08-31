@@ -10,7 +10,7 @@ namespace my_robot_base {
     class HardwareInterfacePCA9685_base: public hardware_interface::SystemInterface
     {
         public:
-            // SystemInterface override
+            // interface override
             hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
             hardware_interface::return_type read 
                 (const rclcpp::Time & time, const rclcpp::Duration & period) override;

@@ -1,0 +1,9 @@
+<library path="ma_robot_controller">
+    <class name="ma_controller/MaController"
+           type="ma_controller::MaController"
+           base_class_type="controller_interface::ControllerInterface">
+        <description>
+            Instead of setting position, it adds command positions into state positions
+        </description>
+    </class>
+</library>

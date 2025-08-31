@@ -10,7 +10,7 @@ namespace ma_robot_arm {
     class HardwareInterfacePCA9685_arm: public hardware_interface::SystemInterface
     {
         public:
-            // SystemInterface override
+            // interface override
             hardware_interface::CallbackReturn 
                 on_init(const hardware_interface::HardwareInfo & info) override;
             hardware_interface::return_type 
