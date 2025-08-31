@@ -224,6 +224,19 @@ Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, c
 
 Sometimes it takes a few tries until the GUI is available and all the controllers are linked.
 
+### ros2_control with locally written controller (Ch6)
+
+Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control`` classes <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/">diff_drive_controller</a> and the controller ``src/my_robot_controller/include/my_robot_controller/me_controller.hpp``. 
+
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_bringup me_robot.launch.py
+    # on a different window
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_controller/cmd_vel -p stamped:=true
+    # on a different window
+    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [4.0, 3.0]}"
+    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.0, 0.0]}"
+
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
 
