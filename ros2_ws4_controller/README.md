@@ -175,6 +175,21 @@ Connect the servos to channels 0 and 1 of the PCA9685. Note, however, that the R
 
 Note that errors will occur if the PCA9685 is not powered on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware.
 
+The launch reference goes like this
+
+  * src/my_robot_**bringup**/launch/**my_robot.launch.py**
+    * src/my_robot_description/urdf/my_robot.urdf.xacro
+      * src/my_robot_**description**/urdf/**mobile_base.ros2_control.xacro**
+        * src/my_robot_**firmware**/include/my_robot_firmware/**hardware_interface_pca9685_base.hpp**
+          * src/my_robot_**firmware**/include/pca9685/**PCA9685.h**
+            * src/my_robot_firmware/include/pca9685/I2C.h
+      * src/my_robot_description/urdf/mobile_base.xacro
+      * src/my_robot_description/urdf/common_properties.xacro
+    * src/my_robot_**bringup**/config/**my_robot_controllers.yaml**
+      * joint_state_broadcaster/JointStateBroadcaster
+      * **diff_drive_controller/DiffDriveController**
+        * src/my_robot_description/urdf/mobile_base.xacro
+
 ### ros2_control with two plugins (Ch5)
 Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control`` classes <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/">diff_drive_controller</a> and <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/forward_command_controller">forward_command_controller</a>. It says that in order to use ``move_it`` later, should also checkout <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/joint_trajectory_controller">joint_trajectory_controller</a>. Run:
 
@@ -208,6 +223,21 @@ Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, c
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
 
 Sometimes it takes a few tries until the GUI is available and all the controllers are linked.
+
+### ros2_control with locally written controller (Ch6)
+
+Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control`` classes <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/">diff_drive_controller</a> and the controller ``src/my_robot_controller/include/my_robot_controller/me_controller.hpp``. 
+
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_bringup me_robot.launch.py
+    # on a different window
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_controller/cmd_vel -p stamped:=true
+    # on a different window
+    ros2 topic list
+    ros2 topic info /joints_command
+    ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [0.1, 0.1]}"
+    ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [-0.1, -0.1]}"
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
