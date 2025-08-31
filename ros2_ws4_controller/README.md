@@ -234,8 +234,10 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
     # on a different window
     ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/diff_drive_controller/cmd_vel -p stamped:=true
     # on a different window
-    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [4.0, 3.0]}"
-    ros2 topic pub -1 /arm_joint_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.0, 0.0]}"
+    ros2 topic list
+    ros2 topic info /joints_command
+    ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [0.1, 0.1]}"
+    ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [-0.1, -0.1]}"
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
