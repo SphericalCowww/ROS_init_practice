@@ -9,7 +9,7 @@ moveit_simple_controller_manager:
     type: ForwardCommandController
     default: true
     joints:
-      - arm_joint_1
-      - arm_joint_2
+      - arm_joint1
+      - arm_joint2
 
 

@@ -1,6 +1,6 @@
 initial_position:
-    arm_joint1: 0
-    arm_joint2: 0
+    arm_joint1: 0.0
+    arm_joint2: 0.0
 
  
 
