@@ -1,0 +1,15 @@
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - arm_joint_controller
+
+  arm_joint_controller:
+    action_ns: forward_command_controller
+    type: ForwardCommandController
+    default: true
+    joints:
+      - arm_joint_1
+      - arm_joint_2
+
+
