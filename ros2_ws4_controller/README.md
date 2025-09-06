@@ -211,7 +211,7 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
 
 Note that errors will occur if the PCA9685 is not powered on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` and/or ``src/my_robot_description/urdf/arm.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware. Any combination should work.
 
-#### with Gazebo
+#### ros2_control with Gazebo
 
 In order to run the same two plugins in Gazebo simulation, install:
 
@@ -239,6 +239,25 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
     ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [0.1, 0.1]}"
     ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [-0.1, -0.1]}"
 
+### ros2_control Gazebo with MoveIt2 (Extra)
+
+Installing MoveIt2 on Jazzy:
+
+    colcon build --mixin release --packages-skip kortex_api kortex_driver
+    ros2 launch moveit_setup_assistant setup_assistant.launch.py
+    sudo apt install ros-jazzy-moveit-planners-ompl
+
+Run the MoveIt2 to be linked with Gazebo by:
+
+    ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
+    # on a different window
+    ros2 launch my_robot_bringup mi_robot.moveit.launch.py
+    # Add => moveit_ros_visualization/MotionPlanning => ompl => Approx IK Solutions => (dragging the sphere around) => Plan & Execute
+
+Note the following error is fine, just without sense:
+
+    [move_group-1] [ERROR] [1757189711.578782510] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates 
+
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
-
+- Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
