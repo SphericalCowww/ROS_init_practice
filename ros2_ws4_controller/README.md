@@ -10,7 +10,7 @@
 
     ros2 pkg list
     sudo apt install ros-(...)-xacro     # if not installed
-    sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
+    sudo apt install ros-(...)-ros2-control ros-(...)-ros2-controllers
     mv ros2_ws4_controller ros2_ws4_controller_
     mkdir ros2_ws4_controller
     cd ros2_ws4_controller
