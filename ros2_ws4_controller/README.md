@@ -11,19 +11,7 @@
     ros2 pkg list
     sudo apt install ros-(...)-xacro     # if not installed
     sudo apt install ros-(...)-ros2-control ros-(...)-ros2-controllers
-    mv ros2_ws4_controller ros2_ws4_controller_
-    mkdir ros2_ws4_controller
-    cd ros2_ws4_controller
-    mkdir src
-    colcon build
-    cd src/
-    # copy the full my_robot_description directly
-    ros2 pkg create my_robot_bringup --build-type ament_python
-    ros2 pkg create my_robot_firmware --build-type ament_cmake
-    ros2 pkg create my_robot_firmware_py --build-type ament_python --dependencies rclpy python3-adafruit-blinka
-    ros2 pkg create my_robot_controller --build-type ament_cmake --dependencies rclcpp
-    cd ..
-    # move everything from ros2_ws4_controller_ to ros2_ws4_controller
+    mkdir src/my_robot_description/rviz
     colcon build --symlink-install
     source install/setup.bash
 
