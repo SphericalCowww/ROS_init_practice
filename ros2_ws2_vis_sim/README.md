@@ -10,19 +10,7 @@ Common URDF inspection code:
 
 Launch ''diffCart.urdf'' in rviz2:
 
-    sudo apt install ros-(...)-xacro     # if not installed
-    mv ros2_ws2_vis_sim ros2_ws2_vis_sim_
-    mkdir ros2_ws2_vis_sim
-    cd ros2_ws2_vis_sim
-    mkdir src
-    colcon build --symlink-install
-    cd src/
-    ros2 pkg create practice_robot_description
-    cd practice_robot_description
-    rm -r include/ src/
-    mkdir urdf launch
-    # move everything from ros2_ws2_vis_sim_ to ros2_ws2_vis_sim, e.g. ''urdf/diffCart.urdf'', ''launch/display.launch.xml'', and replace ''CMakeLists.txt''
-    cd ros2_ws2_vis_sim
+    sudo apt install ros-jazzy-xacro     # if not installed
     colcon build
     file (...)/ros2_ws2_vis_sim/install/practice_robot_description/share/practice_robot_description/urdf/diffCart.urdf
     source install/setup.bash
