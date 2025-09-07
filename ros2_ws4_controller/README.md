@@ -15,6 +15,8 @@
     colcon build --symlink-install
     source install/setup.bash
 
+See section "with the driver from C++ package lib9685" with the ``pca9685_driver`` error.
+
 WARNING: watch out which .type your shell is for ``source install/setup.XXX``!
 
 ### basic urdf 
@@ -146,7 +148,7 @@ Proceeding with the pure drive option, which needs I2C as well:
     colcon build
     source install/setup.bash
 
-Then move the ``I2C.h``, ``I2C.cpp``, and ``PCA9685.h`` from <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a> to ``/src/my_robot_firmware/include/pca9685``. Note that the ``PCA9685.cpp`` has been corrected by  <a href="https://aistudio.google.com">Google AI Studio</a>. Then run,
+Then move the ``I2C.h``, ``I2C.cpp``, and ``PCA9685.h`` from <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a> to ``/src/my_robot_firmware/include/pca9685``. Note, don't copy ``PCA9685.cpp``, it has been corrected by <a href="https://aistudio.google.com">Google AI Studio</a>. Then run,
 
     ros2 run my_robot_firmware testRaspPi5_pca9685_channel0 
     ros2 run my_robot_firmware testRaspPi5_pca9685_channel01
