@@ -15,7 +15,10 @@ Build a ROS package with the following (python based):
     cd (...)/ros2_ws(...)/
     colcon build
     cd src/
-    ros2 pkg create (...project_name...) --build-type ament_python --dependencies rclpy
+    # in python
+    ros2 pkg create my_robot_descriptions --build-type ament_python --dependencies rclpy 
+    # in cpp
+    ros2 pkg create my_robot_controller --build-type ament_cmake --dependencies rclcpp
 
 Common ROS terminal commands:
 
