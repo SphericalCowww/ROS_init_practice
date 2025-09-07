@@ -8,9 +8,15 @@
 
 ### general installation
 
+    sudo apt update
+    sudo apt upgrade
     ros2 pkg list
-    sudo apt install ros-(...)-xacro     # if not installed
-    sudo apt install ros-(...)-ros2-control ros-(...)-ros2-controllers
+    sudo apt install ros-jazzy-xacro     # if not installed
+    sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
+    sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
+    sudo apt install ros-jazzy-teleop-twist-keyboard
+    sudo apt install ros-jazzy-ros-gz
+    sudo apt install ros-jazzy-gz-ros2-control
     mkdir src/my_robot_description/rviz
     colcon build --symlink-install
     source install/setup.bash
@@ -21,7 +27,7 @@ WARNING: watch out which .type your shell is for ``source install/setup.XXX``!
 
 ### basic urdf 
 
-    ros2 launch my_robot_description display.launch.xml 
+    ros2 launch my_robot_description display.launch.py
     rqt_graph
     ros2 run tf2_tools view_frames
 
@@ -127,7 +133,7 @@ To run in ROS, do:
 
     ros2 run my_robot_firmware_py RaspPi5_adafruit_lifecycle --ros-args -p port:=/dev/ttyACM0
 
-#### with the driver from C++ package lib9685 
+#### with the driver from C++ package lib9685 >>> IMPORTANT FOR THE REST
 
   * pure driver: <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a>
   * ros2 node: <a href="https://github.com/kimsniper/ros2_pca9685">github</a>, <a href="https://github.com/vertueux/i2c_pwm_board">github</a>
@@ -142,8 +148,8 @@ Proceeding with the pure drive option, which needs I2C as well:
     sudo raspi-config 	                # navigate to Interfacing Options > I2C, and enable it.
     reboot
     ls /dev/i2c-*                       # if I2C is enabled, it will should show /dev/i2c-1
-    i2cdetect -y 1                      # if I2C is enabled, it will show grid patterns with 40 as the default address
-    sudo usermod -aG i2c kali           # lower level than "sudo adduser $USER i2c"
+    sudo i2cdetect -y 1                 # if I2C is enabled, it will show grid patterns with 40 as the default address
+    sudo usermod -aG i2c $USER          # lower level than "sudo adduser $USER i2c"
     reboot
     colcon build
     source install/setup.bash
@@ -203,11 +209,6 @@ Note that errors will occur if the PCA9685 is not powered on. Also, switch ``src
 
 #### ros2_control with Gazebo
 
-In order to run the same two plugins in Gazebo simulation, install:
-
-    sudo apt install ros-jazzy-ros-gz
-    sudo apt install ros-jazzy-gz-ros2-control
-
 Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, collision and inertia geometries can be found under ``RobotModel``. Then simply change to this launch line:
 
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
@@ -247,6 +248,13 @@ Run the MoveIt2 to be linked with Gazebo by:
 Note the following error is fine, just without sense:
 
     [move_group-1] [ERROR] [1757189711.578782510] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates 
+
+### Extra notes
+
+| term | description | configuration | interrupt handling | MoveIt compatibility |
+| - | - | - | - | - |
+| forward_command_controller | Sends direct commands (position, velocity, or effort) to a joint or set of joints without trajectory interpolation | simple configuration parameters | immediate overwrite | does work with MoveIt |
+| joint_trajectory_controller | Executes full joint trajectories over time. It interpolates between trajectory points, manages timing, and handles smooth motion for multiple joints simultaneously | full PID specification | smooth blending | preferred by MoveIt |
 
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
