@@ -10,6 +10,7 @@
 
     ros2 pkg list
     sudo apt install ros-(...)-xacro     # if not installed
+    sudo apt install ros-(...)-joint-state-publisher-gui
     sudo apt install ros-(...)-ros2-control ros-(...)-ros2-controllers
     mkdir src/my_robot_description/rviz
     colcon build --symlink-install
@@ -21,7 +22,7 @@ WARNING: watch out which .type your shell is for ``source install/setup.XXX``!
 
 ### basic urdf 
 
-    ros2 launch my_robot_description display.launch.xml 
+    ros2 launch my_robot_description display.launch.py
     rqt_graph
     ros2 run tf2_tools view_frames
 
