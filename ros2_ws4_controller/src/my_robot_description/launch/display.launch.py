@@ -7,9 +7,8 @@ from ament_index_python.packages import get_package_share_path
 
 def generate_launch_description():
 
-    #urdf_file_name = 'my_robot.urdf.xacro'
+    urdf_file_name = 'my_robot.urdf.xacro'
     #urdf_file_name = 'ma_robot.urdf.xacro'
-    urdf_file_name = 'me_robot.urdf.xacro'
     urdf_path = os.path.join(get_package_share_path('my_robot_description'),
                              'urdf', urdf_file_name)
     rviz_config_path = os.path.join(get_package_share_path('my_robot_description'),
