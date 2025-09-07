@@ -127,7 +127,7 @@ To run in ROS, do:
 
     ros2 run my_robot_firmware_py RaspPi5_adafruit_lifecycle --ros-args -p port:=/dev/ttyACM0
 
-#### with the driver from C++ package lib9685 
+#### with the driver from C++ package lib9685 >>> IMPORTANT FOR THE REST
 
   * pure driver: <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a>
   * ros2 node: <a href="https://github.com/kimsniper/ros2_pca9685">github</a>, <a href="https://github.com/vertueux/i2c_pwm_board">github</a>
@@ -142,8 +142,8 @@ Proceeding with the pure drive option, which needs I2C as well:
     sudo raspi-config 	                # navigate to Interfacing Options > I2C, and enable it.
     reboot
     ls /dev/i2c-*                       # if I2C is enabled, it will should show /dev/i2c-1
-    i2cdetect -y 1                      # if I2C is enabled, it will show grid patterns with 40 as the default address
-    sudo usermod -aG i2c kali           # lower level than "sudo adduser $USER i2c"
+    sudo i2cdetect -y 1                 # if I2C is enabled, it will show grid patterns with 40 as the default address
+    sudo usermod -aG i2c $USER          # lower level than "sudo adduser $USER i2c"
     reboot
     colcon build
     source install/setup.bash
