@@ -10,15 +10,6 @@ ROS: Robot Operating System
 
 Node practice:
 
-    mv ros2_ws1_basics ros2_ws1_basics_
-    mkdir ros2_ws1_basics
-    cd ros2_ws1_basics
-    mkdir src
-    colcon build
-    cd src/
-    ros2 pkg create practice_controller --build-type ament_python --dependencies rclpy robot_interfaces
-    cd ..
-    # move everything from ros2_ws1_basics_ to ros2_ws1_basics
     colcon build --symlink-install
     source install/setup.bash
     ros2 run practice_controller test_node
