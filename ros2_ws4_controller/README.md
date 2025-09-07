@@ -11,13 +11,11 @@
     sudo apt update
     sudo apt upgrade
     ros2 pkg list
-    sudo apt install ros-jazzy-xacro     # if not installed
+    sudo apt install ros-jazzy-xacro     
     sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
     sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
     sudo apt install ros-jazzy-teleop-twist-keyboard
-    sudo apt install ros-jazzy-ros-gz
-    sudo apt install ros-jazzy-gz-ros2-control
-    mkdir src/my_robot_description/rviz
+    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control
     colcon build --symlink-install
     source install/setup.bash
 
