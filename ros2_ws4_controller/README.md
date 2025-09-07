@@ -8,10 +8,15 @@
 
 ### general installation
 
+    sudo apt update
+    sudo apt upgrade
     ros2 pkg list
-    sudo apt install ros-(...)-xacro     # if not installed
-    sudo apt install ros-(...)-joint-state-publisher-gui
-    sudo apt install ros-(...)-ros2-control ros-(...)-ros2-controllers
+    sudo apt install ros-jazzy-xacro     # if not installed
+    sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
+    sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
+    sudo apt install ros-jazzy-teleop-twist-keyboard
+    sudo apt install ros-jazzy-ros-gz
+    sudo apt install ros-jazzy-gz-ros2-control
     mkdir src/my_robot_description/rviz
     colcon build --symlink-install
     source install/setup.bash
@@ -203,11 +208,6 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
 Note that errors will occur if the PCA9685 is not powered on. Also, switch ``src/my_robot_description/urdf/mobile_base.ros2_control.xacro`` and/or ``src/my_robot_description/urdf/arm.ros2_control.xacro`` to two line beginning with ``<!--plugin>mock_components/GenericSystem</plugin>`` to run with ros2_control without interacting with the hardware. Any combination should work.
 
 #### ros2_control with Gazebo
-
-In order to run the same two plugins in Gazebo simulation, install:
-
-    sudo apt install ros-jazzy-ros-gz
-    sudo apt install ros-jazzy-gz-ros2-control
 
 Note that after launching ``ros2 launch my_robot_bringup my_robot.launch.py``, collision and inertia geometries can be found under ``RobotModel``. Then simply change to this launch line:
 
