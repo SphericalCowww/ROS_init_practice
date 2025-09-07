@@ -1,6 +1,6 @@
 # Learning the Robot Operating System 2 (ROS2)
 
-Installed Ubuntu 24.04.x LTS on Raspberry Pi 5. Installed ROS2 following this <a href="https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>. However, watch out ''$UBUNTU_CODENAME'' can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04.
+Installed Ubuntu 24.04.1 LTS on Raspberry Pi 5. Installed ROS2 following this <a href="https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>. However, watch out ''$UBUNTU_CODENAME'' can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04.
 
 Exporting the following in ''.bashrc'':
 
