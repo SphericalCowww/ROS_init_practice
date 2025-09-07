@@ -41,7 +41,7 @@ Installing gazebo in jazzy. Notice that Jazzy uses "Gazebo Sim (Gazebo Harmonic)
     sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
     sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
     sudo apt install ros-jazzy-teleop-twist-keyboard
-    sudo apt install ros-jazzy-ros-gz ros-jazzy-gazebo-ros2-control 
+    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control 
     ros2 pkg list | grep gz
 
 Launch ''diffCart.gazebo.urdf'' in gazebo. The kinematics uses the <a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">differential drive plugin</a>, and the Jazzy format following <a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>:
