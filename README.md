@@ -7,7 +7,7 @@ Exporting the following in ''.bashrc'':
     sudo apt install python3-colcon-common-extensions
     source /opt/ros/jazzy/setup.bash
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash 
-    source (...)/ros2_ws(...)/install/setup.bash
+    source (...)/ros2_ws(...)/install/setup.bash              # optional
 
 Build a ROS package with the following (python based): 
 
