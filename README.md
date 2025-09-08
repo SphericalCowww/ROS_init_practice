@@ -3,9 +3,12 @@
 Installed Ubuntu 24.04.1 LTS on Raspberry Pi 5. Before installing ROS2, watch out ``$VERSION_CODENAME`` or ``$UBUNTU_CODENAME`` can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04. Or do,
 
     . /etc/os-release
+
+and then install ROS2 following this <a href="https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>, and don't miss:
+
     sudo apt install python3-colcon-common-extensions
 
-and then install ROS2 following this <a href="https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html">webpage</a>. Export the following in ``.bashrc``:
+Next, export the following in ``.bashrc``:
 
     source /opt/ros/jazzy/setup.bash
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash 
