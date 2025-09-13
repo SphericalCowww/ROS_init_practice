@@ -22,10 +22,15 @@ Installing common packages:
     sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control
     colcon build --symlink-install
 
-Installing Gazebo simulation. Notice that Jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in Humble:
+Installing gazebo simulator. Notice that jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in humble:
 
     sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control 
     ros2 pkg list | grep gz                                          # make sure ros_gz_bridge is in the package list
+
+Note that Raspberry Pi 5 may not be able to run gazebo using the ``orge2`` rendering engine. In this case, use ``orge`` by default instead:
+
+    vim ~/.gz/sim/8/gui.config
+    # change <engine>orge2</engine> to <engine>orge</engine>
 
 Build a ROS package:
 
