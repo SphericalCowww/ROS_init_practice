@@ -213,12 +213,6 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
 
 ### ros2_control Gazebo with MoveIt2 (Extra)
 
-Installing MoveIt2 on Jazzy:
-
-    colcon build --mixin release --packages-skip kortex_api kortex_driver
-    ros2 launch moveit_setup_assistant setup_assistant.launch.py
-    sudo apt install ros-jazzy-moveit-planners-ompl
-
 Run the MoveIt2 to be linked with Gazebo by:
 
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
