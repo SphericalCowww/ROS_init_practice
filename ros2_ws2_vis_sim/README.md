@@ -8,7 +8,7 @@ Common URDF inspection code:
     check_urdf diffCart.urdf
     ros2 run tf2_tools view_frames # after opening the model in rviz2
 
-Launch ''diffCart.urdf'' in rviz2:
+Launch ``diffCart.urdf`` in rviz2:
 
     colcon build
     file install/practice_robot_description/share/practice_robot_description/urdf/diffCart.urdf
@@ -28,17 +28,15 @@ In rvis2 do:
 Updated with xacro:
 
     cd ros2_ws2_vis_sim/src/practice_robot_description
-    # move items in ''urdf/'', ''launch/'', and ''mesh/'' accordingly
     colcon build --symlink-install
     ros2 launch practice_robot_description rviz.launch.diffCart.xacro.xml
     # or 
     ros2 launch practice_robot_description rviz.launch_withRvizConfig.diffCart.xacro.xml
     ros2 param get /robot_state_publisher robot_description # to check the parameter value calculated by xacro
 
-For Gazebo simulation, the kinematics in ''diffCart.gazebo.urdf'' uses the <a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">differential drive plugin</a>, and the Jazzy format following <a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>:
+For Gazebo simulation, the kinematics in ``diffCart.gazebo.urdf`` uses the <a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">differential drive plugin</a>, and the Jazzy format following <a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>:
     
     cd ros2_ws2_vis_sim/src/practice_robot_description
-    # move items in ''urdf/'', ''launch/'', ''config'', and ''mesh/'' accordingly
     colcon build --symlink-install
     ros2 launch practice_robot_description gazebo.launch.diffCart.jazzy.xacro.xml 
     # to check geometry details within Gazebo: Entity Tree => diffCart => right click => view
@@ -68,7 +66,7 @@ Additionally, a robot arm with physics is added to the cart:
 
     ros2 launch practice_robot_description gazebo.launch.diffCartWithArm.jazzy.xacro.xml
 
-However, the controller is missing. For Jazzy, the use of ''ros2_control'' will be required and will need to be updated later for the learning will be quite in-depth; see <a href="https://control.ros.org/jazzy/doc/ros2_control_demos/doc/index.html">Tutorial</a> and <a href="https://www.reddit.com/r/ROS/comments/161s6cv/to_ros2_control_or_to_not_ros2_control/">Reddit</a>.
+However, the controller is missing. For Jazzy, the use of ``ros2_control`` will be required and will need to be updated later for the learning will be quite in-depth; see <a href="https://control.ros.org/jazzy/doc/ros2_control_demos/doc/index.html">Tutorial</a> and <a href="https://www.reddit.com/r/ROS/comments/161s6cv/to_ros2_control_or_to_not_ros2_control/">Reddit</a>.
     
 ## References:
 - Edouard Renard, "ROS2 for Beginners Level 2 - TF | URDF | RViz | Gazebo" (<a href="https://www.udemy.com/course/ros2-tf-urdf-rviz-gazebo">Udemy</a>)
