@@ -14,11 +14,25 @@ Next, export the following in ``.bashrc``:
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash 
     source (...)/ros2_ws(...)/install/setup.bash              # optional
 
-Build a ROS package with the following (python based): 
+Installing common packages:
+
+    sudo apt install ros-jazzy-xacro     
+    sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
+    sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers ros-jazzy-teleop-twist-keyboard
+    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control
+    colcon build --symlink-install
+
+Installing Gazebo simulation. Notice that Jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in Humble:
+
+    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control 
+    ros2 pkg list | grep gz                                          # make sure ros_gz_bridge is in the package list
+
+Build a ROS package:
 
     mkdir (...)/ros2_ws(...)/
     cd (...)/ros2_ws(...)/
     colcon build
+    source install/setup.bash                                         # make sure to run the correct setup.XXX, XXX shell type
     cd src/
     # in python
     ros2 pkg create my_robot_descriptions --build-type ament_python --dependencies rclpy 
