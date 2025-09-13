@@ -8,12 +8,6 @@ and then install ROS2 following this <a href="https://docs.ros.org/en/jazzy/Inst
 
     sudo apt install python3-colcon-common-extensions
 
-Next, export the following in ``.bashrc``:
-
-    source /opt/ros/jazzy/setup.bash
-    source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash 
-    source (...)/ros2_ws(...)/install/setup.bash              # optional
-
 Installing common packages:
 
     sudo apt install ros-jazzy-xacro     
@@ -25,12 +19,25 @@ Installing common packages:
 Installing gazebo simulator. Notice that jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in humble:
 
     sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control 
-    ros2 pkg list | grep gz                                          # make sure ros_gz_bridge is in the package list
+    ros2 pkg list | grep gz                                              # make sure ros_gz_bridge is in the package list
 
 Note that Raspberry Pi 5 may not be able to run gazebo using the ``orge2`` rendering engine. In this case, use ``orge`` by default instead:
 
     vim ~/.gz/sim/8/gui.config
     # change <engine>orge2</engine> to <engine>orge</engine>
+
+Installing moveit2 manipulator (see <a href="https://moveit.ai/install-moveit2/binary/">webpage</a>):
+
+    sudo apt install ros-$ROS_DISTRO-rmw-cyclonedds-cpp
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    sudo apt install ros-jazzy-moveit
+
+Next, export the following in ``.bashrc``:
+
+    export PS1='\u@\h:\W\$'                                             # this one is just shell formatting, not ros2 related
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp                        # fore moveit2      
+    source /opt/ros/jazzy/setup.bash                                    # for ros2 
+    source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash   # for colcon
 
 Build a ROS package:
 
