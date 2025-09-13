@@ -6,23 +6,6 @@
 | service | client/server communicated through request/response |
 | action | client/server communicated goal/feedback/result |
 
-### general installation
-
-    sudo apt update
-    sudo apt upgrade
-    ros2 pkg list
-    sudo apt install ros-jazzy-xacro     
-    sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
-    sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
-    sudo apt install ros-jazzy-teleop-twist-keyboard
-    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control
-    colcon build --symlink-install
-    source install/setup.bash
-
-See section "with the driver from C++ package lib9685" with the ``pca9685_driver`` error.
-
-WARNING: watch out which .type your shell is for ``source install/setup.XXX``!
-
 ### basic urdf 
 
     ros2 launch my_robot_description display.launch.py
