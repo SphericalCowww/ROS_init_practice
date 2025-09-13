@@ -10,7 +10,6 @@ Common URDF inspection code:
 
 Launch ''diffCart.urdf'' in rviz2:
 
-    sudo apt install ros-jazzy-xacro     # if not installed
     colcon build
     file install/practice_robot_description/share/practice_robot_description/urdf/diffCart.urdf
     source install/setup.bash
@@ -36,15 +35,7 @@ Updated with xacro:
     ros2 launch practice_robot_description rviz.launch_withRvizConfig.diffCart.xacro.xml
     ros2 param get /robot_state_publisher robot_description # to check the parameter value calculated by xacro
 
-Installing gazebo in jazzy. Notice that Jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in Humble. Make sure ``ros_gz_bridge`` is in the package list:
-
-    sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
-    sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers
-    sudo apt install ros-jazzy-teleop-twist-keyboard
-    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control 
-    ros2 pkg list | grep gz
-
-Launch ''diffCart.gazebo.urdf'' in gazebo. The kinematics uses the <a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">differential drive plugin</a>, and the Jazzy format following <a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>:
+For Gazebo simulation, the kinematics in ''diffCart.gazebo.urdf'' uses the <a href="https://github.com/gazebosim/gz-sim/blob/gz-sim8/src/systems/diff_drive/DiffDrive.hh">differential drive plugin</a>, and the Jazzy format following <a href="https://www.youtube.com/watch?v=9sjTrpxtBaE">YouTube</a>:
     
     cd ros2_ws2_vis_sim/src/practice_robot_description
     # move items in ''urdf/'', ''launch/'', ''config'', and ''mesh/'' accordingly
