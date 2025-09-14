@@ -12,6 +12,13 @@ Use the following to debug urdf/xacro files:
 
     ros2 run xacro xacro my_robot.urdf.xacro 
 
+### basic moveit2 setup assistance
+
+    ros2 launch moveit_setup_assistant setup_assistant.launch.py
+    # Create New Moveit Configuration Package (or edit if the configuration files already exist)
+    # Browse => src/my_robot_description/urdf/my_robot.urdf.xacro => Load Files
+    => rvis rendering error
+
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
 
