@@ -34,7 +34,7 @@ Installing moveit2 manipulator (see <a href="https://moveit.ai/install-moveit2/b
 
 Next, export the following in ``.bashrc``:
 
-    export PS1='\u@\h:\W\$'                                             # this one is just shell formatting, not ros2 related
+    export PS1='\u@\h:\W\$ '                                             # this one is just shell formatting, not ros2 related
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp                        # fore moveit2      
     source /opt/ros/jazzy/setup.bash                                    # for ros2 
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash   # for colcon
