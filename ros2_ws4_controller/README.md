@@ -18,7 +18,7 @@ Use the following to debug urdf/xacro files:
     ros2 run xacro xacro my_robot.urdf.xacro 
 
 ### controller configuration
-Visit <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/">ros2_controllers github</a> and <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/src/diff_drive_controller_parameter.yaml">diff drive controller parameter</a> to fill in the ros2_control configuration file:  ``.../src/my_robot_bringup/config/my_robot_controllers.yaml``.
+Visit <a href="https://github.com/ros-controls/ros2_controllers/tree/jazzy/">ros2_controllers github</a> and <a href="https://github.com/ros-controls/ros2_controllers/blob/jazzy/diff_drive_controller/src/diff_drive_controller_parameter.yaml">diff drive controller parameter</a> to fill in the ros2_control configuration file:  ``src/my_robot_bringup/config/my_robot_controllers.yaml``.
 
     colcon build
     source install/setup.bash
@@ -39,7 +39,7 @@ Other parameters to check:
 #### with an Arduino using the Arduino IDE
 Install ``Adafruit PCA9685 PWM Servo Driver`` library in the Arduino IDE. Open the following file with the Arduino/PCA9685 connected as shown in the photo:
 
-    #upload to Arduino: /src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
+    #upload to Arduino: src/my_robot_firmware/firmware/arduino_PCA9685controllerTestChannel0/PCA9685controllerTestChannel0.ino
 
 <img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws4_controller/src/my_robot_firmware/firmware/Arduino_PCA9685_channel0.png" width="300">
 
@@ -68,7 +68,7 @@ Arduino as a transmitter and ROS as the receiver (very inconsistent on Rasp Pi):
 
 Arduino as the receiver and ROS as the transmitter:
 
-    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_receiver_LED/Arduino_serial_receiver_LED.ino
+    # upload to Arduino: src/my_robot_firmware/firmware/Arduino_serial_receiver_LED/Arduino_serial_receiver_LED.ino
     ros2 run my_robot_firmware_py Arduino_serial_publisher --ros-args -p port:=/dev/ttyACM0
     ros2 topic list
     ros2 topic pub /serial_transmitter example_interfaces/msg/String "data: '1'"     # turn on LED_PIN 13
@@ -76,7 +76,7 @@ Arduino as the receiver and ROS as the transmitter:
 
 Arduino as the transmitter and receiver, and ROS as the lifecycle:
 
-    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
+    # upload to Arduino: src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_communicator.ino
     ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
     ros2 lifecycle nodes
     ros2 lifecycle set /serial_lifecycleNode configure
@@ -86,7 +86,7 @@ Arduino as the transmitter and receiver, and ROS as the lifecycle:
 
 Using the same circuit configuration as shown in the photo of the previous section. We can use Arduino as the receiver to control PCA9685, and ROS as the lifecycle to transmit the on/off signal:
 
-    # upload to Arduino: /src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_receiver_PCA9685.ino
+    # upload to Arduino: src/my_robot_firmware/firmware/Arduino_serial_communicator/Arduino_serial_receiver_PCA9685.ino
     ros2 run my_robot_firmware_py Arduino_serial_lifecycle --ros-args -p port:=/dev/ttyACM0
     ros2 lifecycle set /serial_lifecycleNode configure
     ros2 lifecycle set /serial_lifecycleNode activate
@@ -136,7 +136,7 @@ Proceeding with the pure drive option, which needs I2C as well:
     colcon build
     source install/setup.bash
 
-Then move the ``I2C.h``, ``I2C.cpp``, and ``PCA9685.h`` from <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a> to ``/src/my_robot_firmware/include/pca9685``. Note, don't copy ``PCA9685.cpp``, it has been corrected by <a href="https://aistudio.google.com">Google AI Studio</a>. Then run,
+Then move the ``I2C.h``, ``I2C.cpp``, and ``PCA9685.h`` from <a href="https://github.com/TeraHz/PCA9685/">github</a>, <a href="https://github.com/TeraHz/I2C/">github</a> to ``src/my_robot_firmware/include/pca9685``. Note, don't copy ``PCA9685.cpp``, it has been corrected by <a href="https://aistudio.google.com">Google AI Studio</a>. Then run,
 
     ros2 run my_robot_firmware testRaspPi5_pca9685_channel0 
     ros2 run my_robot_firmware testRaspPi5_pca9685_channel01
