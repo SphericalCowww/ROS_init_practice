@@ -34,8 +34,9 @@ Fix the following file:
 
     # src/my_robot_bringup/config/ros2_controllers.yaml => update_rate: 20  # Hz
     # src/my_robot_bringup/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
-    # src/my_robot_bringup/config/moveit_controllers.yaml => add arm_controller: action_ns: follow_joint_trajectory
-    # src/my_robot_bringup/config/moveit_controllers.yaml => add arm_controller: default: true
+    # src/my_robot_bringup/config/moveit_controllers.yaml => add in arm_controller: 
+    ## action_ns: follow_joint_trajectory
+    ## default: true
 
 Launch the demo:
 
