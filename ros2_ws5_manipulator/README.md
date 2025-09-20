@@ -14,6 +14,8 @@ Use the following to debug urdf/xacro files:
 
 ### basic moveit2 setup assistance
 
+Launch the MoveIt assisance:
+
     ros2 launch moveit_setup_assistant setup_assistant.launch.py
     # Create New Moveit Configuration Package (or edit if the configuration files already exist)
     # Browse => src/my_robot_description/urdf/my_robot.urdf.xacro => Load Files
@@ -28,13 +30,24 @@ Use the following to debug urdf/xacro files:
     # Author Information => add anything (e.g. "my_robot", "my_robot@gmail.com"), otherwise bugged
     # Configuration Files => Browse: src/my_robot_bringup/ => Generate Package: double check if files are generated => Exit Setup Assistant
 
+Fix the following file:
+
     # src/my_robot_bringup/config/ros2_controllers.yaml => update_rate: 20  # Hz
     # src/my_robot_bringup/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
     # src/my_robot_bringup/config/moveit_controllers.yaml => add arm_controller: action_ns: follow_joint_trajectory
     # src/my_robot_bringup/config/moveit_controllers.yaml => add arm_controller: default: true
+
+Launch the demo:
+
     colcon build
     source install/setup.bash
     ros2 launch my_robot_bringup demo.launch.py
+    # MotionPlanning:
+    ## Planning Group: arm
+    ## Goal State: pose1
+    ## Plan
+    ## => error
+    
 
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
