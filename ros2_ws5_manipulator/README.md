@@ -32,7 +32,7 @@ Launch the MoveIt assistance:
     # ROS2 Controllers => Auto Add JointTrajectoryController
     # Moveit Controllers => Auto Add FollowJointsTrajectory
     # Author Information => add anything (e.g. "my_robot", "my_robot@gmail.com"), otherwise bugged
-    # Configuration Files => Browse: src/my_robot_bringup/ => Generate Package: double check if files are generated => Exit Setup Assistant
+    # Configuration Files => Browse: src/my_robot_moveit_config/ => Generate Package: double check if files are generated => Exit Setup Assistant
 
 Fix the following file:
 
