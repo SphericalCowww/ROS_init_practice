@@ -12,7 +12,7 @@ Use the following to debug urdf/xacro files:
 
     ros2 run xacro xacro my_robot.urdf.xacro 
 
-### basic moveit2 setup assistance
+### moveit2 setup assistance with an arm
 
 Launch the MoveIt assistance:
 
@@ -26,7 +26,7 @@ Launch the MoveIt assistance:
     # Start Screen: can toggle visual/collision
     # Self-Collisions => Generate Collision Matrix: removes all adjacent collisions and never in contact ones
     # Virtual Joints => Add Virtual Joint => Virtual Joint Name: virtual_join => Parent Frame Name: world => Joint Type: fixed => Save
-    # Planning Groups => Add Group => Group Name: arm => Kinametic Solver: kdl_kinematics_plugin => Add Joints => choose all and right arrw => Save
+    # Planning Groups => Add Group => Group Name: arm => Kinametic Solver: kdl_kinematics_plugin => Add Joints => choose all and right arrow => Save
     # Robot Poses => Add Pose => all joints at 0 => Pose Name: home => Save: can add a few other ones for debugging
     # ros2_control URDF Model => position for Command Interfaces and State Interfaces => Add interfaces
     # ROS2 Controllers => Auto Add JointTrajectoryController
@@ -36,7 +36,6 @@ Launch the MoveIt assistance:
 
 Fix the following file:
 
-    # src/my_robot_moveit_config/config/ros2_controllers.yaml => update_rate: 20  # Hz
     # src/my_robot_moveit_config/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
     # src/my_robot_moveit_config/config/moveit_controllers.yaml => add in arm_controller: 
     ## action_ns: follow_joint_trajectory
@@ -56,6 +55,38 @@ Launch the demo:
     ## Execute
 
 Can also try moving the 3D model (slowly if on rasp pi) before Plan and Execute. Also, try selecting ``MotionPlanning:Use Cartesian Path``, where planning may fail due to the solution not existing.
+
+### moveit2 setup assistance with an arm and gripper
+
+Launch the MoveIt assistance:
+
+    sudo apt update
+    sudo apt install
+    colcon build
+    source install/setup.bash
+    ros2 launch moveit_setup_assistant setup_assistant.launch.py
+    # Create New Moveit Configuration Package (or edit if the configuration files already exist)
+    # Browse => src/my_robot_description/urdf/ma_robot.urdf.xacro => Load Files
+    # ...
+    # Planning Groups => Add Group => Group Name: gripper => Kinametic Solver: kdl_kinematics_plugin => Add Joints => choose gripper joint and right arrow => Save
+    # End Effectors => End Effector Name: gripper_end_effector => End Effector Group: gripper => Parent Lin: tool_link => Parent Group: arm => Save
+    # ...
+    
+Fix the following file:
+
+    # src/ma_robot_moveit_config/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
+    # src/ma_robot_moveit_config/config/moveit_controllers.yaml => add in gripper_controller/arm_controller: 
+    ## action_ns: follow_joint_trajectory
+    ## default: true
+
+Launch the demo:
+
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_moveit_config demo.launch.py
+    # ignore: [move_group-3] [ERROR] [1758361830.007872451] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
+    # ignore: [rviz2-4] [ERROR] [1758361834.128908606] [moveit_143394722.moveit.ros.motion_planning_frame]: Action server: /recognize_objects not available
+    # MotionPlanning:
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
