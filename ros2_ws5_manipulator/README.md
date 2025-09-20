@@ -42,11 +42,15 @@ Launch the demo:
     colcon build
     source install/setup.bash
     ros2 launch my_robot_bringup demo.launch.py
+    # ignore: [move_group-3] [ERROR] [1758361830.007872451] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
+    # ignore: [rviz2-4] [ERROR] [1758361834.128908606] [moveit_143394722.moveit.ros.motion_planning_frame]: Action server: /recognize_objects not available
     # MotionPlanning:
     ## Planning Group: arm
     ## Goal State: pose1
     ## Plan
-    ## => error
+    ## Execute
+
+Can also try also moving the 3D model (slowly if on rasp pi) before Plan and Execute. Also try selecting ``MotionPlanning:Use Cartesian Path``, where planning may fail due to solution not existing.
     
 
 ## References:
