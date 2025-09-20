@@ -14,8 +14,10 @@ Use the following to debug urdf/xacro files:
 
 ### basic moveit2 setup assistance
 
-Launch the MoveIt assisance:
+Launch the MoveIt assistance:
 
+    colcon build
+    source install/setup.bash
     ros2 launch moveit_setup_assistant setup_assistant.launch.py
     # Create New Moveit Configuration Package (or edit if the configuration files already exist)
     # Browse => src/my_robot_description/urdf/my_robot.urdf.xacro => Load Files
