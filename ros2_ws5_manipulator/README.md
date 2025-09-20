@@ -16,6 +16,8 @@ Use the following to debug urdf/xacro files:
 
 Launch the MoveIt assistance:
 
+    sudo apt update
+    sudo apt install
     colcon build
     source install/setup.bash
     ros2 launch moveit_setup_assistant setup_assistant.launch.py
