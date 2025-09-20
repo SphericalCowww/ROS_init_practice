@@ -36,9 +36,9 @@ Launch the MoveIt assistance:
 
 Fix the following file:
 
-    # src/my_robot_bringup/config/ros2_controllers.yaml => update_rate: 20  # Hz
-    # src/my_robot_bringup/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
-    # src/my_robot_bringup/config/moveit_controllers.yaml => add in arm_controller: 
+    # src/my_robot_moveit_config/config/ros2_controllers.yaml => update_rate: 20  # Hz
+    # src/my_robot_moveit_config/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
+    # src/my_robot_moveit_config/config/moveit_controllers.yaml => add in arm_controller: 
     ## action_ns: follow_joint_trajectory
     ## default: true
 
@@ -46,7 +46,7 @@ Launch the demo:
 
     colcon build
     source install/setup.bash
-    ros2 launch my_robot_bringup demo.launch.py
+    ros2 launch my_robot_moveit_config demo.launch.py
     # ignore: [move_group-3] [ERROR] [1758361830.007872451] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
     # ignore: [rviz2-4] [ERROR] [1758361834.128908606] [moveit_143394722.moveit.ros.motion_planning_frame]: Action server: /recognize_objects not available
     # MotionPlanning:
@@ -55,9 +55,8 @@ Launch the demo:
     ## Plan
     ## Execute
 
-Can also try also moving the 3D model (slowly if on rasp pi) before Plan and Execute. Also try selecting ``MotionPlanning:Use Cartesian Path``, where planning may fail due to solution not existing.
+Can also try moving the 3D model (slowly if on rasp pi) before Plan and Execute. Also, try selecting ``MotionPlanning:Use Cartesian Path``, where planning may fail due to the solution not existing.
     
-
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
 
