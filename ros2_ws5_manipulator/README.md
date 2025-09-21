@@ -83,11 +83,15 @@ Launch the demo:
 
     colcon build
     source install/setup.bash
-    ros2 launch my_robot_moveit_config demo.launch.py
+    ros2 launch ma_robot_moveit_config demo.launch.py
     # ignore: [move_group-3] [ERROR] [1758361830.007872451] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
     # ignore: [rviz2-4] [ERROR] [1758361834.128908606] [moveit_143394722.moveit.ros.motion_planning_frame]: Action server: /recognize_objects not available
-    # MotionPlanning:
+    # optional: MotionPlanning => Planned Path => Loop Animation: off
+
+Note that setting the gripper as an end effector is necessary. Otherwise, if a gripper piece is used as the pose goal, the inverse-kinematic solve for the arm movement would have to account for tiny changes in gripper position, which adds non-essential degrees of freedom and makes convergence much harder. By using the end effector base link as the reference, the arm can be much cleanly planned, and the gripper action remains independent of the arm action.
+
+### launch file for moveit2
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
-
+- Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
