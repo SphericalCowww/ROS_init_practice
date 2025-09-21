@@ -90,7 +90,17 @@ Launch the demo:
 
 Note that setting the gripper as an end effector is necessary. Otherwise, if a gripper piece is used as the pose goal, the inverse-kinematic solve for the arm movement would have to account for tiny changes in gripper position, which adds non-essential degrees of freedom and makes convergence much harder. By using the end effector base link as the reference, the arm can be much cleanly planned, and the gripper action remains independent of the arm action.
 
-### launch file for moveit2
+### local launch file for moveit2
+    
+    cp src/ma_robot_moveit_config/config/ros2_controllers.yaml src/my_robot_bringup/config/ma_robot_controllers.yaml
+    cp src/ma_robot_moveit_config/config/ma_robot.ros2_control.xacro src/my_robot_description/urdf/
+    # modify ma_robot.ros2_control.xacro accordingly
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_bringup ma_robot.launch.py
+    # ignore: [move_group-3] [ERROR] [1758361830.007872451] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
+    # Add => MotionPlanning
+    # Context => Planning Library => ompl
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
