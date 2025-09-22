@@ -1,5 +1,10 @@
 ## Basic manipulator using ros2 (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
 
+| term | description | configuration | interrupt handling | MoveIt compatibility |
+| - | - | - | - | - |
+| forward_command_controller | Sends direct commands (position, velocity, or effort) to a joint or set of joints without trajectory interpolation | simple configuration parameters | immediate overwrite | does work with MoveIt |
+| joint_trajectory_controller | Executes full joint trajectories over time. It interpolates between trajectory points, manages timing, and handles smooth motion for multiple joints simultaneously | full PID specification | smooth blending | preferred by MoveIt |
+
 ### basic urdf 
 
     colcon build
