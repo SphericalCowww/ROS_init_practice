@@ -9,7 +9,7 @@
 
     colcon build
     source install/setup.bash
-    ros2 launch my_robot_description display.launch.py
+    ros2 launch my_robot_description my_robot.rviz.launch.xacro.py
     rqt_graph
     ros2 run tf2_tools view_frames
 
