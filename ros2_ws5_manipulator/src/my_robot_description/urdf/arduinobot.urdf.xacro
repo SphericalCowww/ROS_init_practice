@@ -2,10 +2,9 @@
 <!-- ======================================================================================================== -->
 <!-- reference from  Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (Udemy) -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
-    <xacro:include filename="$(find robot_build)/urdf/_GlobalConfigs.urdf.xacro"/>
+    <xacro:include filename="$(find my_robot_description)/urdf/arduinobot_common_properties.urdf.xacro"/>
 
-    <xacro:include filename="$(find robot_build)/urdf/arduinobot.gazebo.xacro"/>
-    <xacro:include filename="$(find robot_build)/urdf/arduinobot.ros2_control.xacro"/>
+    <!-- xacro:include filename="$(find robot_build)/urdf/arduinobot.ros2_control.xacro"/-->
 
     <xacro:property name="effort"   value="30.0" />
     <xacro:property name="velocity" value="10.0" />
@@ -18,14 +17,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="red"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/basement.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="1.0"/>
@@ -35,14 +34,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="blue"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="0.1"/>
@@ -52,14 +51,14 @@
         <visual>
             <origin rpy=" 0 -${pi/2} ${pi/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="green"/>
         </visual>
         <collision>
             <origin rpy=" 0 -${pi/2} ${pi/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="0.1"/>
@@ -69,14 +68,14 @@
         <visual>
             <origin rpy="${pi/2} 0 ${pi/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="green"/>
         </visual>
         <collision>
             <origin rpy="${pi/2} 0 ${pi/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="0.1"/>
@@ -86,14 +85,14 @@
         <visual>
             <origin rpy="0 0 ${pi/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="blue"/>
         </visual>
         <collision>
             <origin rpy="0 0 ${pi/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="0.05"/>
@@ -103,14 +102,14 @@
         <visual>
             <origin rpy="0 0 -${pi/2}" xyz="-0.1 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="red"/>
         </visual>
         <collision>
             <origin rpy="0 0 -${pi/2}" xyz="-0.1 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/right_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="0.01"/>
@@ -120,34 +119,17 @@
         <visual>
             <origin rpy="0 0 -${pi/2}" xyz="-0.04 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
             <material name="red"/>
         </visual>
         <collision>
             <origin rpy="0 0 -${pi/2}" xyz="-0.04 0.50 -0.1"/>
             <geometry>
-                <mesh filename="package://robot_build/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://my_robot_description/mesh/left_finger.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
         <xacro:lazy_inertia m="0.01"/>
-    </link>
-
-    <link name="rgb_camera">
-        <visual>
-            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
-            <geometry>
-                <mesh filename="package://robot_build/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
-            </geometry>
-            <material name="green"/>
-        </visual>
-        <collision>
-            <origin rpy="-1.57 0 -1.57" xyz="-0.1 0.125 0.15"/>
-            <geometry>
-                <mesh filename="package://robot_build/mesh/pi_camera.STL" scale="0.01 0.01 0.01"/>
-            </geometry>
-        </collision>
-        <xacro:lazy_inertia m="0.1"/>
     </link>
 
 <!-- ======================================================================================================== -->
@@ -208,12 +190,6 @@
         <limit lower="0.0" upper="${pi/2}" 
                effort="${effort}" velocity="${velocity}"/>
         <mimic joint="joint_4" multiplier="-1"/>
-    </joint>
-
-    <joint name ="rgb_camera_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="rgb_camera"/>
-        <origin xyz="0 0.45 0.2" rpy="0 -0.5 1.57"/>
     </joint>
 <!-- ======================================================================================================== -->
 
