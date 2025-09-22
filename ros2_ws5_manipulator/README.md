@@ -101,6 +101,35 @@ Note also that ``Kinametic Solver: kdl_kinematics_plugin`` for this gripper desi
     [move_group-6] [ERROR] [1758556501.971280137] [move_group.moveit.moveit.ros.kinematics_plugin_loader]: Kinematics solver of type 'kdl_kinematics_plugin/KDLKinematicsPlugin' could not be initialized for group 'gripper'
     [move_group-6] [ERROR] [1758556501.971634545] [move_group.moveit.moveit.ros.robot_model_loader]: Kinematics solver could not be instantiated for joint group gripper.
 
+### moveit2 setup assistance with an arm and gripper now with mesh
+
+Launch the MoveIt assistance:
+
+    sudo apt update
+    sudo apt install
+    colcon build
+    source install/setup.bash
+    ros2 launch moveit_setup_assistant setup_assistant.launch.py
+    # Create New Moveit Configuration Package (or edit if the configuration files already exist)
+    # Browse => src/my_robot_description/urdf/arduinobot.urdf.xacro => Load Files
+    # ...
+    # both arm and gripper group contain the crawler base
+    # end effector parent link on the crawler base
+    
+Fix the following file:
+
+    # src/arduinobot_moveit_config/config/joint_limits.yaml => max_velocity: 10.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
+    # src/arduinobot_moveit_config/config/moveit_controllers.yaml => add in gripper_controller/arm_controller: 
+    ## action_ns: follow_joint_trajectory
+    ## default: true
+
+Launch the demo:
+
+    colcon build
+    source install/setup.bash
+    ros2 launch arduinobot_moveit_config demo.launch.py
+    # lots of errors, but plan/execute still work
+ 
 ### local launch file for moveit2
     
     cp src/ma_robot_moveit_config/config/ros2_controllers.yaml src/my_robot_bringup/config/ma_robot_controllers.yaml
