@@ -103,6 +103,12 @@ Note also that ``Kinametic Solver: kdl_kinematics_plugin`` for this gripper desi
 
 ### moveit2 setup assistance with an arm and gripper now with mesh
 
+Checking the basic rviz model:
+
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_description arduinobot.rviz.launch.xacro.py
+
 Launch the MoveIt assistance:
 
     sudo apt update
