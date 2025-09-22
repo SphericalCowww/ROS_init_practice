@@ -90,6 +90,12 @@ Launch the demo:
 
 Note that setting the gripper as an end effector is necessary. Otherwise, if a gripper piece is used as the pose goal, the inverse-kinematic solve for the arm movement would have to account for tiny changes in gripper position, which adds non-essential degrees of freedom and makes convergence much harder. By using the end effector base link as the reference, the arm can be much cleanly planned, and the gripper action remains independent of the arm action.
 
+Note also that ``Kinametic Solver: kdl_kinematics_plugin`` for this gripper design is in principle not going to work due to its linear motion design. It should be corrected to ``Kinametic Solver: None``, otherwise it will see the following error (plan/execute still work, however):
+
+    [move_group-6] [ERROR] [1758556501.970869191] [move_group.moveit.moveit.kinematics.kdl_kinematics_plugin]: Group 'gripper' is not a chain
+    [move_group-6] [ERROR] [1758556501.971280137] [move_group.moveit.moveit.ros.kinematics_plugin_loader]: Kinematics solver of type 'kdl_kinematics_plugin/KDLKinematicsPlugin' could not be initialized for group 'gripper'
+    [move_group-6] [ERROR] [1758556501.971634545] [move_group.moveit.moveit.ros.robot_model_loader]: Kinematics solver could not be instantiated for joint group gripper.
+
 ### local launch file for moveit2
     
     cp src/ma_robot_moveit_config/config/ros2_controllers.yaml src/my_robot_bringup/config/ma_robot_controllers.yaml
