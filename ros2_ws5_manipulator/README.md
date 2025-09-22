@@ -1,10 +1,15 @@
 ## Basic manipulator using ros2 (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
 
+| term | description | configuration | interrupt handling | MoveIt compatibility |
+| - | - | - | - | - |
+| forward_command_controller | Sends direct commands (position, velocity, or effort) to a joint or set of joints without trajectory interpolation | simple configuration parameters | immediate overwrite | does work with MoveIt |
+| joint_trajectory_controller | Executes full joint trajectories over time. It interpolates between trajectory points, manages timing, and handles smooth motion for multiple joints simultaneously | full PID specification | smooth blending | preferred by MoveIt |
+
 ### basic urdf 
 
     colcon build
     source install/setup.bash
-    ros2 launch my_robot_description display.launch.py
+    ros2 launch my_robot_description my_robot.rviz.launch.xacro.py
     rqt_graph
     ros2 run tf2_tools view_frames
 
@@ -100,7 +105,8 @@ Note also that ``Kinametic Solver: kdl_kinematics_plugin`` for this gripper desi
     
     cp src/ma_robot_moveit_config/config/ros2_controllers.yaml src/my_robot_bringup/config/ma_robot_controllers.yaml
     cp src/ma_robot_moveit_config/config/ma_robot.ros2_control.xacro src/my_robot_description/urdf/
-    # modify ma_robot.ros2_control.xacro accordingly
+    # adding the following line in ma_robot.ros2_control.xacro:
+    ## <xacro:include filename="ma_robot.ros2_control.xacro" />
     colcon build
     source install/setup.bash
     ros2 launch my_robot_bringup ma_robot.launch.py

@@ -212,26 +212,6 @@ Connect the servos to channels 0-3 of the PCA9685. It uses both ``ros2_control``
     ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [0.1, 0.1]}"
     ros2 topic pub -1 /my_arm_controller/joints_command example_interfaces/msg/Float64MultiArray "{data: [-0.1, -0.1]}"
 
-### ros2_control Gazebo with MoveIt2 (Extra)
-
-Run the MoveIt2 to be linked with Gazebo by:
-
-    ros2 launch my_robot_bringup ma_robot.gazebo.launch.py
-    # on a different window
-    ros2 launch my_robot_bringup mi_robot.moveit.launch.py
-    # Add => moveit_ros_visualization/MotionPlanning => ompl => Approx IK Solutions => (dragging the sphere around) => Plan & Execute
-
-Note the following error is fine, just without sense:
-
-    [move_group-1] [ERROR] [1757189711.578782510] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates 
-
-### Extra notes
-
-| term | description | configuration | interrupt handling | MoveIt compatibility |
-| - | - | - | - | - |
-| forward_command_controller | Sends direct commands (position, velocity, or effort) to a joint or set of joints without trajectory interpolation | simple configuration parameters | immediate overwrite | does work with MoveIt |
-| joint_trajectory_controller | Executes full joint trajectories over time. It interpolates between trajectory points, manages timing, and handles smooth motion for multiple joints simultaneously | full PID specification | smooth blending | preferred by MoveIt |
-
 ## References:
 - Edouard Renard, "ROS 2 - Hardware and ros2_control, Step by Step" (<a href="https://www.udemy.com/course/ros2_control/">Udemy</a>)
 - Antonio Brandi, "Robotics and ROS 2 - Learn by Doing! Manipulators" (<a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>)
