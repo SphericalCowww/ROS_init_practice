@@ -103,7 +103,7 @@ Note also that ``Kinametic Solver: kdl_kinematics_plugin`` for this gripper desi
 
 ### moveit2 setup assistance with an arm and gripper now with mesh
 
-Checking the basic rviz model:
+Mesh obtained from <a href="https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/">Udemy</a>, lecture 44. Checking the basic rviz model:
 
     colcon build
     source install/setup.bash
