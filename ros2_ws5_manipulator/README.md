@@ -148,6 +148,13 @@ Launch the demo:
     # ignore: [move_group-3] [ERROR] [1758361830.007872451] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
     # Add => MotionPlanning
     # Context => Planning Library => ompl
+
+### command file for moveit2
+
+    colcon build
+    source install/setup.bash
+    ros2 launch my_robot_moveit_config demo.launch.py
+    ros2 run my_robot_commander my_robot_moveit_basic 
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
