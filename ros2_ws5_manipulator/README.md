@@ -169,8 +169,8 @@ With end-effector:
 
 Using commander with end-effector:
 
-    ros2 launch my_robot_bringup ma_robot.launch.py
-    ros2 run my_robot_commander ma_robot_commander
+    ros2 launch my_robot_bringup ma_robot.launch.with_commander.py
+    # or "ros2 run my_robot_commander ma_robot_commander" after "ros2 launch my_robot_bringup ma_robot.launch.py"
     ros2 topic list
     ros2 topic info /gripper_set_open
     ros2 topic pub -1 /gripper_set_open example_interfaces/msg/Bool "{data: false}"
