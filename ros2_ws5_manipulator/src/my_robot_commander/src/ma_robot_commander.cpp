@@ -5,17 +5,17 @@
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 using Bool = example_interfaces::msg::Bool;
 using namespace std::placeholders;
-class Commander
+class ma_robot_commander_class
 {
     public:
-        Commander(std::shared_ptr<rclcpp::Node> node) {
+        ma_robot_commander_class(std::shared_ptr<rclcpp::Node> node) {
             node_ = node;
             arm_interface_ = std::make_shared<MoveGroupInterface>(node_, "arm");
             arm_interface_->setMaxVelocityScalingFactor(1.0);
             arm_interface_->setMaxAccelerationScalingFactor(1.0);
             gripper_interface_ = std::make_shared<MoveGroupInterface>(node_, "gripper");
             gripper_subscriber_ = node_->create_subscription<Bool>("gripper_set_open", 10, 
-                std::bind(&Commander::gripperCallback, this, _1));
+                std::bind(&ma_robot_commander_class::gripperCallback, this, _1));
         }
         void armSetNamedTarget(const std::string &name) {
             arm_interface_->setStartStateToCurrentState();
@@ -91,8 +91,8 @@ class Commander
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<rclcpp::Node>("commander");
-    auto commander = Commander(node);
+    auto node = std::make_shared<rclcpp::Node>("ma_robot_commander");
+    auto commander = ma_robot_commander_class(node);
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
