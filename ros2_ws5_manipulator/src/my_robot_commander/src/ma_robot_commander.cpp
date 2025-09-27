@@ -14,7 +14,7 @@ class Commander
             arm_interface_->setMaxVelocityScalingFactor(1.0);
             arm_interface_->setMaxAccelerationScalingFactor(1.0);
             gripper_interface_ = std::make_shared<MoveGroupInterface>(node_, "gripper");
-            gripper_subscriber_ = node_->create_subscription<Bool>("open_gripper", 10, 
+            gripper_subscriber_ = node_->create_subscription<Bool>("gripper_set_open", 10, 
                 std::bind(&Commander::gripperCallback, this, _1));
         }
         void armSetNamedTarget(const std::string &name) {
