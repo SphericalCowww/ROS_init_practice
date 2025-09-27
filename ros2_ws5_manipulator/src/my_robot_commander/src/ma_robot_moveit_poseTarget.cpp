@@ -21,9 +21,9 @@ int main(int argc, char **argv)
     tf2::Quaternion quaternionObj;
     geometry_msgs::msg::PoseStamped target_pose;
     
-    target_pose.pose.position.x = 0.0
-    target_pose.pose.position.y = -0.4
-    target_pose.pose.position.z = 0.8
+    target_pose.pose.position.x = 0.0;
+    target_pose.pose.position.y = -0.4;
+    target_pose.pose.position.z = 0.2;
     quaternionObj.setRPY(3.14, 0.0, 0.0);   //Euler's angle: (roll, pitch, yaw)
     quaternionObj = quaternionObj.normalize();
     target_pose.pose.orientation.x = quaternionObj.getX();
@@ -58,8 +58,6 @@ int main(int argc, char **argv)
     if (fraction == 1) {
         arm.execute(trajectory);
     }
-    
- 
     //////////
 
     rclcpp::shutdown();

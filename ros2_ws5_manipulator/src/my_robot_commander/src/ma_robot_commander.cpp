@@ -4,31 +4,31 @@
 
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 using Bool = example_interfaces::msg::Bool;
+using namespace std::placeholders;
 class Commander
 {
     public:
         Commander(std::shared_ptr<rclcpp::Node> node) {
             node_ = node;
-            I_arm_ = std::make_shared<MoveGroupInterface>(node_, "arm");
-            I_arm_->setMaxVelocityScalingFactor(1.0);
-            I_arm_->setMaxAccelerationScalingFactor(1.0);
-            I_gripper_ = std::make_shared<MoveGroupInterface>(node_, "gripper");
-            open_gripper_sub = node_->create_subscription<Bool>("open_gripper", 10, );
-
-            double CartesianConstraintStepsize_ = 0.01;    //meter
+            arm_interface_ = std::make_shared<MoveGroupInterface>(node_, "arm");
+            arm_interface_->setMaxVelocityScalingFactor(1.0);
+            arm_interface_->setMaxAccelerationScalingFactor(1.0);
+            gripper_interface_ = std::make_shared<MoveGroupInterface>(node_, "gripper");
+            gripper_subscriber_ = node_->create_subscription<Bool>("open_gripper", 10, 
+                std::bind(&Commander::gripperCallback, this, _1));
         }
-        void armNamedTarget(const std::string &name) {
-            I_arm_->setStartStateToCurrentState();
-            I_arm_->setNamedTarget(name);
-            planAndExecute(I_arm_);
+        void armSetNamedTarget(const std::string &name) {
+            arm_interface_->setStartStateToCurrentState();
+            arm_interface_->setNamedTarget(name);
+            planAndExecute(arm_interface_);
         }
-        void armJointTarget(const std::vector<double> &joints) {
-            I_arm_->setStartStateToCurrentState();
-            I_arm_->setJointValueTarget(joints);
-            planAndExecute(I_arm_);
+        void armSetJointTarget(const std::vector<double> &joints) {
+            arm_interface_->setStartStateToCurrentState();
+            arm_interface_->setJointValueTarget(joints);
+            planAndExecute(arm_interface_);
         }
-        void armPoseTarget(double x, double y, double z, double roll, double pitch, double yaw,
-                           bool use_cartesian_path=false) {
+        void armSetPoseTarget(double x, double y, double z, double roll, double pitch, double yaw,
+                              bool use_cartesian_path=false) {
             tf2::Quaternion quaternionObj;
             geometry_msgs::msg::PoseStamped target_pose;
             target_pose.header.frame_id = "base_link";    
@@ -43,28 +43,27 @@ class Commander
             target_pose.pose.orientation.z = quaternionObj.getZ();
             target_pose.pose.orientation.w = quaternionObj.getW();
 
-            I_arm_->setStartStateToCurrentState();
+            arm_interface_->setStartStateToCurrentState();
             if (use_cartesian_path == false) {
-            
-                I_arm_setPoseTarget(target_pose);
-                planAndExecute(I_arm_);
+                arm_interface_->setPoseTarget(target_pose);
+                planAndExecute(arm_interface_);
             } else {
                 moveit_msgs::msg::RobotTrajectory trajectory;
                 std::vector<geometry_msgs::msg::Pose> waypoints;
                 waypoints.push_back(target_pose.pose);
-                double fraction = I_arm_.computeCartesianPath(waypoints, CartesianConstraintStepsize, trajectory);
+                double fraction = arm_interface_->computeCartesianPath(waypoints, cartesianConstraintStepsize_, trajectory);
                 if (fraction == 1) {
-                    I_arm_.execute(trajectory);
+                    arm_interface_->execute(trajectory);
                 }
             }
         }
-        void gripperNameTarget(const std::string &name) {
-            I_gripper_->setStartStateToCurrentState();
-            I_gripper_->setNamedTarget(name);
-            planAndExecute(I_gripper_);
+        void gripperSetNameTarget(const std::string &name) {
+            gripper_interface_->setStartStateToCurrentState();
+            gripper_interface_->setNamedTarget(name);
+            planAndExecute(gripper_interface_);
         }
-        void gripperOpen()  { gripperNameTarget("gripper_open"); }
-        void gripperClose() { gripperNameTarget("gripper_close"); }
+        void gripperOpen()  { gripperSetNameTarget("gripper_open"); }
+        void gripperClose() { gripperSetNameTarget("gripper_close"); }
     private:
         void planAndExecute(const std::shared_ptr<MoveGroupInterface> &interface) {
             MoveGroupInterface::Plan plan;
@@ -74,24 +73,25 @@ class Commander
                 interface->execute(plan);
             }
         }
-        void OpenGripperCallback(const Bool &msg) {
+        void gripperCallback(const Bool &msg) {
             if (msg.data) {
-                openGripper();
+                gripperOpen();
             } else {
-                closeGripper();
+                gripperClose();
             }
-            
         }
+        
         std::shared_ptr<rclcpp::Node> node_;
-        std::shared_ptr<MoveGroupInterface> I_arm_;
-        std::shared_ptr<MoveGroupInterface> I_gripper_;
-        rclcpp::Subscription<Bool>::SharedPtr open_gripper_sub_;
+        std::shared_ptr<MoveGroupInterface> arm_interface_;
+        std::shared_ptr<MoveGroupInterface> gripper_interface_;
+        rclcpp::Subscription<Bool>::SharedPtr gripper_subscriber_;
+        double cartesianConstraintStepsize_ = 0.01;    //meter
 };
 
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<rclcpp::Node>("commander")l
+    auto node = std::make_shared<rclcpp::Node>("commander");
     auto commander = Commander(node);
     rclcpp::spin(node);
     rclcpp::shutdown();
