@@ -151,10 +151,30 @@ Launch the demo:
 
 ### command file for moveit2
 
+With just arm:
+
     colcon build
     source install/setup.bash
     ros2 launch my_robot_moveit_config demo.launch.py
-    ros2 run my_robot_commander my_robot_moveit_basic 
+    ros2 run my_robot_commander my_robot_moveit_namedTarget
+    ros2 run my_robot_commander my_robot_moveit_jointTarget
+
+With end-effector:
+
+    ros2 launch my_robot_bringup ma_robot.launch.py
+    ros2 run my_robot_commander my_robot_moveit_jointTarget
+    ros2 run my_robot_commander ma_robot_moveit_poseTarget
+    # RobotModel => Links => tool link => Show Trail
+    ros2 run my_robot_commander ma_robot_moveit_poseTarget
+
+Using commander with end-effector:
+
+    ros2 launch my_robot_bringup ma_robot.launch.py
+    ros2 run my_robot_commander ma_robot_commander
+    ros2 topic list
+    ros2 topic info /gripper_set_open
+    ros2 topic pub -1 /gripper_set_open example_interfaces/msg/Bool "{data: false}"
+    ros2 topic pub -1 /gripper_set_open example_interfaces/msg/Bool "{data: true}"
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
