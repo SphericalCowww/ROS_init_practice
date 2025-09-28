@@ -93,9 +93,11 @@ class ma_robot_commander_class
         }
 
         void armNamedCallback(const ros_string::SharedPtr msg) {
+            RCLCPP_INFO(node_->get_logger(), "ma_robot_commander_class::armNamedCallback()");
             armSetNamedTarget(msg->data);
         }
         void armJointCallback(const ros_array::SharedPtr msg) {
+            RCLCPP_INFO(node_->get_logger(), "ma_robot_commander_class::armJointCallback()");
             if (msg->layout.dim.empty()) {
                 RCLCPP_WARN(get_logger(), "armJointCallback(): message empty");
                 return;
@@ -107,9 +109,11 @@ class ma_robot_commander_class
             armSetJointTarget(msg->data);
         }
         void armPoseCallback(const custom_array::SharedPtr msg) {
+            RCLCPP_INFO(node_->get_logger(), "ma_robot_commander_class::armPoseCallback()");
             armSetPoseTarget(msg->x, msg->y, msg->z, msg->roll, msg->pitch, msg->yaw, msg->use_cartesian_path);
         }
         void gripperCallback(const ros_bool::SharedPtr msg) {
+            RCLCPP_INFO(node_->get_logger(), "ma_robot_commander_class::gripperCallback()");
             if ( msg->data == true) {
                 gripperOpen();
             } else {
