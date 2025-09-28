@@ -48,7 +48,7 @@ def generate_launch_description():
         output="screen",
         parameters=[{"config_file": gazebo_config_path}],
     )
-
+    
     # check src/my_robot_bringup/config/ma_robot_controllers.yaml 
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
@@ -90,8 +90,8 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         arm_controller_spawner,
         gripper_controller_spawner,
-        moveit_launcher,
-        commander_node,
+        #moveit_launcher,
+        #commander_node,
         #rviz_node,
     ])
 
