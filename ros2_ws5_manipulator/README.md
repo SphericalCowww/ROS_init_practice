@@ -167,7 +167,7 @@ With end-effector:
     # RobotModel => Links => tool link => Show Trail
     ros2 run my_robot_commander ma_robot_moveit_poseTarget
 
-Using commander with end-effector:
+Using the commander with end-effector (existing interface see <a href="https://github.com/ros2/example_interfaces/tree/rolling/msg">github</a>; custom interface see <a href="https://roboticsbackend.com/ros2-create-custom-message/">webpage</a> or action from ``ros2_ws2_vis_sim`` though in python):
 
     ros2 launch my_robot_bringup ma_robot.launch.with_commander.py
     # or "ros2 run my_robot_commander ma_robot_commander" after "ros2 launch my_robot_bringup ma_robot.launch.py"
@@ -175,6 +175,17 @@ Using commander with end-effector:
     ros2 topic info /gripper_set_open
     ros2 topic pub -1 /gripper_set_open example_interfaces/msg/Bool "{data: false}"
     ros2 topic pub -1 /gripper_set_open example_interfaces/msg/Bool "{data: true}"
+    ros2 topic info /arm_set_name
+    ros2 topic pub -1 /arm_set_named example_interfaces/msg/String "{data: "arm_pose1"}"
+    ros2 topic info /arm_set_joint
+    ros2 topic pub -1 /arm_set_joint example_interfaces/msg/Float32MultiArray "{data: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}"
+    # try to see error message with: ros2 topic pub -1 /arm_set_joint example_interfaces/msg/Float32MultiArray "{data: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}"
+    ros2 topic info /arm_set_pose
+ros2 topic pub -1 /arm_set_pose my_robot_interface/msg/ArmPoseTarget "{x: 0.0, y: -0.4, z: 0.2, roll: 3.14, pitch: 0.0, yaw: 0.0, use_cartesian_path: false}"
+ros2 topic pub -1 /arm_set_pose my_robot_interface/msg/ArmPoseTarget "{x: 0.1, y: 0.0, z: 0.0, roll: 0.0, pitch: 0.0, yaw: 0.0, use_cartesian_path: true}"
+ros2 topic pub -1 /arm_set_pose my_robot_interface/msg/ArmPoseTarget "{x: 0.0, y: 0.1, z: 0.0, roll: 0.0, pitch: 0.0, yaw: 0.0, use_cartesian_path: true}"
+ros2 topic pub -1 /arm_set_pose my_robot_interface/msg/ArmPoseTarget "{x: 0.0, y: 0.0, z: 0.1, roll: 0.0, pitch: 0.0, yaw: 0.0, use_cartesian_path: true}"
+
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
