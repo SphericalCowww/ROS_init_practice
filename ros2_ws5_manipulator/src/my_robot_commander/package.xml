@@ -13,11 +13,6 @@
   <depend>moveit_ros_planning_interface</depend>  
   <depend>example_interfaces</depend>
   <depend>my_robot_interface</depend>
-  <export>
-    <rosidl_interface_packages>
-      <package>my_robot_interface</package>
-    </rosidl_interface_packages>
-  </export>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
@@ -26,3 +21,6 @@
     <build_type>ament_cmake</build_type>
   </export>
 </package>
+
+
+

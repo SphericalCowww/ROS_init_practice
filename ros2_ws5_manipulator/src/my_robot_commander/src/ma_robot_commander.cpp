@@ -2,7 +2,7 @@
 #include <moveit/move_group_interface/move_group_interface.hpp>
 //https://github.com/ros2/example_interfaces/tree/rolling/msg
 #include <example_interfaces/msg/string.hpp>
-#include <example_interfaces/msg/float32_multi_array.hpp>    //variable size
+#include <example_interfaces/msg/float64_multi_array.hpp>    //variable size
 #include "my_robot_interface/msg/arm_pose_target.hpp"
 #include <example_interfaces/msg/bool.hpp>
 
@@ -10,8 +10,8 @@
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
 using namespace std::placeholders;                  // for using _1
 using ros_string   = example_interfaces::msg::String;
-using ros_array    = example_interfaces::msg::Float32MultiArray;
-using costum_array = my_robot_interface::msg::ArmPoseTarget;
+using ros_array    = example_interfaces::msg::Float64MultiArray;
+using custom_array = my_robot_interface::msg::ArmPoseTarget;
 using ros_bool     = example_interfaces::msg::Bool;
 
 class ma_robot_commander_class
@@ -27,13 +27,13 @@ class ma_robot_commander_class
             gripper_interface_ = std::make_shared<MoveGroupInterface>(node_, "gripper");
 
             arm_named_subscriber_ = node_->create_subscription<ros_string> ("arm_set_named", 10,
-                std::bind(&ma_robot_commander_class::armSetNamedTarget, this, _1));            
+                std::bind(&ma_robot_commander_class::armNamedCallback, this, _1));            
             arm_joint_subscriber_ = node_->create_subscription<ros_array>  ("arm_set_joint", 10,
-                std::bind(&ma_robot_commander_class::armSetJointTarget, this, _1));
+                std::bind(&ma_robot_commander_class::armJointCallback, this, _1));
             arm_pose_subscriber_ = node_->create_subscription<custom_array>("arm_set_pose", 10,
-                std::bind(&ma_robot_commander_class::armSetPoseTarget, this, _1));
+                std::bind(&ma_robot_commander_class::armPoseCallback,  this, _1));
             gripper_subscriber_   = node_->create_subscription<ros_bool>   ("gripper_set_open", 10, 
-                std::bind(&ma_robot_commander_class::gripperCallback, this, _1));
+                std::bind(&ma_robot_commander_class::gripperCallback,  this, _1));
         }
         void armSetNamedTarget(const std::string &name) {
             arm_interface_->setStartStateToCurrentState();
@@ -70,6 +70,7 @@ class ma_robot_commander_class
                 std::vector<geometry_msgs::msg::Pose> waypoints;
                 waypoints.push_back(target_pose.pose);
                 double fraction = arm_interface_->computeCartesianPath(waypoints, cartesianConstraintStepsize_, trajectory);
+                RCLCPP_INFO(node_->get_logger(), "armSetPoseTarget(): cartesianConstraintFraction = %lf", fraction);
                 if (fraction == 1) {
                     arm_interface_->execute(trajectory);
                 }
@@ -98,12 +99,16 @@ class ma_robot_commander_class
         }
         void armJointCallback(const ros_array::SharedPtr msg) {
             RCLCPP_INFO(node_->get_logger(), "ma_robot_commander_class::armJointCallback()");
+            msg->layout.dim.resize(1);
+            msg->layout.dim[0].size   = msg->data.size();
+            msg->layout.dim[0].stride = msg->data.size();
+            msg->layout.data_offset = 0;
             if (msg->layout.dim.empty()) {
-                RCLCPP_WARN(get_logger(), "armJointCallback(): message empty");
+                RCLCPP_WARN(node_->get_logger(), "armJointCallback(): message empty");
                 return;
             }
             else if (msg->layout.dim[0].size != 6) {
-                RCLCPP_WARN(get_logger(), "armJointCallback(): incorrect input dimension, expect 6");
+                RCLCPP_WARN(node_->get_logger(), "armJointCallback(): incorrect input dimension, expect 6");
                 return;
             }
             armSetJointTarget(msg->data);
@@ -126,7 +131,7 @@ class ma_robot_commander_class
         std::shared_ptr<MoveGroupInterface> gripper_interface_;
         double cartesianConstraintStepsize_ = 0.01;     //meter
 
-        rclcpp::Subscription<ros_sting>   ::SharedPtr arm_named_subscriber_;      
+        rclcpp::Subscription<ros_string>  ::SharedPtr arm_named_subscriber_;      
         rclcpp::Subscription<ros_array>   ::SharedPtr arm_joint_subscriber_;
         rclcpp::Subscription<custom_array>::SharedPtr arm_pose_subscriber_;
         rclcpp::Subscription<ros_bool>    ::SharedPtr gripper_subscriber_;
