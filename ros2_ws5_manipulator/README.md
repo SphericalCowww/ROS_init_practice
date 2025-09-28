@@ -187,6 +187,11 @@ Using the commander with end-effector (existing interface see <a href="https://g
     ros2 topic pub -1 /arm_set_pose my_robot_interface/msg/ArmPoseTarget "{x: 0.7, y: 0.2, z: 0.2, roll: 3.14, pitch: 0.0, yaw: 0.0, use_cartesian_path: true}"
     ros2 topic pub -1 /arm_set_pose my_robot_interface/msg/ArmPoseTarget "{x: 0.5, y: 0.2, z: 0.2, roll: 3.14, pitch: 0.0, yaw: 0.0, use_cartesian_path: true}"
 
+#### moveit2 with Gazebo
+
+Sometimes it takes a few tries until the GUI is available and all the controllers are linked:
+
+    ros2 launch my_robot_bringup ma_robot.gazebo.launch.with_commander.py
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
