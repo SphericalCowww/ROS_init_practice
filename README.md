@@ -13,7 +13,7 @@ Installing common packages:
     sudo apt install ros-jazzy-xacro     
     sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
     sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers ros-jazzy-teleop-twist-keyboard
-    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control
+    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control*
     colcon build --symlink-install
 
 Installing gazebo simulator. Notice that jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in humble:
