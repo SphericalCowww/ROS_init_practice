@@ -1,20 +1,38 @@
 #include <rclcpp/rclcpp.hpp>
 #include <moveit/move_group_interface/move_group_interface.hpp>
+//https://github.com/ros2/example_interfaces/tree/rolling/msg
+#include <example_interfaces/msg/string.hpp>
+#include <example_interfaces/msg/float32_multi_array.hpp>    //variable size
+#include "my_robot_interface/msg/arm_pose_target.hpp"
 #include <example_interfaces/msg/bool.hpp>
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using MoveGroupInterface = moveit::planning_interface::MoveGroupInterface;
-using Bool = example_interfaces::msg::Bool;
-using namespace std::placeholders;
+using namespace std::placeholders;                  // for using _1
+using ros_string   = example_interfaces::msg::String;
+using ros_array    = example_interfaces::msg::Float32MultiArray;
+using costum_array = my_robot_interface::msg::ArmPoseTarget;
+using ros_bool     = example_interfaces::msg::Bool;
+
 class ma_robot_commander_class
 {
     public:
         ma_robot_commander_class(std::shared_ptr<rclcpp::Node> node) {
             node_ = node;
+            RCLCPP_INFO(node_->get_logger(), "ma_robot_commander_class::constructor()");
+
             arm_interface_ = std::make_shared<MoveGroupInterface>(node_, "arm");
             arm_interface_->setMaxVelocityScalingFactor(1.0);
             arm_interface_->setMaxAccelerationScalingFactor(1.0);
             gripper_interface_ = std::make_shared<MoveGroupInterface>(node_, "gripper");
-            gripper_subscriber_ = node_->create_subscription<Bool>("gripper_set_open", 10, 
+
+            arm_named_subscriber_ = node_->create_subscription<ros_string> ("arm_set_named", 10,
+                std::bind(&ma_robot_commander_class::armSetNamedTarget, this, _1));            
+            arm_joint_subscriber_ = node_->create_subscription<ros_array>  ("arm_set_joint", 10,
+                std::bind(&ma_robot_commander_class::armSetJointTarget, this, _1));
+            arm_pose_subscriber_ = node_->create_subscription<custom_array>("arm_set_pose", 10,
+                std::bind(&ma_robot_commander_class::armSetPoseTarget, this, _1));
+            gripper_subscriber_   = node_->create_subscription<ros_bool>   ("gripper_set_open", 10, 
                 std::bind(&ma_robot_commander_class::gripperCallback, this, _1));
         }
         void armSetNamedTarget(const std::string &name) {
@@ -73,8 +91,26 @@ class ma_robot_commander_class
                 interface->execute(plan);
             }
         }
-        void gripperCallback(const Bool &msg) {
-            if (msg.data) {
+
+        void armNamedCallback(const ros_string::SharedPtr msg) {
+            armSetNamedTarget(msg->data);
+        }
+        void armJointCallback(const ros_array::SharedPtr msg) {
+            if (msg->layout.dim.empty()) {
+                RCLCPP_WARN(get_logger(), "armJointCallback(): message empty");
+                return;
+            }
+            else if (msg->layout.dim[0].size != 6) {
+                RCLCPP_WARN(get_logger(), "armJointCallback(): incorrect input dimension, expect 6");
+                return;
+            }
+            armSetJointTarget(msg->data);
+        }
+        void armPoseCallback(const custom_array::SharedPtr msg) {
+            armSetPoseTarget(msg->x, msg->y, msg->z, msg->roll, msg->pitch, msg->yaw, msg->use_cartesian_path);
+        }
+        void gripperCallback(const ros_bool::SharedPtr msg) {
+            if ( msg->data == true) {
                 gripperOpen();
             } else {
                 gripperClose();
@@ -84,10 +120,14 @@ class ma_robot_commander_class
         std::shared_ptr<rclcpp::Node> node_;
         std::shared_ptr<MoveGroupInterface> arm_interface_;
         std::shared_ptr<MoveGroupInterface> gripper_interface_;
-        rclcpp::Subscription<Bool>::SharedPtr gripper_subscriber_;
-        double cartesianConstraintStepsize_ = 0.01;    //meter
-};
+        double cartesianConstraintStepsize_ = 0.01;     //meter
 
+        rclcpp::Subscription<ros_sting>   ::SharedPtr arm_named_subscriber_;      
+        rclcpp::Subscription<ros_array>   ::SharedPtr arm_joint_subscriber_;
+        rclcpp::Subscription<custom_array>::SharedPtr arm_pose_subscriber_;
+        rclcpp::Subscription<ros_bool>    ::SharedPtr gripper_subscriber_;
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
@@ -97,7 +137,7 @@ int main(int argc, char **argv)
     rclcpp::shutdown();
     return 0;
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
