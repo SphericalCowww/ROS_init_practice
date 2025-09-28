@@ -13,7 +13,7 @@ def generate_launch_description():
     robot_bringup_path       = get_package_share_path('my_robot_bringup')
     robot_moveit_config_path = get_package_share_path('ma_robot_moveit_config')   
  
-    urdf_path          = os.path.join(robot_description_path, 'urdf', 'ma_robot.urdf.xacro')
+    urdf_path          = os.path.join(robot_description_path, 'urdf', 'ma_robot.gazebo.xacro')
     gazebo_config_path = os.path.join(robot_bringup_path, 'config', 'gazebo_bridge.yaml')
     rviz_config_path   = os.path.join(robot_description_path, 'rviz', 'urdf_config.rviz')
     robot_description  = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
