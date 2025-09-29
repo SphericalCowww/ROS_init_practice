@@ -189,7 +189,7 @@ Using the commander with end-effector (existing interface see <a href="https://g
 
 #### moveit2 with Gazebo
 
-Sometimes it takes a few tries until the GUI is available and all the controllers are linked:
+Remember to give each link the inertia property; otherwise, Gazebo will just ignore them. Sometimes it takes a few tries until the GUI is available and all the controllers are linked:
 
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.with_commander.py
     
