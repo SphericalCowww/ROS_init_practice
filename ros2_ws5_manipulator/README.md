@@ -189,9 +189,12 @@ Using the commander with end-effector (existing interface see <a href="https://g
 
 #### moveit2 with Gazebo
 
-Remember to give each link the inertia property; otherwise, Gazebo will just ignore them. Sometimes it takes a few tries until the GUI is available and all the controllers are linked:
+Remember to provide the inertia property to each link; otherwise, Gazebo will just ignore them. Sometimes it takes a few tries until the GUI is available and all the controllers are linked:
 
     ros2 launch my_robot_bringup ma_robot.gazebo.launch.with_commander.py
+
+<img src="https://github.com/SphericalCowww/ROS_init_practice/blob/main/ros2_ws5_manipulator/practice_manipulator_demo.png" width="800">
+
     
 ## References:
 - Edouard Renard, "ROS 2 Moveit 2 - Control a Robotic Arm" (<a href="https://www.udemy.com/course/ros2-moveit2/">Udemy</a>)
