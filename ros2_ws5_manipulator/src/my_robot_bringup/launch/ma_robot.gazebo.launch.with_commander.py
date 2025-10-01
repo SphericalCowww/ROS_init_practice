@@ -1,9 +1,9 @@
 from ament_index_python.packages import get_package_share_path
 from launch import LaunchDescription
 from launch_ros.parameter_descriptions import ParameterValue
-from launch.substitutions import Command
-from launch_ros.actions import Node
-from launch.actions import IncludeLaunchDescription
+from launch.substitutions import Command, LaunchConfiguration
+from launch_ros.actions import Node, SetParameter
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 import os
 
@@ -19,12 +19,6 @@ def generate_launch_description():
     robot_description  = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
     robot_controllers  = os.path.join(robot_bringup_path, 'config', 'ma_robot_controllers.yaml')
     moveit_config_path = os.path.join(robot_moveit_config_path, 'launch', 'move_group.launch.py')
-
-    robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        parameters=[{'robot_description': robot_description}],
-    )
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -48,24 +42,37 @@ def generate_launch_description():
         output="screen",
         parameters=[{"config_file": gazebo_config_path}],
     )
-    
+   
+    robot_state_publisher_node = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        parameters=[
+            {'robot_description': robot_description},
+        ],
+    )
     # check src/my_robot_bringup/config/ma_robot_controllers.yaml 
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_state_broadcaster"],
+        arguments=[
+            "joint_state_broadcaster",
+        ],
     )
     arm_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["arm_controller"],
+        arguments=[
+            "arm_controller",
+        ],
     )
     gripper_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["gripper_controller"],
+        arguments=[
+            "gripper_controller",
+        ],
     )
-    
+   
     moveit_launcher = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(moveit_config_path),
         launch_arguments={}.items(),
@@ -83,10 +90,11 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
-        robot_state_publisher_node,
+        SetParameter(name='use_sim_time', value=True),
         gazebo,
         gz_spawn_entity,
         gz_ros2_bridge,
+        robot_state_publisher_node,
         joint_state_broadcaster_spawner,
         arm_controller_spawner,
         gripper_controller_spawner,
