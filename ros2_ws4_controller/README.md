@@ -35,15 +35,24 @@ Other parameters to check:
     ros2 control list_hardware_components
 
 ### PCA9685 controller spec 
-
-  * 16-channel, 12-bit PWM I2C-bus driver
-  * operating voltage from 2.3 V to 5.5 V
-  * delivery power: completely depends on what is connected in the middle of the controller
-  * delivery power provided by HW-131 board 5V output pins, maximum output current of < 700 mA. Sufficiency for just testing
-
-  * controlling MG90s servo: operating voltage from 4.8 V to 6.0 V, stall current at 750 mA, 2.2 kg*cm max torque
-  * controlling MG996R servo: operating voltage from 4.8 V to 6.6 V, stall current at 2.5 A, 11 kg*cm max torque => needs separate power supply
-
+  * **PCA9685** controller:
+    * 16-channel, 12-bit PWM I2C-bus driver
+    * operating voltage: 2.3 V to 5.5 V
+    * delivery power: completely depends on what is connected in the middle of the controller
+  * **HW‑131** breadboard power supply module:
+    * operating voltage: 6.5 V to 12 V
+    * delivery power from 5V output pins: maximum output current of < 700 mA. Sufficiency for just testing
+  * **Raspberry Pi 5**:
+    * operating voltage: 5 V
+    * delivery power from 5V output pins: 1 to 1.5 A as the practical range
+  * **MG90S** micro servo engine:
+    * operating voltage: 4.8 V to 6.0 V,
+    * stall current: 750 mA
+    * max torque: 2.2 kg*cm 
+  * **MG996R** digital servo motor:
+    * operating voltage: 4.8 V to 6.6 V,
+    * stall current: 2.5 A,
+    * max torque: 11 kg*cm 
 
 ### controlling servo with controller PCA9685 without ros2_control
 
