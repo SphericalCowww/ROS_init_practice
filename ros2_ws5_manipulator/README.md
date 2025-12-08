@@ -42,7 +42,7 @@ Launch the MoveIt assistance:
 Fix the following file:
 
     # src/my_robot_moveit_config/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
-    # src/my_robot_moveit_config/config/moveit_controllers.yaml => add in arm_controller: 
+    # src/my_robot_moveit_config/config/moveit_controllers.yaml => add the following under arm_controller: 
     ## action_ns: follow_joint_trajectory
     ## default: true
 
@@ -80,7 +80,7 @@ Launch the MoveIt assistance:
 Fix the following file:
 
     # src/ma_robot_moveit_config/config/joint_limits.yaml => max_velocity: 1.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
-    # src/ma_robot_moveit_config/config/moveit_controllers.yaml => add in gripper_controller/arm_controller: 
+    # src/ma_robot_moveit_config/config/moveit_controllers.yaml => add the following under gripper_controller/arm_controller: 
     ## action_ns: follow_joint_trajectory
     ## default: true
 
@@ -125,7 +125,7 @@ Launch the MoveIt assistance:
 Fix the following file:
 
     # src/arduinobot_moveit_config/config/joint_limits.yaml => max_velocity: 10.0, has_acceleration_limits: true, max_acceleration: 1.0 (need to be float)
-    # src/arduinobot_moveit_config/config/moveit_controllers.yaml => add in gripper_controller/arm_controller: 
+    # src/arduinobot_moveit_config/config/moveit_controllers.yaml => add the following under gripper_controller/arm_controller: 
     ## action_ns: follow_joint_trajectory
     ## default: true
 
