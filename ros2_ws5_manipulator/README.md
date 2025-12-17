@@ -140,7 +140,7 @@ Launch the demo:
     
     cp src/ma_robot_moveit_config/config/ros2_controllers.yaml src/my_robot_bringup/config/ma_robot_controllers.yaml
     cp src/ma_robot_moveit_config/config/ma_robot.ros2_control.xacro src/my_robot_description/urdf/
-    # adding the following line in ma_robot.ros2_control.xacro:
+    # adding the following line in ma_robot.urdf.xacro:
     ## <xacro:include filename="ma_robot.ros2_control.xacro" />
     colcon build
     source install/setup.bash
