@@ -1,6 +1,6 @@
 # Learning the Robot Operating System 2 (ROS2)
 
-Installed Ubuntu 24.04.1 LTS on Raspberry Pi 5. Before installing ROS2, watch out ``$VERSION_CODENAME`` or ``$UBUNTU_CODENAME`` can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04. Or do,
+Installed Ubuntu <a href="https://cdimage.ubuntu.com/ubuntu/releases/24.04/release/">24.04.1 LTS</a> on Raspberry Pi 5. Before installing ROS2, watch out ``$VERSION_CODENAME`` or ``$UBUNTU_CODENAME`` can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04. Or do,
 
     . /etc/os-release
 
