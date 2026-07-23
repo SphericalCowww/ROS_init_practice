@@ -1,6 +1,6 @@
 # Learning the Robot Operating System 2 (ROS2)
 
-Installed Ubuntu <a href="https://cdimage.ubuntu.com/ubuntu/releases/24.04/release/">24.04.1 LTS</a> (	ubuntu-24.04.1-preinstalled-desktop-arm64+raspi.img.xz) on Raspberry Pi 5. Before installing ROS2, watch out ``$VERSION_CODENAME`` or ``$UBUNTU_CODENAME`` can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04. Or do,
+Installed Ubuntu <a href="https://cdimage.ubuntu.com/ubuntu/releases/24.04/release/">24.04 LTS Noble</a> (	ubuntu-24.04.1-preinstalled-desktop-arm64+raspi.img.xz) on Raspberry Pi 5. Before installing ROS2, watch out ``$VERSION_CODENAME`` or ``$UBUNTU_CODENAME`` can be empty. Replace it with the Ubuntu version's corresponding code name, e.g ''novel'' for 24.04. Or do,
 
     . /etc/os-release
 
@@ -13,12 +13,11 @@ Installing common packages:
     sudo apt install ros-jazzy-xacro     
     sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
     sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers ros-jazzy-teleop-twist-keyboard
-    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control*
     colcon build --symlink-install
 
 Installing gazebo simulator. Notice that jazzy uses "Gazebo Sim (Gazebo Harmonic) Plugin", instead of "<a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">Gazebo Classic Plugin</a>" like in humble:
 
-    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control 
+    sudo apt install ros-jazzy-ros-gz ros-jazzy-gz-ros2-control*
     ros2 pkg list | grep gz                                              # make sure ros_gz_bridge is in the package list
 
 Note that Raspberry Pi 5 may not be able to run gazebo using the ``orge2`` rendering engine. In this case, use ``orge`` by default instead:
