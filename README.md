@@ -10,6 +10,7 @@ and then install ROS2 following this <a href="https://docs.ros.org/en/jazzy/Inst
 
 Installing common packages:
 
+    sudo apt install ros-jazzy-rmw-cyclonedds-cpp
     sudo apt install ros-jazzy-xacro     
     sudo apt install ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui
     sudo apt install ros-jazzy-ros2-control ros-jazzy-ros2-controllers ros-jazzy-teleop-twist-keyboard
